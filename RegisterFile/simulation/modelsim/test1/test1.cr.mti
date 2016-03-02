@@ -1,0 +1,17 @@
+{C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/regfile_tb.v} {1 {vlog -work test {C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/regfile_tb.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module regfile_tb
+
+Top level modules:
+	regfile_tb
+
+} {} {}} {C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/regfile.v} {1 {vlog -work test {C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/regfile.v}
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module regfile
+-- Compiling module decoder5to32
+-- Compiling module register
+
+Top level modules:
+	regfile
+
+} {} {}}

@@ -1,0 +1,14 @@
+sl290_alu
+
+The ALU file build in the sl290_alu module is an ALU with add, subtract, shift left logical, shift right arithmetic, AND and OR. Each of the ALU operations has it's own unique opcode. The output is chosen using a ALU_decoder which is a 5 to 32 decoder where each of the 32 bit is connected to the enable input of the tri-state buffer.
+
+Adder module - 
+The adder module was build using the carry_select adder. This implementation was chosen due to the low gate delays. The only delays are 7 mux's and 4 1 bit ripple carry adder. The schematic of this gate was built by exanding on the 16-bit uniform carry-select adder on wikipedia (https://en.wikipedia.org/wiki/Carry-select_adder#/media/File:Carry-select-adder-fixed-size.png). Unary operations such as * and + were used in the generate loop to connect the wires to the right gates.
+
+Subtract module -
+The subtract module was built using the adder module as shown in the following equation. A-B=A+~B+1. Therefore, A is added to ~B and there is a carry_in of 1 to the adder.
+
+Shift Left Logical module and Shift Right Arithmetic module:-
+This module was build using the barrel shifter approach which utilizes muxes and shifting the wires.
+
+Sivaneshwaran Loganathan

@@ -1,0 +1,403 @@
+Analysis & Synthesis report for RegisterFile
+Wed Feb 10 19:56:19 2016
+Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. General Register Statistics
+  9. Post-Synthesis Netlist Statistics for Top Partition
+ 10. Elapsed Time Per Partition
+ 11. Analysis & Synthesis Messages
+ 12. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Wed Feb 10 19:56:19 2016       ;
+; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
+; Revision Name                      ; RegisterFile                                ;
+; Top-level Entity Name              ; sl290_hw1                                   ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 2,489                                       ;
+;     Total combinational functions  ; 1,465                                       ;
+;     Dedicated logic registers      ; 1,024                                       ;
+; Total registers                    ; 1024                                        ;
+; Total pins                         ; 114                                         ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE115F29C7      ;                    ;
+; Top-level entity name                                                      ; sl290_hw1          ; RegisterFile       ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 2           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ; < 0.1%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                     ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                                       ; Library ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------+---------+
+; sl290_hw1.v                      ; yes             ; User Verilog HDL File  ; C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v ;         ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------+---------+
+
+
++-----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary               ;
++---------------------------------------------+-------------+
+; Resource                                    ; Usage       ;
++---------------------------------------------+-------------+
+; Estimated Total logic elements              ; 2,489       ;
+;                                             ;             ;
+; Total combinational functions               ; 1465        ;
+; Logic element usage by number of LUT inputs ;             ;
+;     -- 4 input functions                    ; 1407        ;
+;     -- 3 input functions                    ; 41          ;
+;     -- <=2 input functions                  ; 17          ;
+;                                             ;             ;
+; Logic elements by mode                      ;             ;
+;     -- normal mode                          ; 1465        ;
+;     -- arithmetic mode                      ; 0           ;
+;                                             ;             ;
+; Total registers                             ; 1024        ;
+;     -- Dedicated logic registers            ; 1024        ;
+;     -- I/O registers                        ; 0           ;
+;                                             ;             ;
+; I/O pins                                    ; 114         ;
+;                                             ;             ;
+; Embedded Multiplier 9-bit elements          ; 0           ;
+;                                             ;             ;
+; Maximum fan-out node                        ; clock~input ;
+; Maximum fan-out                             ; 1024        ;
+; Total fan-out                               ; 10059       ;
+; Average fan-out                             ; 3.70        ;
++---------------------------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                        ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node                   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                              ; Library Name ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------+--------------+
+; |sl290_hw1                                   ; 1465 (0)          ; 1024 (0)     ; 0           ; 0            ; 0       ; 0         ; 114  ; 0            ; |sl290_hw1                                                       ; work         ;
+;    |regfile:register|                        ; 1465 (1393)       ; 1024 (0)     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register                                      ; work         ;
+;       |decoder5to32:decoderForReadA|         ; 36 (36)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|decoder5to32:decoderForReadA         ; work         ;
+;       |decoder5to32:decoderForReadB|         ; 36 (36)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|decoder5to32:decoderForReadB         ; work         ;
+;       |register:registerGenerator[0].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[0].regis  ; work         ;
+;       |register:registerGenerator[10].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[10].regis ; work         ;
+;       |register:registerGenerator[11].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[11].regis ; work         ;
+;       |register:registerGenerator[12].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[12].regis ; work         ;
+;       |register:registerGenerator[13].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[13].regis ; work         ;
+;       |register:registerGenerator[14].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[14].regis ; work         ;
+;       |register:registerGenerator[15].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[15].regis ; work         ;
+;       |register:registerGenerator[16].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[16].regis ; work         ;
+;       |register:registerGenerator[17].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[17].regis ; work         ;
+;       |register:registerGenerator[18].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[18].regis ; work         ;
+;       |register:registerGenerator[19].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[19].regis ; work         ;
+;       |register:registerGenerator[1].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[1].regis  ; work         ;
+;       |register:registerGenerator[20].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[20].regis ; work         ;
+;       |register:registerGenerator[21].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[21].regis ; work         ;
+;       |register:registerGenerator[22].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[22].regis ; work         ;
+;       |register:registerGenerator[23].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[23].regis ; work         ;
+;       |register:registerGenerator[24].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[24].regis ; work         ;
+;       |register:registerGenerator[25].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[25].regis ; work         ;
+;       |register:registerGenerator[26].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[26].regis ; work         ;
+;       |register:registerGenerator[27].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[27].regis ; work         ;
+;       |register:registerGenerator[28].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[28].regis ; work         ;
+;       |register:registerGenerator[29].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[29].regis ; work         ;
+;       |register:registerGenerator[2].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[2].regis  ; work         ;
+;       |register:registerGenerator[30].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[30].regis ; work         ;
+;       |register:registerGenerator[31].regis| ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[31].regis ; work         ;
+;       |register:registerGenerator[3].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[3].regis  ; work         ;
+;       |register:registerGenerator[4].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[4].regis  ; work         ;
+;       |register:registerGenerator[5].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[5].regis  ; work         ;
+;       |register:registerGenerator[6].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[6].regis  ; work         ;
+;       |register:registerGenerator[7].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[7].regis  ; work         ;
+;       |register:registerGenerator[8].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[8].regis  ; work         ;
+;       |register:registerGenerator[9].regis|  ; 0 (0)             ; 32 (32)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |sl290_hw1|regfile:register|register:registerGenerator[9].regis  ; work         ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 1024  ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 1024  ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 1024  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 114                         ;
+; cycloneiii_ff         ; 1024                        ;
+;     ENA CLR           ; 1024                        ;
+; cycloneiii_io_obuf    ; 64                          ;
+; cycloneiii_lcell_comb ; 1465                        ;
+;     normal            ; 1465                        ;
+;         2 data inputs ; 17                          ;
+;         3 data inputs ; 41                          ;
+;         4 data inputs ; 1407                        ;
+;                       ;                             ;
+; Max LUT depth         ; 6.00                        ;
+; Average LUT depth     ; 4.28                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:03     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
+    Info: Processing started: Wed Feb 10 19:56:00 2016
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off RegisterFile -c RegisterFile
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file regfile_tb.v
+    Info (12023): Found entity 1: regfile_tb File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/regfile_tb.v Line: 2
+Info (12021): Found 4 design units, including 4 entities, in source file sl290_hw1.v
+    Info (12023): Found entity 1: sl290_hw1 File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 1
+    Info (12023): Found entity 2: regfile File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 11
+    Info (12023): Found entity 3: decoder5to32 File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 40
+    Info (12023): Found entity 4: register File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 47
+Info (12127): Elaborating entity "sl290_hw1" for the top level hierarchy
+Info (12128): Elaborating entity "regfile" for hierarchy "regfile:register" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 7
+Info (12128): Elaborating entity "decoder5to32" for hierarchy "regfile:register|decoder5to32:decoderForWrite" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 23
+Info (12128): Elaborating entity "register" for hierarchy "regfile:register|register:registerGenerator[0].regis" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 31
+Warning (13009): TRI or OPNDRN buffers permanently enabled
+    Warning (13010): Node "regfile:register|data_readRegA[0]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[1]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[2]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[3]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[4]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[5]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[6]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[7]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[8]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[9]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[10]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[11]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[12]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[13]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[14]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[15]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[16]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[17]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[18]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[19]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[20]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[21]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[22]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[23]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[24]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[25]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[26]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[27]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[28]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[29]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[30]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegA[31]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[0]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[1]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[2]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[3]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[4]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[5]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[6]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[7]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[8]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[9]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[10]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[11]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[12]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[13]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[14]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[15]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[16]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[17]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[18]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[19]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[20]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[21]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[22]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[23]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[24]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[25]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[26]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[27]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[28]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[29]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[30]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+    Warning (13010): Node "regfile:register|data_readRegB[31]~synth" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/sl290_hw1.v Line: 15
+Info (286030): Timing-Driven Synthesis is running
+Info (144001): Generated suppressed messages file C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/output_files/RegisterFile.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 2603 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 50 input pins
+    Info (21059): Implemented 64 output pins
+    Info (21061): Implemented 2489 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 65 warnings
+    Info: Peak virtual memory: 808 megabytes
+    Info: Processing ended: Wed Feb 10 19:56:19 2016
+    Info: Elapsed time: 00:00:19
+    Info: Total CPU time (on all processors): 00:00:39
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/output_files/RegisterFile.map.smsg.
+
+

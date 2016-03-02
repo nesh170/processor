@@ -1,0 +1,12 @@
+module register(bitsIn, bitsOut, writeEnable, reset, clk);
+	input [31:0] bitsIn;
+	input writeEnable, reset, clk;
+	output [31:0] bitsOut;
+	
+	genvar index;
+	generate
+		for(index=0; index<=31; index=index+1)
+			DFF dflip(bitsIn(k),clock,reset,writeEnable,bitsOut(k));
+		end
+	endgenerate
+endmodule

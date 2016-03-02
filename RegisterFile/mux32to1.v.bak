@@ -1,0 +1,16 @@
+module mux32to1(in, out, sel):
+	input [31:0] in[31:0];
+	output [31:0]out;
+	input sel;
+	
+endmodule
+
+module TwoToOneMultiplexer(x1, x2, Select,Out);
+	input x1,x2, Select;
+	output Out;
+	wire w1,w2,w3;
+	
+	assign f = (x1 & x2) | (Select & ~x2);
+	
+endmodule
+	

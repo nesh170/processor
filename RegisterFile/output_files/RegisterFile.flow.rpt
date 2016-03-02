@@ -1,0 +1,216 @@
+Flow report for RegisterFile
+Thu Feb 11 21:09:47 2016
+Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Flow Summary                                                                     ;
++------------------------------------+---------------------------------------------+
+; Flow Status                        ; Successful - Thu Feb 11 21:09:47 2016       ;
+; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
+; Revision Name                      ; RegisterFile                                ;
+; Top-level Entity Name              ; sl290_hw1                                   ;
+; Family                             ; Cyclone IV E                                ;
+; Device                             ; EP4CE115F29C7                               ;
+; Timing Models                      ; Final                                       ;
+; Total logic elements               ; 1,465 / 114,480 ( 1 % )                     ;
+;     Total combinational functions  ; 1,465 / 114,480 ( 1 % )                     ;
+;     Dedicated logic registers      ; 1,024 / 114,480 ( < 1 % )                   ;
+; Total registers                    ; 1024                                        ;
+; Total pins                         ; 114 / 529 ( 22 % )                          ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0 / 3,981,312 ( 0 % )                       ;
+; Embedded Multiplier 9-bit elements ; 0 / 532 ( 0 % )                             ;
+; Total PLLs                         ; 0 / 4 ( 0 % )                               ;
++------------------------------------+---------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 02/10/2016 19:56:01 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; RegisterFile        ;
++-------------------+---------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                           ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID               ; 8796747348052.145515216114652         ; --            ; --          ; --             ;
+; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                           ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)             ; <None>        ; --          ; --             ;
+; EDA_TIME_SCALE                      ; 1 ps                                  ; --            ; --          ; eda_simulation ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                     ; --            ; --          ; --             ;
+; PARTITION_COLOR                     ; 16764057                              ; --            ; sl290_hw1   ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING                 ; --            ; sl290_hw1   ; Top            ;
+; PARTITION_NETLIST_TYPE              ; SOURCE                                ; --            ; sl290_hw1   ; Top            ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                   ; --            ; --          ; --             ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW ; --            ; --          ; --             ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                          ; --            ; --          ; --             ;
+; TOP_LEVEL_ENTITY                    ; sl290_hw1                             ; RegisterFile  ; --          ; --             ;
++-------------------------------------+---------------------------------------+---------------+-------------+----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:19     ; 1.0                     ; 803 MB              ; 00:00:38                           ;
+; Fitter                    ; 00:00:27     ; 1.0                     ; 1570 MB             ; 00:00:28                           ;
+; Assembler                 ; 00:00:06     ; 1.0                     ; 754 MB              ; 00:00:05                           ;
+; TimeQuest Timing Analyzer ; 00:00:04     ; 1.3                     ; 916 MB              ; 00:00:04                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 733 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 709 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 735 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 709 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 735 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 696 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 724 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 707 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 736 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 707 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 722 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 707 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 735 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 708 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 735 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:00     ; 1.0                     ; 708 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 733 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 708 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 736 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 708 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 734 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 708 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 716 MB              ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 711 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:04     ; 1.0                     ; 733 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:00     ; 1.0                     ; 707 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 733 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:00     ; 1.0                     ; 707 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 734 MB              ; 00:00:03                           ;
+; Total                     ; 00:01:56     ; --                      ; --                  ; 00:02:13                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++----------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                        ;
++---------------------------+------------------+-----------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++---------------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis      ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; Fitter                    ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; Assembler                 ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; TimeQuest Timing Analyzer ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
++---------------------------+------------------+-----------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off RegisterFile -c RegisterFile
+quartus_fit --read_settings_files=off --write_settings_files=off RegisterFile -c RegisterFile
+quartus_asm --read_settings_files=off --write_settings_files=off RegisterFile -c RegisterFile
+quartus_sta RegisterFile -c RegisterFile
+quartus_eda --read_settings_files=off --write_settings_files=off RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/timing.vwf" --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/timing.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source=C:/Users/nesh1/Downloads/register_test50.vwf --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/register_test50.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source=C:/Users/nesh1/Downloads/register_test50.vwf --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/register_test50.vwf.vt"
+quartus_eda --write_settings_files=off --functional=on --flatten_buses=off --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source=C:/Users/nesh1/Downloads/register_test50.vwf --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/register_test50.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source=C:/Users/nesh1/Desktop/Waveform.vwf --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/Waveform.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off RegisterFile -c RegisterFile --vector_source=C:/Users/nesh1/Desktop/Waveform.vwf --testbench_file="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/Waveform.vwf.vt"
+quartus_eda --write_settings_files=off --functional=off --flatten_buses=off --timescale=1ps --simulation=on --tool=modelsim_oem --format=verilog --output_directory="C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/RegisterFile/simulation/qsim/" RegisterFile -c RegisterFile
+
+
+

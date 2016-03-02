@@ -1,0 +1,6 @@
+module shift_logical();	
+	input[31:0] in;
+	input[4:0] ctrl_ShiftAmt;
+	output[31:0] out;
+
+endmodule

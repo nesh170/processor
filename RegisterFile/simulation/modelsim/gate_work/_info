@@ -1,0 +1,25 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\nesh1\OneDrive\Current Classes\ECE 350\Processor\RegisterFile\simulation\modelsim
+vregfile
+!i10b 1
+!s100 ]g@h@5?^04=^WBdI=F2_62
+ILVJdG<GVn@3DTB;5_WQSo2
+VXLFNO3f5>lQf^PVkEbF:f1
+Z1 dC:\Users\nesh1\OneDrive\Current Classes\ECE 350\Processor\RegisterFile\simulation\modelsim
+w1455069901
+8RegisterFile_7_1200mv_85c_slow.vo
+FRegisterFile_7_1200mv_85c_slow.vo
+L0 32
+OV;L;10.1d;51
+r1
+!s85 0
+31
+!s108 1455070773.097000
+!s107 RegisterFile_7_1200mv_85c_slow.vo|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+.|RegisterFile_7_1200mv_85c_slow.vo|
+!s101 -O0
+o-vlog01compat -work work -O0
+!s92 -vlog01compat -work work +incdir+. -O0

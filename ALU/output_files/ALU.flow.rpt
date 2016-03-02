@@ -1,0 +1,134 @@
+Flow report for ALU
+Sat Feb 20 15:26:55 2016
+Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Flow Summary                                                                     ;
++------------------------------------+---------------------------------------------+
+; Flow Status                        ; Successful - Sat Feb 20 15:26:55 2016       ;
+; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
+; Revision Name                      ; ALU                                         ;
+; Top-level Entity Name              ; shift_right_arithmetic                      ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 163 / 6,272 ( 3 % )                         ;
+;     Total combinational functions  ; 163 / 6,272 ( 3 % )                         ;
+;     Dedicated logic registers      ; 0 / 6,272 ( 0 % )                           ;
+; Total registers                    ; 0                                           ;
+; Total pins                         ; 69 / 180 ( 38 % )                           ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0 / 276,480 ( 0 % )                         ;
+; Embedded Multiplier 9-bit elements ; 0 / 30 ( 0 % )                              ;
+; Total PLLs                         ; 0 / 2 ( 0 % )                               ;
+; Device                             ; EP4CE6F17C6                                 ;
+; Timing Models                      ; Final                                       ;
++------------------------------------+---------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 02/20/2016 15:26:04 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; ALU                 ;
++-------------------+---------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                ;
++--------------------------------------+-------------------------------+---------------+------------------------+-----------------+
+; Assignment Name                      ; Value                         ; Default Value ; Entity Name            ; Section Id      ;
++--------------------------------------+-------------------------------+---------------+------------------------+-----------------+
+; COMPILER_SIGNATURE_ID                ; 8796747348052.145599996401652 ; --            ; --                     ; --              ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                            ; --            ; --                     ; Dwyer_testBench ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; Dwyer_testBench               ; --            ; --                     ; eda_simulation  ;
+; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                   ; --            ; --                     ; eda_simulation  ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (Verilog)     ; <None>        ; --                     ; --              ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE               ; --            ; --                     ; eda_simulation  ;
+; EDA_TEST_BENCH_FILE                  ; testbench.v                   ; --            ; --                     ; Dwyer_testBench ;
+; EDA_TEST_BENCH_MODULE_NAME           ; Dwyer_testBench               ; --            ; --                     ; Dwyer_testBench ;
+; EDA_TEST_BENCH_NAME                  ; Dwyer_testBench               ; --            ; --                     ; eda_simulation  ;
+; EDA_TIME_SCALE                       ; 1 ps                          ; --            ; --                     ; eda_simulation  ;
+; PARTITION_COLOR                      ; 16764057                      ; --            ; shift_right_arithmetic ; Top             ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; PLACEMENT_AND_ROUTING         ; --            ; shift_right_arithmetic ; Top             ;
+; PARTITION_NETLIST_TYPE               ; SOURCE                        ; --            ; shift_right_arithmetic ; Top             ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                  ; --            ; --                     ; --              ;
+; TOP_LEVEL_ENTITY                     ; shift_right_arithmetic        ; ALU           ; --                     ; --              ;
++--------------------------------------+-------------------------------+---------------+------------------------+-----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:16     ; 1.0                     ; 800 MB              ; 00:00:36                           ;
+; Fitter                    ; 00:00:05     ; 1.0                     ; 1322 MB             ; 00:00:06                           ;
+; Assembler                 ; 00:00:01     ; 1.0                     ; 740 MB              ; 00:00:01                           ;
+; TimeQuest Timing Analyzer ; 00:00:03     ; 1.0                     ; 830 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 709 MB              ; 00:00:01                           ;
+; Total                     ; 00:00:27     ; --                      ; --                  ; 00:00:47                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++----------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                        ;
++---------------------------+------------------+-----------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++---------------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis      ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; Fitter                    ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; Assembler                 ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; TimeQuest Timing Analyzer ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; NESH170          ; Windows 8 ; 6.2        ; x86_64         ;
++---------------------------+------------------+-----------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off ALU -c ALU
+quartus_fit --read_settings_files=off --write_settings_files=off ALU -c ALU
+quartus_asm --read_settings_files=off --write_settings_files=off ALU -c ALU
+quartus_sta ALU -c ALU
+quartus_eda --read_settings_files=off --write_settings_files=off ALU -c ALU
+
+
+

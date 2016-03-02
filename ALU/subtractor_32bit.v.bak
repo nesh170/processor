@@ -1,0 +1,10 @@
+/*
+*Creating A-B=out
+*/
+
+module subtractor_32bit(in_A, in_B, out);
+	input[31:0] in_A;
+	output out;
+	
+	
+endmodule
