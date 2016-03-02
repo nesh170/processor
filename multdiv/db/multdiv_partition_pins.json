@@ -136,151 +136,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "data_operandB[0]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandB[1]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandB[2]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandB[3]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[31]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[30]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[29]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[28]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[27]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[26]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[25]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[24]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[23]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[22]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[21]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[20]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[19]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[18]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[17]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[16]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[15]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[14]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[13]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[12]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[11]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[10]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[9]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[8]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[7]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[6]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[5]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[4]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[3]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[2]",
-					"strict" : false
-				},
-				{
-					"name" : "data_operandA[1]",
-					"strict" : false
-				},
-				{
 					"name" : "data_operandA[0]",
 					"strict" : false
 				},
 				{
-					"name" : "clock",
+					"name" : "data_operandB[0]",
+					"strict" : false
+				},
+				{
+					"name" : "ctrl_MULT",
 					"strict" : false
 				}
 			]
