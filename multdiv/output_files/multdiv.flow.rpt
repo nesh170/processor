@@ -1,5 +1,5 @@
 Flow report for multdiv
-Wed Mar 02 13:49:17 2016
+Thu Mar 03 00:15:24 2016
 Quartus Prime Version 15.1.0 Build 185 10/21/2015 SJ Lite Edition
 
 
@@ -41,13 +41,13 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Mar 02 13:49:17 2016       ;
+; Flow Status                        ; Successful - Thu Mar 03 00:15:24 2016       ;
 ; Quartus Prime Version              ; 15.1.0 Build 185 10/21/2015 SJ Lite Edition ;
 ; Revision Name                      ; multdiv                                     ;
 ; Top-level Entity Name              ; multdiv                                     ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 1 / 6,272 ( < 1 % )                         ;
-;     Total combinational functions  ; 1 / 6,272 ( < 1 % )                         ;
+; Total logic elements               ; 1,061 / 6,272 ( 17 % )                      ;
+;     Total combinational functions  ; 1,061 / 6,272 ( 17 % )                      ;
 ;     Dedicated logic registers      ; 0 / 6,272 ( 0 % )                           ;
 ; Total registers                    ; 0                                           ;
 ; Total pins                         ; 86 / 180 ( 48 % )                           ;
@@ -65,25 +65,32 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/02/2016 13:48:22 ;
+; Start date & time ; 03/03/2016 00:13:58 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; multdiv             ;
 +-------------------+---------------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                   ;
-+-------------------------------------+-------------------------------+---------------+-------------+----------------+
-; Assignment Name                     ; Value                         ; Default Value ; Entity Name ; Section Id     ;
-+-------------------------------------+-------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 8796747348052.145694450203704 ; --            ; --          ; --             ;
-; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                   ; --            ; --          ; eda_simulation ;
-; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)     ; <None>        ; --          ; --             ;
-; PARTITION_COLOR                     ; 16764057                      ; --            ; --          ; Top            ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; PLACEMENT_AND_ROUTING         ; --            ; --          ; Top            ;
-; PARTITION_NETLIST_TYPE              ; SOURCE                        ; --            ; --          ; Top            ;
-; PROJECT_OUTPUT_DIRECTORY            ; output_files                  ; --            ; --          ; --             ;
-+-------------------------------------+-------------------------------+---------------+-------------+----------------+
++---------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                    ;
++--------------------------------------+-------------------------------+---------------+-------------+----------------+
+; Assignment Name                      ; Value                         ; Default Value ; Entity Name ; Section Id     ;
++--------------------------------------+-------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 8796747348052.145698203704916 ; --            ; --          ; --             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                            ; --            ; --          ; testbench_jw   ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench_jw                  ; --            ; --          ; eda_simulation ;
+; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                   ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (Verilog)     ; <None>        ; --          ; --             ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE               ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_FILE                  ; testbench_jw.v                ; --            ; --          ; testbench_jw   ;
+; EDA_TEST_BENCH_MODULE_NAME           ; testbench_jw                  ; --            ; --          ; testbench_jw   ;
+; EDA_TEST_BENCH_NAME                  ; testbench_jw                  ; --            ; --          ; eda_simulation ;
+; EDA_TIME_SCALE                       ; 1 ps                          ; --            ; --          ; eda_simulation ;
+; PARTITION_COLOR                      ; 16764057                      ; --            ; --          ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; PLACEMENT_AND_ROUTING         ; --            ; --          ; Top            ;
+; PARTITION_NETLIST_TYPE               ; SOURCE                        ; --            ; --          ; Top            ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                  ; --            ; --          ; --             ;
++--------------------------------------+-------------------------------+---------------+-------------+----------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -91,12 +98,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:16     ; 1.0                     ; 802 MB              ; 00:00:37                           ;
-; Fitter                    ; 00:00:05     ; 1.0                     ; 1321 MB             ; 00:00:06                           ;
-; Assembler                 ; 00:00:01     ; 1.0                     ; 729 MB              ; 00:00:02                           ;
-; TimeQuest Timing Analyzer ; 00:00:03     ; 1.0                     ; 828 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 693 MB              ; 00:00:02                           ;
-; Total                     ; 00:00:26     ; --                      ; --                  ; 00:00:49                           ;
+; Analysis & Synthesis      ; 00:00:31     ; 1.0                     ; 831 MB              ; 00:00:50                           ;
+; Fitter                    ; 00:00:11     ; 1.0                     ; 1238 MB             ; 00:00:11                           ;
+; Assembler                 ; 00:00:03     ; 1.0                     ; 733 MB              ; 00:00:02                           ;
+; TimeQuest Timing Analyzer ; 00:00:05     ; 1.0                     ; 812 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 707 MB              ; 00:00:03                           ;
+; Total                     ; 00:00:53     ; --                      ; --                  ; 00:01:09                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

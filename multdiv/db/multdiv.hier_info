@@ -168,7 +168,6 @@ data_operandB[13] => data_operandB[13].IN8
 data_operandB[14] => data_operandB[14].IN8
 data_operandB[15] => data_operandB[15].IN8
 clock => ~NO_FANOUT~
-reset => ~NO_FANOUT~
 data_result[0] <= carry_select_adder:mult_loop[8].adder.port2
 data_result[1] <= carry_select_adder:mult_loop[8].adder.port2
 data_result[2] <= carry_select_adder:mult_loop[8].adder.port2
@@ -201,7 +200,7 @@ data_result[28] <= carry_select_adder:mult_loop[8].adder.port2
 data_result[29] <= carry_select_adder:mult_loop[8].adder.port2
 data_result[30] <= carry_select_adder:mult_loop[8].adder.port2
 data_result[31] <= carry_select_adder:mult_loop[8].adder.port2
-data_exception <= <GND>
+data_exception <= xor_gate.DB_MAX_OUTPUT_PORT_TYPE
 data_inputRDY <= <VCC>
 data_resultRDY <= <VCC>
 

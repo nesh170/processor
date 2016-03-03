@@ -11,7 +11,8 @@ module mult_module(data_operandA, data_operandB, clock, data_result, data_except
 	wire[31:0] temp_adder_wire[8:0];
 	assign temp_adder_wire[0] = 32'b0;
 	
-
+	xor xor_gate(data_exception,data_operandA[31:16]);
+	
 	genvar index;
 	generate
 		for(index=1; index<9; index=index+1) begin:mult_loop
