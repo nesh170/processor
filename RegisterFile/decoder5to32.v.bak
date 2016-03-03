@@ -1,9 +1,0 @@
-module decoder5to32(in,out,enable);
-	input [4:0] in; //5 bit input entering
-	input enable; //enable to tell whether the decoder is functioning
-	output [31:0] out; //32 bit output;
-	
-	assign out = (enable) ? (1 << in) : 32'b0;
-
-endmodule
-	
