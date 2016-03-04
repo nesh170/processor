@@ -15,7 +15,7 @@ module counter(clock, in_signal, out, present, next);
 	
 	wire [2:0] present;
 	
-	reg out;
+	reg[2:0] out;
 	reg [2:0] next;
 	
 	always @(*) begin
@@ -27,7 +27,7 @@ module counter(clock, in_signal, out, present, next);
 			`state4: next = in_signal ? `state0 : `state5;
 			`state5: next = in_signal ? `state0 : `state6;
 			`state6: next = in_signal ? `state0 : `state7;
-			`state7: next = in_signal ? `state0 : `state7;
+			`state7: next = in_signal ? `state0 : `state0;
 			default: next = `state0;
 		endcase
 	end
