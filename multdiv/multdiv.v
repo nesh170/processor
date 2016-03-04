@@ -7,7 +7,7 @@ module multdiv(data_operandA, data_operandB, ctrl_MULT, ctrl_DIV, clock, data_re
 	
 	wire[31:0] temp_mult_result;
 	
-	mult_module multiplier(data_operandA, data_operandB, clock, temp_mult_result, data_exception, data_inputRDY, data_resultRDY);
+	mult_module multiplier(data_operandA, data_operandB, clock, ctrl_MULT, temp_mult_result, data_exception, data_inputRDY, data_resultRDY);
 	assign data_result = (ctrl_MULT) ? temp_mult_result : 32'bZ;
 	
 endmodule
