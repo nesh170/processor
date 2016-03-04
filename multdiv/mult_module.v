@@ -9,7 +9,7 @@ module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, 
 	assign data_exception = exception_wire[1] | exception_wire[0];
 	assign exception_wire[0] = 0;
 	
-	//xor xor_gate(exception_wire[0],data_operandA[31:16]);
+	//xor xor_gate(exception_wire[0],data_operandA[31:15]);
 
 	/*
 	Handling Reset Cases
@@ -17,6 +17,7 @@ module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, 
 	wire reset_wire; 
 	assign reset_wire	= 0;
 	
+	//counter reseting = exception, 
 	
 	
 	/*
@@ -24,7 +25,7 @@ module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, 
 	*/
 	wire[31:0] input_DFF;
 	wire[31:0] output_DFF;
-	register regis_32bit(input_DFF, output_DFF, reset_wire, clock);
+	register regis_32bit(input_DFF, output_DFF, reset_wire, clock); //reset at state 0
 	
 	wire[2:0] counter_output; //output from the couter to the BOOTH and SHIFTER
 	assign data_resultRDY = counter_output[0] & counter_output[1] & counter_output[2]; //set to high if counter is at 7, meaning the output is ready
