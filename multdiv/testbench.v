@@ -168,7 +168,7 @@ module testbench();
             $display("**Error in calculation: %d but expected %d.", data_result, inExp);
             errors = errors + 1;            
         end else begin
-          $display(ticks, "\t\t Operation correct.");
+          $display(ticks, "\t\t Operation correct. %d but expected %d", data_result, inExp);
         end
     end
  endtask
