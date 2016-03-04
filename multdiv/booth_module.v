@@ -41,7 +41,7 @@ module booth_module(multiplicand,multiplier, counter_output, booth_output, carry
 		wire[31:0] temp_output;
 		wire temp_carry_out;
 		assign shift_wire = multiplicand << (2*index);
-		booth_decoder decode(booth_input[index],shift_wire,temp_output,temp_carry_out);
+		booth_decoder decode(booth_input[index],multiplicand,temp_output,temp_carry_out);
 		assign booth_output = (one_hot_counter_amt[index]) ? temp_output : 32'bZ;
 		assign carry_out = (one_hot_counter_amt[index]) ? temp_carry_out : 1'bZ;
 	end
