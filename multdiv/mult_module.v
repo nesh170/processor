@@ -11,18 +11,28 @@ module mult_module(data_operandA, data_operandB, clock, data_result, data_except
 	wire[31:0] temp_adder_wire[8:0];
 	assign temp_adder_wire[0] = 32'b0;
 	
+	wire[1:0] wire_exception;
+	wire carry_out[7:0];
+	//assign wire_exception[0] = //this is for the carry_in
+	//[1] is for overflow
 
+	
+	counter counter_3_bit(clock,|wire_exception,counter_output);
+	assign data_inputRDY = ~counter_output[0] & ~counter_output[1] & ~counter_output[2]);
+	assign data_resultRDY = counter_output[0] & counter_output[1] & counter_output[2];
+	assign data_exception = wire_exception[0] | wire_exception[1] | wire_exception[2];
+	
+	
+	wire[31:0] booth_output[7:0];
 	genvar index;
 	generate
 		for(index=1; index<9; index=index+1) begin:mult_loop
-			wire carry_in;
-			wire[31:0] booth_output;
-			booth_module booth(data_operandA,data_operandB,index-1,booth_output,carry_in);
-			carry_select_adder adder(temp_adder_wire[index-1],booth_output,temp_adder_wire[index],carry_in);
+			wire carry_out;
+			booth_module booth(data_operandA,data_operandB,index-1,booth_output[index-1],carry_in);
+			carry_select_adder adder(temp_adder_wire[index-1],booth_output[index-1],temp_adder_wire[index],carry_in,carry_out);
 		end
 	endgenerate
 
 	assign data_result = temp_adder_wire[8];
-	assign data_inputRDY = 1;
-	assign data_resultRDY = 1;
+
 endmodule
