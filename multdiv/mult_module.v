@@ -15,7 +15,7 @@ module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, 
 	Handling Reset Cases
 	*/
 	wire reset_wire; 
-	assign reset_wire	= exception_wire[1] | exception_wire[0] | ~ctrl_MULT;
+	assign reset_wire	= 0;
 	
 	
 	
@@ -24,12 +24,7 @@ module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, 
 	*/
 	wire[31:0] input_DFF;
 	wire[31:0] output_DFF;
-	genvar memory_index;
-	generate
-	for(memory_index=0; memory_index<32; memory_index=memory_index+1) begin: memory_loop
-		DFFE memory_storage (.d(input_DFF[memory_index]), .clk(clock),.clrn(~reset_wire), .prn(1'b1), .ena(~data_resultRDY),.q(output_DFF[memory_index]));
-	end
-	endgenerate
+	register regis_32bit(input_DFF, output_DFF, reset_wire, clock);
 	
 	wire[2:0] counter_output; //output from the couter to the BOOTH and SHIFTER
 	assign data_resultRDY = counter_output[0] & counter_output[1] & counter_output[2]; //set to high if counter is at 7, meaning the output is ready

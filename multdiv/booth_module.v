@@ -37,7 +37,7 @@ module booth_module(multiplicand,multiplier, counter_output, booth_output, carry
 	genvar index;
 	generate
 	for(index=0; index<8; index = index + 1) begin: loop_structure
-		wire[31:0] shift_wire;
+		wire[31:0] shift_wire; // move it out
 		wire[31:0] temp_output;
 		wire temp_carry_out;
 		assign shift_wire = multiplicand << (2*index);
