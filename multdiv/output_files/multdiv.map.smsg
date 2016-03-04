@@ -1,5 +1,0 @@
-Warning (10273): Verilog HDL warning at booth_decoder.v(25): extended using "x" or "z" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/multdiv/booth_decoder.v Line: 25
-Warning (10273): Verilog HDL warning at multdiv.v(11): extended using "x" or "z" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/multdiv/multdiv.v Line: 11
-Warning (10273): Verilog HDL warning at mult_module.v(35): extended using "x" or "z" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/multdiv/mult_module.v Line: 35
-Warning (10273): Verilog HDL warning at mult_module.v(36): extended using "x" or "z" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/multdiv/mult_module.v Line: 36
-Warning (10273): Verilog HDL warning at booth_module.v(45): extended using "x" or "z" File: C:/Users/nesh1/OneDrive/Current Classes/ECE 350/Processor/multdiv/booth_module.v Line: 45

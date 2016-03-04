@@ -1,7 +1,7 @@
-module mult_module(data_operandA, data_operandB, clock, reset, data_result, data_exception, data_inputRDY, data_resultRDY);
+module mult_module(data_operandA, data_operandB, clock, ctrl_MULT, data_result, data_exception, data_inputRDY, data_resultRDY);
    input [31:0] data_operandA;
    input [15:0] data_operandB;
-   input clock, reset;      
+   input clock, ctrl_MULT;      
    output [31:0] data_result; 
    output data_exception, data_inputRDY, data_resultRDY; 
 
@@ -9,7 +9,7 @@ module mult_module(data_operandA, data_operandB, clock, reset, data_result, data
 	Handling Reset Cases
 	*/
 	wire reset_wire; 
-	assign reset_wire	= data_exception | reset;
+	assign reset_wire	= data_exception | ~ctrl_MULT;
 	
 	/*
 		Handling the D-Flip-Flop Operation
@@ -34,7 +34,7 @@ module mult_module(data_operandA, data_operandB, clock, reset, data_result, data
 	assign adder_input = (~data_resultRDY) ? output_DFF : 32'bz;
 	
 	
-	counter_8bit counter(clock, reset_wire, counter_output); //handles the fsm counter
+	counter counter_3bit(clock, reset_wire, counter_output); //handles the fsm counter
 	wire carry_in;
 	wire[31:0] booth_output;
 	booth_module booth_operations(data_operandA,data_operandB, counter_output, booth_output, carry_in); //this does the shifting and booth operation

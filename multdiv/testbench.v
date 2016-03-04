@@ -65,7 +65,7 @@ module testbench();
     always
     begin
          #clock_halfperiod     clock = ~clock;    // toggle
-        ticks = ticks + 1;
+        ticks = ticks + 16;
     end
         
  ///////////////////////////////////////////////////////////////////////////////

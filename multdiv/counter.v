@@ -7,7 +7,7 @@
 `define state6  3'b110
 `define state7  3'b111
 
-module counter_8bit(clock, in_signal, out, present, next);
+module counter(clock, in_signal, out, present, next);
 	input clock, in_signal;
 	output[2:0] out;
 	output [2:0] present,next;
@@ -27,7 +27,7 @@ module counter_8bit(clock, in_signal, out, present, next);
 			`state4: next = in_signal ? `state0 : `state5;
 			`state5: next = in_signal ? `state0 : `state6;
 			`state6: next = in_signal ? `state0 : `state7;
-			`state7: next = in_signal ? `state0 : `state0;
+			`state7: next = in_signal ? `state0 : `state7;
 			default: next = `state0;
 		endcase
 	end
