@@ -4,6 +4,8 @@ module testbench();
     parameter minfreq = 30;    // Min. clock freq. for testing (in MHz)
     parameter maxfreq = 70;    // Max. clock freq. for testing (in MHz)
     parameter freqstep = 5;    // Increment in clock freq. between tests (in MHz)
+    parameter cycles_per_mult = 8;    // for multi-cycle multiplcation
+    parameter cycles_per_div = 33;        // for mult-cycle division
     ///////////////////////////////////////////////////////////////////////////
     // Tracking the number of errors
     reg clock, ctrl_reset;    // standard signals- required even if DUT doesn't use them
@@ -65,7 +67,7 @@ module testbench();
     always
     begin
          #clock_halfperiod     clock = ~clock;    // toggle
-        ticks = ticks + 16;
+        ticks = ticks + 1;
     end
         
  ///////////////////////////////////////////////////////////////////////////////
@@ -92,14 +94,14 @@ module testbench();
             opA = $random;
             opB = $random;
             
-            next_tick = ticks + 1;
+            next_tick = ticks + cycles_per_mult;
             verifyMULT(opA, opB, opA * opB);
             wait(ticks == next_tick);
             ctrl_MULT = 1'b0;
             ctrl_DIV = 1'b0;
             wait(ticks == next_tick+1);
             
-            next_tick = ticks + 1;            
+            next_tick = ticks + cycles_per_div;            
             verifyDIV(opA, opB, opA / opB);
             wait(ticks == next_tick);
             ctrl_MULT = 1'b0;
@@ -108,7 +110,7 @@ module testbench();
     end
     
     // Verify DIV0 exception
-    next_tick = ticks + 1;            
+    next_tick = ticks + cycles_per_div;            
     verifyDIV0(opA);    // DIV0
     wait(ticks == next_tick);
     ctrl_MULT = 1'b0;
