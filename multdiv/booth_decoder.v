@@ -5,7 +5,7 @@ module booth_decoder(booth_operation,multiplicand,adder_output,carry_out); //tak
 	output carry_out;
 	
 	wire[7:0] booth_operation_wire;
-	assign booth_operation_wire = 1 << booth_operation; //this generates which operation should be performed
+	assign booth_operation_wire = 8'b00000001 << booth_operation; //this generates which operation should be performed
 	
 	wire[31:0] output_operation_wire[7:0];
 	

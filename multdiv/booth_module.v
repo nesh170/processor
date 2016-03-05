@@ -1,7 +1,7 @@
-module booth_module(multiplicand,multiplier, counter_output, booth_output, carry_out);
+module booth_module(multiplicand,multiplier, counter_val, booth_output, carry_out);
 	input[31:0] multiplicand;
 	input[15:0] multiplier;
-	input[2:0] counter_output;
+	input[2:0] counter_val;
 	output carry_out;
 	output[31:0] booth_output;
 	
@@ -9,7 +9,7 @@ module booth_module(multiplicand,multiplier, counter_output, booth_output, carry
 	Gets the operation counter in one hot decoding
 	*/
 	wire[7:0] one_hot_counter_amt;
-	assign one_hot_counter_amt = 1 << counter_output;
+	assign one_hot_counter_amt = 8'b00000001 << counter_val;
 	
 	
 	/*

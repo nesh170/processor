@@ -7,7 +7,7 @@
 `define state6  3'b110
 `define state7  3'b111
 
-module counter_8bit(clock, in_signal, out, present, next);
+module counter(clock, in_signal, out, present, next);
 	input clock, in_signal;
 	output[2:0] out;
 	output [2:0] present,next;
@@ -15,8 +15,8 @@ module counter_8bit(clock, in_signal, out, present, next);
 	
 	wire [2:0] present;
 	
-	reg out;
-	reg [2:0] next;
+	reg[2:0] out;
+	reg[2:0] next;
 	
 	always @(*) begin
 		case(present)
