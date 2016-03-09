@@ -1,15 +1,14 @@
-module booth_module(multiplicand,multiplier, counter_val, booth_output, carry_out);
+module booth_module(multiplicand,multiplier, booth_output_0,booth_output_1,booth_output_2,booth_output_3,booth_output_4,booth_output_5,booth_output_6,booth_output_7);
 	input[31:0] multiplicand;
 	input[15:0] multiplier;
-	input[2:0] counter_val;
-	output carry_out;
-	output[31:0] booth_output;
-	
-	/*
-	Gets the operation counter in one hot decoding
-	*/
-	wire[7:0] one_hot_counter_amt;
-	assign one_hot_counter_amt = 8'b00000001 << counter_val;
+	output[31:0] booth_output_0;
+	output[31:0] booth_output_1;
+	output[31:0] booth_output_2;
+	output[31:0] booth_output_3;
+	output[31:0] booth_output_4;
+	output[31:0] booth_output_5;
+	output[31:0] booth_output_6;
+	output[31:0] booth_output_7;
 	
 	
 	/*
@@ -31,21 +30,22 @@ module booth_module(multiplicand,multiplier, counter_val, booth_output, carry_ou
 	assign booth_input[6] = multiplier[13:11];
 	assign booth_input[7] = multiplier[15:13];
 	
-	/*
-		The code below generates the shifters and booth_decoders to resturn the right output which is then added but the adder
-	*/
+	wire[31:0] booth_output[7:0];
 	genvar index;
 	generate
 	for(index=0; index<8; index = index + 1) begin: loop_structure
-		wire[31:0] shift_wire;
-		wire[31:0] temp_output;
-		wire temp_carry_out;
-		assign shift_wire = multiplicand << (2*index);
-		booth_decoder decode(booth_input[index],shift_wire,temp_output,temp_carry_out);
-		assign booth_output = (one_hot_counter_amt[index]) ? temp_output : 32'bZ;
-		assign carry_out = (one_hot_counter_amt[index]) ? temp_carry_out : 1'bZ;
+		booth_decoder booth(booth_input[index],(multiplicand << (2*index)),booth_output[index]);
 	end
 	endgenerate
+	
+	assign booth_output_0=booth_output[0];
+	assign booth_output_1=booth_output[1];
+	assign booth_output_2=booth_output[2];
+	assign booth_output_3=booth_output[3];
+	assign booth_output_4=booth_output[4];
+	assign booth_output_5=booth_output[5];
+	assign booth_output_6=booth_output[6];
+	assign booth_output_7=booth_output[7];
 	
 
 endmodule
