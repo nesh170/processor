@@ -14,6 +14,14 @@ module multdiv(data_operandA, data_operandB, ctrl_MULT, ctrl_DIV, clock, data_re
 	assign data_inputRDY = (ctrl_MULT) ? mult_inputRDY : 1'bZ;
 	assign data_resultRDY = (ctrl_MULT) ? mult_resultRDY : 1'bZ;
 	
+	wire[31:0] temp_div_result;
+	wire div_exception,div_inputRDY,div_resultRDY;
+	
+	div_module diviplier(data_operandA, data_operandB, clock, temp_div_result, div_exception, div_inputRDY, div_resultRDY);
+	assign data_result = (ctrl_DIV) ? temp_div_result : 32'bZ;
+	assign data_exception = (ctrl_DIV) ? div_exception : 1'bZ;
+	assign data_inputRDY = (ctrl_DIV) ? div_inputRDY : 1'bZ;
+	assign data_resultRDY = (ctrl_DIV) ? div_resultRDY : 1'bZ;
 	
 endmodule
 
