@@ -70,13 +70,13 @@ module testbench_jw();
         end    
     
         
-//    for(index_rep = 0;index_rep <= 15;index_rep = index_rep + 1)    // replicated random tests
-//        begin
-//            opA = $random; //$urandom_range(-2147483648, 2147483647);
-//            opB = $urandom_range(0,65535) - 32767;
-//            
-//            verifyDiv(opA, opB, opA / opB);
-//        end  
+    for(index_rep = 0;index_rep <= 15;index_rep = index_rep + 1)    // replicated random tests
+        begin
+            opA = $random; //$urandom_range(-2147483648, 2147483647);
+            opB = $urandom_range(0,65535) - 32767;
+            
+            verifyDiv(opA, opB, opA / opB);
+        end  
 
     $display("\n\n");
     if(errors == 0) begin

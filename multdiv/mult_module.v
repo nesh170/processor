@@ -41,9 +41,9 @@ module mult_module(data_operandA, data_operandB,ctrl_MULT, clock, data_result, d
 	wire[2:0] counter_output;
 	wire in_signal; //the in_signal is used to reset the wire, effectively turning the counter to be a mod k counter where k <= 8
 	counter count_8(clock, in_signal, counter_output);
-	assign in_signal = ~ctrl_MULT; 
+	assign in_signal = 0; 
 	assign data_resultRDY = (counter_output[0] & counter_output[1] & counter_output[2]); //currently mod 8 counter; change here to change it
-	assign data_inputRDY = ~counter_output[0] & ~counter_output[1] & ~counter_output[2];
+	assign data_inputRDY = (~counter_output[0] & ~counter_output[1] & ~counter_output[2]) | (counter_output[0] & counter_output[1] & counter_output[2]);
 	
 	/*
 	Data exception is triggered when the sign bit of the output does not match the predicted output sign.
