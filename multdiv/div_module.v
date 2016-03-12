@@ -30,23 +30,22 @@ module div_module(data_operandA, data_operandB, clock, data_result, data_excepti
 	try to figure whether 1 or 0: if A<B, then choose 0
 	*/
 	// //A<B
-	// subtractor_32bit(in_A, in_B, out, carry_out)
-	
+	//subtractor(data_operandA, data_operandB, data_result, isLessThan, isHighImp)
 	genvar index;
 	generate
 	for(index = 0; index<31; index=index+1) begin: divisor_loop
-		wire isNotEqual,isLessThan,divisor_isNotEqual,divisor_isLessThan;
+		wire isNotEqual,isLessThan,isHighImp_1,isHighImp_2,divisor_isNotEqual,divisor_isLessThan;
 		wire[31:0] temp_wire;
 		wire[31:0] temp_remainder; //because we need to pick between - 0 or not
-		ALU subtractor(remainder[index],temp_divisor[index], 5'b00001, 5'b0, temp_remainder, isNotEqual, isLessThan);
-		ALU subtractor_divisor(remainder[index],divisor, 5'b00001, 5'b0, temp_wire, divisor_isNotEqual, divisor_isLessThan); //figure out if shift or not
-		assign remainder[index+1] = (isLessThan) ? remainder[index] : temp_remainder; //is a<B then subtract 0 else subtract temp_divisor
+		subtractor sub1(remainder[index],temp_divisor[index],isLessThan,isHighImp_1);
+		subtractor sub2(remainder[index],divisor,temp_wire,divisor_isLessThan,isHighImp_2); //figure out if shift or not
+		assign remainder[index+1] = (~isHighImp_1) ? remainder[index] : temp_remainder; //is a<B then subtract 0 else subtract temp_divisor
 		wire[31:0] w1;
 		wire[31:0] temp_shift_wire;
 		assign temp_shift_wire = (temp_quotient[index] << 1);
 		assign w1[31:1] = temp_shift_wire[31:1];
-		assign w1[0] = (divisor_isLessThan) ? temp_shift_wire[0] : ~isLessThan;
-		assign temp_quotient[index+1] = (divisor_isLessThan) ? temp_quotient[index] : w1[31:0];
+		assign w1[0] = (~isHighImp_2) ? temp_shift_wire[0] : isHighImp_1;
+		assign temp_quotient[index+1] = (~isHighImp_2) ? temp_quotient[index] : w1[31:0];
 	end
 	endgenerate
 	
