@@ -29,10 +29,10 @@ module div_counter(clock, in_signal, out, present, next);
 			out = 2'b00;
 	end
 
-	DFF state_reg_0(.clk(clock), .d(next[0]), .q(present[0]));
-	DFF state_reg_1(.clk(clock), .d(next[1]), .q(present[1]));
-	DFF state_reg_2(.clk(clock), .d(next[2]), .q(present[2]));
-	DFF state_reg_3(.clk(clock), .d(next[3]), .q(present[3]));
-	DFF state_reg_4(.clk(clock), .d(next[4]), .q(present[4]));
-	DFF state_reg_5(.clk(clock), .d(next[5]), .q(present[5]));
+	dff state_reg_0(.clk(clock), .d(next[0]), .q(present[0]));
+	dff state_reg_1(.clk(clock), .d(next[1]), .q(present[1]));
+	dff state_reg_2(.clk(clock), .d(next[2]), .q(present[2]));
+	dff state_reg_3(.clk(clock), .d(next[3]), .q(present[3]));
+	dff state_reg_4(.clk(clock), .d(next[4]), .q(present[4]));
+	dff state_reg_5(.clk(clock), .d(next[5]), .q(present[5]));
 endmodule

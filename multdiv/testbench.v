@@ -2,7 +2,7 @@
 module testbench();
     ///////////////////////////////////////////////////////////////////////////
     parameter minfreq = 30;    // Min. clock freq. for testing (in MHz)
-    parameter maxfreq = 70;    // Max. clock freq. for testing (in MHz)
+    parameter maxfreq = 15;    // Max. clock freq. for testing (in MHz)
     parameter freqstep = 5;    // Increment in clock freq. between tests (in MHz)
     parameter cycles_per_mult = 8;    // for multi-cycle multiplcation
     parameter cycles_per_div = 33;        // for mult-cycle division

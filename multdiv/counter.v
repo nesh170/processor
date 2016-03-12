@@ -46,8 +46,8 @@ module counter(clock, in_signal, out, present, next);
 		endcase
 	end
 
-	DFF state_reg_0(.clk(clock), .d(next[0]), .q(present[0]));
-	DFF state_reg_1(.clk(clock), .d(next[1]), .q(present[1]));
-	DFF state_reg_2(.clk(clock), .d(next[2]), .q(present[2]));
+	dff state_reg_0(.clk(clock), .d(next[0]), .q(present[0]));
+	dff state_reg_1(.clk(clock), .d(next[1]), .q(present[1]));
+	dff state_reg_2(.clk(clock), .d(next[2]), .q(present[2]));
 	
 endmodule
