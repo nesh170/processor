@@ -6,19 +6,18 @@ module div_counter(clock, in_signal, out, present, next);
 	
 	wire [5:0] present;
 	
-	reg[2:0] out;
+	reg[1:0] out;
 	reg[5:0] next;
 	
 	always @(*) begin
 		if(in_signal)
 			next = 6'b0;
-		else if(present~=6'b100001)
+		else if(present!=6'b100001)
 			next = present + 1;
 		else if(present == 6'b100001)
 			next = 6'b0;
 		else 
 			next = 6'b0;
-		end
 	end
 	
 	always @(present) begin
@@ -28,7 +27,6 @@ module div_counter(clock, in_signal, out, present, next);
 			out = 2'b10;
 		else 
 			out = 2'b00;
-		end
 	end
 
 	DFF state_reg_0(.clk(clock), .d(next[0]), .q(present[0]));
