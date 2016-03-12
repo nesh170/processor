@@ -101,22 +101,22 @@ module testbench();
             ctrl_DIV = 1'b0;
             wait(ticks == next_tick+1);
             
-//            next_tick = ticks + cycles_per_div;            
-//            verifyDIV(opA, opB, opA / opB);
-//            wait(ticks == next_tick);
-//            ctrl_MULT = 1'b0;
-//            ctrl_DIV = 1'b0;
-//            wait(ticks == next_tick+1);
+            next_tick = ticks + cycles_per_div;            
+            verifyDIV(opA, opB, opA / opB);
+            wait(ticks == next_tick);
+            ctrl_MULT = 1'b0;
+            ctrl_DIV = 1'b0;
+            wait(ticks == next_tick+1);
     end
     
     // Verify DIV0 exception
-//    next_tick = ticks + cycles_per_div;            
-//    verifyDIV0(opA);    // DIV0
-//    wait(ticks == next_tick);
-//    ctrl_MULT = 1'b0;
-//    ctrl_DIV = 1'b0;
-//    wait(ticks == next_tick+1);
-//            
+    next_tick = ticks + cycles_per_div;            
+    verifyDIV0(opA);    // DIV0
+    wait(ticks == next_tick);
+    ctrl_MULT = 1'b0;
+    ctrl_DIV = 1'b0;
+    wait(ticks == next_tick+1);
+            
     if(errors == 0) begin
                $display("The simulation completed without errors");
    end else begin
@@ -168,7 +168,7 @@ module testbench();
             $display("**Error in calculation: %d but expected %d.", data_result, inExp);
             errors = errors + 1;            
         end else begin
-          $display(ticks, "\t\t Operation correct. %d but expected %d", data_result, inExp);
+          $display(ticks, "\t\t Operation correct.");
         end
     end
  endtask
