@@ -16,9 +16,9 @@ module div_module(data_operandA, data_operandB, ctrl_DIV, clock, data_result, da
 	
 	wire[1:0] counter_output;
 	div_counter counter_33(clock, ~ctrl_DIV, counter_output);
-	assign data_inputRDY = (counter_output[1] & ~counter_output[0]) | (~counter_output[1] & counter_output[0]);
-	assign data_resultRDY = counter_output[1] & ~counter_output[0];
-//	assign data_inputRDY = 1; assign data_resultRDY = 1;
+//	assign data_inputRDY = (counter_output[1] & ~counter_output[0]) | (~counter_output[1] & counter_output[0]);
+//	assign data_resultRDY = counter_output[1] & ~counter_output[0];
+	assign data_inputRDY = 1; assign data_resultRDY = 1;
 	
 	wire[31:0] remainder[32:0];
 	wire[31:0] temp_quotient;
