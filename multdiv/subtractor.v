@@ -1,7 +1,7 @@
-module subtractor(data_operandA, data_operandB, data_result, isLessThan, isHighImp);
+module subtractor(data_operandA, data_operandB, data_result, isLessThan, isNotEqual);
    input [31:0] data_operandA, data_operandB;
    output [31:0] data_result;
-   output isLessThan, isHighImp;
+   output isLessThan, isNotEqual;
 	
 	wire[31:0] subtract_output;
 	subtractor_32bit sub(data_operandA,data_operandB,subtract_output);
@@ -19,7 +19,8 @@ module subtractor(data_operandA, data_operandB, data_result, isLessThan, isHighI
 	assign isLessThan = (less_then_case_selector[3]) ? subtract_output[31] : 1'bZ;
 	
 	assign data_result = subtract_output;
-	assign isHighImp = ~less_then_case_selector[0] | ~less_then_case_selector[1] | ~less_then_case_selector[2] | ~less_then_case_selector[3];
+	assign isNotEqual = ~(~subtract_output & (subtract_output + ~0)) >> 31;
+	
 endmodule
 
 module subtractor_32bit(in_A, in_B, out, carry_out);
