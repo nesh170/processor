@@ -1,4 +1,4 @@
-This contains all the files needed to assemble a multiplier and a divider in Quartus. It was tested using functional testing on the testbench provided in class and successfully passes all the cases. Hence it could run with 1 cycle per MULT and 1 cycle per DIV. This was ran using the RTL Simulation and Gate Level Simulation(FAST -M 1.2V 0 Model).
+This contains all the files needed to assemble a multiplier and a divider in Quartus. It was tested using functional testing on the testbench provided in class and successfully passes all the cases. Hence it could run with 1 cycle per MULT and 1 cycle per DIV. This was ran using the RTL Simulation and Gate Level Simulation(FAST -M 1.2V 0 Model). The main file is multdiv.v
 
 However, the counter was not implemented so data_inputRDY and data_outputRDY is always asserted hence only working with the functional test. 
 Multiplication Implementation
