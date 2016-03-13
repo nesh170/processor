@@ -1,8 +1,8 @@
 `timescale 1 ns / 100 ps
 module testbench();
     ///////////////////////////////////////////////////////////////////////////
-    parameter minfreq = 25;    // Min. clock freq. for testing (in MHz)
-    parameter maxfreq = 30;    // Max. clock freq. for testing (in MHz)
+    parameter minfreq = 15;    // Min. clock freq. for testing (in MHz)
+    parameter maxfreq = 10;    // Max. clock freq. for testing (in MHz)
     parameter freqstep = 5;    // Increment in clock freq. between tests (in MHz)
     parameter cycles_per_mult = 8;    // for multi-cycle multiplcation
     parameter cycles_per_div = 33;        // for mult-cycle division

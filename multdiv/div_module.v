@@ -12,7 +12,7 @@ module div_module(data_operandA, data_operandB, ctrl_DIV, clock, data_result, da
 	assign divisor[31:16] = 0;
 	sign_checker check_sign(data_operandA,data_operandB,dividend,divisor[15:0],predicted_sign); //tested and works
 	
-	assign data_exception = ~(data_operandB[0] | data_operandB[1] | data_operandB[2] | data_operandB[3] | data_operandB[4] | data_operandB[5] | data_operandB[6] | data_operandB[7] | data_operandB[8] | data_operandB[9] | data_operandB[10] | data_operandB[11] | data_operandB[12] | data_operandB[13] | data_operandB[14] | data_operandB[15]);   //DIV by 0 Check
+	assign data_exception = ~|data_operandB;
 	
 	wire[1:0] counter_output;
 	div_counter counter_33(clock, ~ctrl_DIV, counter_output);
