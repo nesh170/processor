@@ -1,11 +1,11 @@
 `timescale 1 ns / 100 ps
 module testbench();
     ///////////////////////////////////////////////////////////////////////////
-    parameter minfreq = 15;    // Min. clock freq. for testing (in MHz)
-    parameter maxfreq = 10;    // Max. clock freq. for testing (in MHz)
+    parameter minfreq = 10;    // Min. clock freq. for testing (in MHz)
+    parameter maxfreq = 20;    // Max. clock freq. for testing (in MHz)
     parameter freqstep = 5;    // Increment in clock freq. between tests (in MHz)
     parameter cycles_per_mult = 8;    // for multi-cycle multiplcation
-    parameter cycles_per_div = 33;        // for mult-cycle division
+    parameter cycles_per_div = 66;        // for mult-cycle division
     ///////////////////////////////////////////////////////////////////////////
     // Tracking the number of errors
     reg clock, ctrl_reset;    // standard signals- required even if DUT doesn't use them
