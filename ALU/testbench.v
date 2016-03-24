@@ -25,7 +25,7 @@ module testbench();
 
     // instantiate the DUT
     // data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_result, isNotEqual, isLessThan
-    sl290_alu U1 (.data_operandA(data_operandA), .data_operandB(data_operandB), .ctrl_ALUopcode(ctrl_ALUopcode),
+    ALU U1 (.data_operandA(data_operandA), .data_operandB(data_operandB), .ctrl_ALUopcode(ctrl_ALUopcode),
                         .ctrl_shiftamt(ctrl_shiftamt), .data_result(data_result), .isNotEqual(isNotEqual),
                         .isLessThan(isLessThan));
 
