@@ -19,7 +19,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	// CHANGE THIS TO ASSIGN YOUR DMEM WRITE ADDRESS ALSO TO debug_addr
 	assign debug_addr = (12'b000000000001);
 	// CHANGE THIS TO ASSIGN YOUR DMEM DATA INPUT (TO BE WRITTEN) ALSO TO debug_data
-	//assign debug_data = ...;
+	assign debug_data = (12'b000000000001);
 	////////////////////////////////////////////////////////////
 	
 		
@@ -27,14 +27,14 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	dmem mydmem(	.address	(debug_addr),
 					.clock		(clock),
 					.data		(debug_data),
-					.wren		(1'b1)
-					//.q			(wherever_you_want)); // change where output q goes...
+					.wren		(1'b1) //,	//need to fix this!
+					//.q			(wherever_you_want) // change where output q goes...
 	);
 	
 	imem myimem(	.address 	(12'b000000000000),
 					.clken		(1'b1),
-					.clock		(clock),
-					.q 			(lcd_data) // change where output q goes...
+					.clock		(clock) //,
+					//.q			(wherever_you_want) // change where output q goes...
 	); 
 	
 endmodule
