@@ -11,7 +11,7 @@ module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	
 	//Adder Block Opcode: 00000
 	wire[31:0] adder_output;
-	carry_select_Adder add(data_operandA, data_operandB, adder_output, 1'b0);
+	carry_select_adder add(data_operandA, data_operandB, adder_output, 1'b0);
 	tri_state tri_state_adder(adder_output,data_result,decoder_output[0]);
 	
 	//Subtract Block Opcode:00001

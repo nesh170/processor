@@ -22,6 +22,40 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign debug_data = (12'b000000000001);
 	////////////////////////////////////////////////////////////
 	
+	/**
+	FETCH stage
+	**/
+	//Instruction Wires
+	wire[31:0] instruction_wire;
+	
+	//Program Counter
+	wire[31:0] program_counter_input,program_counter_output;
+	register program_counter(program_counter_input,program_counter_output,1'b1,1'b0,clock);
+	wire[31:0] next_program_counter;
+	carry_select_adder add_program_counter(program_counter_output, 32'b0, next_program_counter, 1'b1); //CHECK IF THIS IS +1 or +4
+	
+	//fetch_decode_latch
+	wire[31:0] fd_ir_output,fd_pc_output;
+	latch_350 fetch_decode_latch(.input_A(32'b0),.input_B(32'b0),.program_counter(next_program_counter),.instruction(instruction_wire),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
+	
+	
+	//Register File 
+	wire write_enable;
+	wire[4:0] write_reg,read_reg_A,read_reg_B;
+	wire[31:0] write_data,read_A_data, read_B_data;
+	regfile register_file(clock, write_enable, reset, write_reg, read_reg_A, read_reg_B, write_data, read_A_data, read_B_data);
+	
+	control_decode con_decode(fd_ir_output,read_reg_A,read_reg_B);
+	
+	//decode_execute_latch
+	wire[31:0] de_ir_output,de_pc_output,de_A_output,de_B_output;
+	latch_350 decode_execute_latch(.input_A(read_A_data),.input_B(read_B_data),.program_counter(fd_pc_output),.instruction(fd_ir_output),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
+	
+	
+	
+	
+	
+	
 		
 	// You'll need to change where the dmem and imem read and write...
 	dmem mydmem(	.address	(debug_addr),
@@ -31,10 +65,13 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 					//.q			(wherever_you_want) // change where output q goes...
 	);
 	
-	imem myimem(	.address 	(12'b000000000000),
+	imem myimem(	.address 	(program_counter_output[11:0]),
 					.clken		(1'b1),
-					.clock		(clock) //,
-					//.q			(wherever_you_want) // change where output q goes...
+					.clock		(clock),
+					.q			(instruction_wire) // change where output q goes...
 	); 
+	
+	
+
 	
 endmodule
