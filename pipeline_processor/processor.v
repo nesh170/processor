@@ -72,13 +72,6 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 		
 	// You'll need to change where the dmem and imem read and write...
 	dmem mydmem(	.address	(debug_addr),
