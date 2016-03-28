@@ -53,6 +53,29 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	
 	
+	wire[31:0] ALU_inputA,ALU_inputB,ALU_output;
+	wire isNotEqual, isLessThan;
+	
+	wire[4:0] ALU_opcode, shamt;
+	wire[16:0] immediate_data;
+	wire[26:0] jump_target;
+	wire i_sig,j_sig;
+	ALU alu_opertaion(ALU_inputA, ALU_inputB, ALU_opcode, shamt, ALU_output, isNotEqual, isLessThan);
+	control_execute alu_controller(de_ir_output,immediate_data,jump_target,ALU_opcode,shamt,i_sig,j_sig);
+	
+	wire[31:0] immediate_data_32,jump_target_32;
+	sign_extender_17 extend_immediate(immediate_data,immediate_data_32);
+	sign_extender_27 extend_jump(jump_target,jump_target_32);
+	
+	assign ALU_inputB = (i_sig) ? immediate_data_32 : de_B_output;
+	assign ALU_inputA = de_A_output;
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
