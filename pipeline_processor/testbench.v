@@ -17,7 +17,7 @@ module testbench();
 	wire  [11:0]  debug_addr;
 	
 	// instantiate the skeleton
-	skeleton		U1 (inclock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_addr, leds, 
+	skeleton		U1 (clock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_addr, leds, 
 					lcd_data, lcd_rw, lcd_en, lcd_rs, lcd_on, lcd_blon, 	
 					seg1, seg2, seg3, seg4, seg5, seg6, seg7, seg8);
 	

@@ -9,7 +9,8 @@ module sign_extender_27(in_bits,out_bits);
 	genvar index;
 	generate
 	for(index=27; index<32;index=index+1)begin:loop
-		assign out_bits[index]=in_bits[26];
+		//assign out_bits[index]=in_bits[26];
+		assign out_bits[index]=1'b0;
 	end
 	endgenerate
 endmodule
