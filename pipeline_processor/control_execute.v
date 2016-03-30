@@ -7,7 +7,7 @@ module control_execute(instruction,output_immediate_value,output_jump_value,outp
 	
 	wire i_type,j_type;
 	assign j_type = 1'b0;//TODO
-	assign i_type = ~instruction[31] & ~instruction[30] & instruction[29] & ~instruction[28] & instruction[27];
+	assign i_type = (~instruction[31] & instruction[30] & ~instruction[29] & ~instruction[28] & ~instruction[27]) | (~instruction[31] & ~instruction[30] & instruction[29] & instruction[27]);
 	assign output_i = i_type;
 	assign output_j = j_type; 
 	assign output_jump_value = instruction[26:0];
