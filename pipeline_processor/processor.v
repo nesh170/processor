@@ -83,12 +83,12 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	control_memory memory_controller(em_ir_output,data_write_sig);
 	wire[31:0] dmem_data_output;
 	//DMEM
-	dmem mydmem(.address	(em_O_output[11:0]),.clock(clock),.data(em_O_output),.wren(data_write_signal),.q(dmem_data_output));
+	dmem mydmem(.address	(em_O_output[11:0]),.clock(clock),.data(em_O_output),.wren(data_write_sig),.q(dmem_data_output));
 	
 	
 	//memory_writeback_latch
 	wire[31:0] mw_O_output,mw_D_output,mw_ir_output,mw_pc_output;
-	latch_350 execute_memory_latch(.input_A(em_O_output),.input_B(dmem_data_output),.program_counter(em_pc_output),.instruction(em_ir_output),.clock(clock),.output_A(mw_O_output),.output_B(mw_D_output),.output_PC(mw_pc_output),.output_ins(mw_ir_output));
+	latch_350 memory_writeback_latch(.input_A(em_O_output),.input_B(dmem_data_output),.program_counter(em_pc_output),.instruction(em_ir_output),.clock(clock),.output_A(mw_O_output),.output_B(mw_D_output),.output_PC(mw_pc_output),.output_ins(mw_ir_output));
 	
 	//WRITEBACK stage
 	wire data_or_output_sig,jal_ins_signal;
@@ -96,9 +96,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] data_to_register;
 	assign data_to_register = (data_or_output_sig) ? mw_D_output : mw_O_output;
 	
-	assign write_data = (jal_ins_signal) mw_pc_output : data_to_register;
-	assign write_reg = (jal_ins_signal) 5'b11111 : rd;
+	assign write_data = (jal_ins_signal) ? mw_pc_output : data_to_register;
+	assign write_reg = (jal_ins_signal) ? 5'b11111 : rd;
 	
-	control_writeback writeback_controller(mw_ir_output,data_or_output_sig,jal_ins_signal,write_enable);
+	control_writeback writeback_controller(mw_ir_output,rd,data_or_output_sig,jal_ins_signal,write_enable);
 
 endmodule
