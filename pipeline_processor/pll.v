@@ -95,7 +95,7 @@ module pll (
 		altpll_component.clk0_phase_shift = "0",
 		altpll_component.compensate_clock = "CLK0",
 		altpll_component.inclk0_input_frequency = 20000,
-	   //altpll_component.intended_device_family = "Cyclone IV",
+		//altpll_component.intended_device_family = "Cyclone IV",
 		altpll_component.lpm_hint = "CBX_MODULE_PREFIX=pll",
 		altpll_component.lpm_type = "altpll",
 		altpll_component.operation_mode = "NORMAL",
