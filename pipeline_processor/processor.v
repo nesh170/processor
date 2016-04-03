@@ -39,28 +39,50 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//FETCH_DECODE LATCH
 	wire[31:0] fd_pc_output,fd_ir_output;
 	latch_350 fetch_decode_latch(.program_counter(next_pc_output),.instruction(imem_output),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
-	assign ir_out = fd_ir_output;
+	
+	
 	//DECODE STAGE
 	//DECODE controller
 	wire[4:0] read_reg_A,read_reg_B;
 	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B));
-	assign debug_out[4:0] = read_reg_A;
-	assign debug_out[31:27] = read_reg_B;
-	assign debug_out[26:5] = 0;
+	
+	//REGISTER FILE
+	wire wren_signal; //FILL UP AT WRITEBACK
+	wire[4:0] write_register; //FILL UP AT WRITEBACK
+	wire[31:0] write_data,read_data_A,read_data_B;
+	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_signal), .ctrl_reset(reset), .ctrl_writeReg(write_register), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
+
+	
+	//DECODE_EXECUTE LATCH
+	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output;
+	latch_350 decode_execute_latch(.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(fd_ir_output),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
 	
 	
+	//EXECUTE controller
+	wire[4:0] opcode_ALU, shamt;
+	wire[31:0] immediate_data;
+	wire i_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig));
 	
+	//ALU
+	wire[31:0] ALU_input_B,ALU_output;
+	wire ALU_isNotEqual,ALU_isLessThan;
+	assign ALU_input_B = (i_sig) ? immediate_data : de_B_output;
+	ALU alu(.data_operandA(de_A_output), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output), .isNotEqual(ALU_isNotEqual), .isLessThan(ALU_isLessThan));
 	
-	
-	
-	
-		
-	// You'll need to change where the dmem and imem read and write...
-	dmem mydmem(	.address	(debug_addr),
-					.clock		(clock),
-					.data		(debug_data),
-					.wren		(1'b1) //,	//need to fix this!
-					//.q			(wherever_you_want) // change where output q goes...
-	);
+	//EXECUTE_MEMORY_LATCH
+	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
+	latch_350 execute_memory_latch(.input_A(ALU_output),.input_B(de_B_output),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
+	assign ir_out = em_ir_output;
+
+	//MEMORY
+	//MEMORY controller
+	wire sw_sig;
+	control_memory(.instruction(em_ir_output),.sw_signal(sw_sig));
+	wire[31:0] dmem_output;	
+	//DMEM
+	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(em_B_output),.wren(sw_sig),.q(dmem_output));
+	assign debug_out = dmem_output;
+
 	
 endmodule

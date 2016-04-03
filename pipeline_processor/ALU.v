@@ -113,11 +113,9 @@ module carry_select_adder(in_A, in_B, out, carry_in, carry_out);
 		adder_4bit adder_0(in_A[((index*4)+3):index*4],in_B[((index*4)+3):index*4],1'b0,out_0,c_out[0]);
 		adder_4bit adder_1(in_A[((index*4)+3):index*4],in_B[((index*4)+3):index*4],1'b1,out_1,c_out[1]);
 		for(index_1=0; index_1<4; index_1 = index_1 + 1) begin:loop_mux
-			assign out[index*4 + index_1] = (~carry_out_of_Gate[index-1]) ? out_0[index_1] : 1'bZ;
-			assign out[index*4 + index_1] = (carry_out_of_Gate[index-1]) ? out_1[index_1] : 1'bZ;
+			assign out[index*4 + index_1] = (carry_out_of_Gate[index-1]) ? out_1[index_1] : out_0[index_1];
 		end
-		assign carry_out_of_Gate[index] = (carry_out_of_Gate[index-1]) ? c_out[1] : 1'bZ;
-		assign carry_out_of_Gate[index] = (~carry_out_of_Gate[index-1]) ? c_out[0] : 1'bZ;
+		assign carry_out_of_Gate[index] = (carry_out_of_Gate[index-1]) ? c_out[1] : c_out[0];
 	end
 	endgenerate
 	
