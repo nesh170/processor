@@ -47,10 +47,10 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B));
 	
 	//REGISTER FILE
-	wire wren_signal; //FILL UP AT WRITEBACK
-	wire[4:0] write_register; //FILL UP AT WRITEBACK
+	wire wren_sig;//WRITEBACK
+	wire[4:0] write_register;//WRITEBACK
 	wire[31:0] write_data,read_data_A,read_data_B;
-	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_signal), .ctrl_reset(reset), .ctrl_writeReg(write_register), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
+	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_sig), .ctrl_reset(reset), .ctrl_writeReg(write_register), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
 
 	
 	//DECODE_EXECUTE LATCH
@@ -73,16 +73,31 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
 	latch_350 execute_memory_latch(.input_A(ALU_output),.input_B(de_B_output),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
-	assign ir_out = em_ir_output;
+	
 
-	//MEMORY
+	//MEMORY stage
 	//MEMORY controller
 	wire sw_sig;
-	control_memory(.instruction(em_ir_output),.sw_signal(sw_sig));
+	control_memory memory_controller(.instruction(em_ir_output),.sw_signal(sw_sig));
 	wire[31:0] dmem_output;	
 	//DMEM
 	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(em_B_output),.wren(sw_sig),.q(dmem_output));
-	assign debug_out = dmem_output;
 
+	//MEMORY_WRITEBACK latch
+	wire[31:0] mw_pc_output,mw_ir_output,mw_A_output,mw_B_output;
+	latch_350 memory_writeback_latch(.input_A(em_A_output),.input_B(dmem_output),.program_counter(em_pc_output),.instruction(em_ir_output),.clock(clock),.output_A(mw_A_output),.output_B(mw_B_output),.output_PC(mw_pc_output),.output_ins(mw_ir_output));
+	
+	
+	//WRITEBACK control
+	wire lw_sig,jal_sig;
+	control_writeback writeback_controller(.instruction(mw_ir_output),.write_reg_number(write_register),.jal_signal(jal_sig),.lw_signal(lw_sig),.wren_signal(wren_sig));
+
+	wire[31:0] intermediate_value;
+	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
+	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
+	
+	assign ir_out = mw_ir_output;
+	assign debug_out = write_data;
+	
 	
 endmodule

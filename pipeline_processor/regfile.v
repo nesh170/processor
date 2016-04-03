@@ -16,9 +16,9 @@ module regfile(clock, ctrl_writeEnable, ctrl_reset, ctrl_writeReg, ctrl_readRegA
 	decoder5to32 decoderForReadB(ctrl_readRegB,selectDecoderB);
 	
 	//ZERO case, register zero has to be zero
-	wire[31:0] data_Out;
+	wire[31:0] data_Out_zero;
 	wire [31:0] data_zero;
-	register register_zero(data_writeReg,data_Out,ctrl_writeEnable & ctrl_writeWhichRegister[0],ctrl_reset,clock);  
+	register register_zero(data_writeReg,data_Out_zero,ctrl_writeEnable & ctrl_writeWhichRegister[0],ctrl_reset,clock);  
 	assign data_readRegA = selectDecoderA[0] ? 32'b0 : 32'bZ; //tri state buffer to decide which output to display
 	assign data_readRegB = selectDecoderB[0] ? 32'b0 : 32'bZ; //tri state buffer to decide which output to display
 	
