@@ -34,7 +34,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] next_pc_output;
 	carry_select_adder pc_adder(.in_A(pc_output), .in_B(32'b0), .out(next_pc_output), .carry_in(1'b1));
 	
-	assign pc_input = next_pc_output; //remove THIS IT IS WRONG BROSKI
+	//pc_input is assigned in the execute stage
 	
 	//FETCH_DECODE LATCH
 	wire[31:0] fd_pc_output,fd_ir_output;
@@ -61,8 +61,15 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//EXECUTE controller
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
-	wire i_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig));
+	wire[31:0] jump_immediate_data;
+	wire i_sig,j_sig,jr_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output));
+	
+	//JUMP Stuff
+	wire[31:0] jump_next_pc;
+	assign jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
+	assign pc_input = (j_sig) ? jump_next_pc : next_pc_output;
+	
 	
 	//ALU
 	wire[31:0] ALU_input_B,ALU_output;
