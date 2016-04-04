@@ -62,14 +62,22 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
 	wire[31:0] jump_immediate_data;
-	wire i_sig,j_sig,jr_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output));
+	wire i_sig,j_sig,jr_sig,blt_sig,bne_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.bne_signal(bne_sig),.blt_signal(blt_sig));
+	
+	//BRANCH STUFF
+	wire branch_sig;
+	assign branch_sig = (bne_sig & ALU_isNotEqual) | (blt_sig & ~ALU_isLessThan & ALU_isNotEqual);
+	wire[31:0] new_branch_pc;
+	carry_select_adder add_branch_pc(.in_A(de_pc_output), .in_B(immediate_data), .out(new_branch_pc), .carry_in(1'b0));
+	
+
 	
 	//JUMP Stuff
-	wire[31:0] jump_next_pc;
-	assign jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
-	assign pc_input = (j_sig) ? jump_next_pc : next_pc_output;
-	
+	wire[31:0] jump_branch_next_pc,temp_jump_next_pc;
+	assign temp_jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
+	assign jump_branch_next_pc = (branch_sig) ? new_branch_pc : temp_jump_next_pc;
+	assign pc_input = (j_sig | branch_sig) ? jump_branch_next_pc : next_pc_output;
 	
 	//ALU
 	wire[31:0] ALU_input_B,ALU_output;
@@ -102,6 +110,10 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
+	
+	/*
+	DEBUGGING TOOLS
+	*/
 	assign ir_out = mw_ir_output;
 	assign pc_out = mw_pc_output;
 	assign debug_out = write_data;
