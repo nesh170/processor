@@ -1,8 +1,8 @@
-module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc,bne_signal,blt_signal);
+module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc);
 	input[31:0] instruction,pc;
 	output[4:0] ALU_opcode,ctrl_shamt;
 	output[31:0] immediate_value,jump_immediate_value;
-	output i_signal,j_signal,jr_signal,bne_signal,blt_signal;
+	output i_signal,j_signal,jr_signal;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -41,8 +41,6 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	assign jump_immediate_value[26:0] = instruction[26:0];
 	assign jump_immediate_value[31:27] = pc[31:27];
 	
-	assign bne_signal = (~A&~B&~C&D&~E);
-	assign blt_signal = (~A&~B&C&D&~E);
 	
 	
 endmodule

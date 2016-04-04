@@ -44,7 +44,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//DECODE STAGE
 	//DECODE controller
 	wire[4:0] read_reg_A,read_reg_B;
-	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B));
+	wire[31:0] branch_to_add;
+	wire blt_sig,bne_sig;
+	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add));
 	
 	//REGISTER FILE
 	wire wren_sig;//WRITEBACK
@@ -52,6 +54,14 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] write_data,read_data_A,read_data_B;
 	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_sig), .ctrl_reset(reset), .ctrl_writeReg(write_register), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
 
+	//BRANCH STUFF, mux is shown in execute but actually done in decoding 
+	wire branch_sig;
+	wire isNotEqual,isLessThan;
+	branch_detector detect(.in_A(read_data_A),.in_B(read_data_B),.blt(isLessThan),.bne(isNotEqual)); //bascially a subtract module :/
+	assign branch_sig = (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual);
+	wire[31:0] new_branch_pc;
+	carry_select_adder add_branch_pc(.in_A(fd_pc_output), .in_B(branch_to_add), .out(new_branch_pc), .carry_in(1'b0));
+	
 	
 	//DECODE_EXECUTE LATCH
 	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output;
@@ -62,28 +72,19 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
 	wire[31:0] jump_immediate_data;
-	wire i_sig,j_sig,jr_sig,blt_sig,bne_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.bne_signal(bne_sig),.blt_signal(blt_sig));
-	
-	//BRANCH STUFF
-	wire branch_sig;
-	assign branch_sig = (bne_sig & ALU_isNotEqual) | (blt_sig & ~ALU_isLessThan & ALU_isNotEqual);
-	wire[31:0] new_branch_pc;
-	carry_select_adder add_branch_pc(.in_A(de_pc_output), .in_B(immediate_data), .out(new_branch_pc), .carry_in(1'b0));
-	
-
+	wire i_sig,j_sig,jr_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output));
 	
 	//JUMP Stuff
 	wire[31:0] jump_branch_next_pc,temp_jump_next_pc;
 	assign temp_jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
-	assign jump_branch_next_pc = (branch_sig) ? new_branch_pc : temp_jump_next_pc;
+	assign jump_branch_next_pc = (branch_sig) ? new_branch_pc : temp_jump_next_pc; //branch_sig calculations are done in the decode stage
 	assign pc_input = (j_sig | branch_sig) ? jump_branch_next_pc : next_pc_output;
 	
 	//ALU
 	wire[31:0] ALU_input_B,ALU_output;
-	wire ALU_isNotEqual,ALU_isLessThan;
 	assign ALU_input_B = (i_sig) ? immediate_data : de_B_output;
-	ALU alu(.data_operandA(de_A_output), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output), .isNotEqual(ALU_isNotEqual), .isLessThan(ALU_isLessThan));
+	ALU alu(.data_operandA(de_A_output), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
