@@ -37,8 +37,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//pc_input is assigned in the execute stage
 	
 	//FETCH_DECODE LATCH
-	wire[31:0] fd_pc_output,fd_ir_output;
-	latch_350 fetch_decode_latch(.program_counter(next_pc_output),.instruction(imem_output),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
+	wire[31:0] fd_pc_output,fd_ir_output,fd_ir_input;
+	assign fd_ir_input = (j_sig | branch_sig) ? 32'b0 : imem_output; //noop stall if jump or branch
+	latch_350 fetch_decode_latch(.program_counter(next_pc_output),.instruction(fd_ir_input),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
 	
 	
 	//DECODE STAGE
@@ -64,8 +65,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	
 	//DECODE_EXECUTE LATCH
-	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output;
-	latch_350 decode_execute_latch(.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(fd_ir_output),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
+	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output,de_ir_input;
+	assign de_ir_input = (j_sig) ? 32'b0 : fd_ir_output;
+	latch_350 decode_execute_latch(.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(de_ir_input),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
 	
 	
 	//EXECUTE controller
