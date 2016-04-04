@@ -6,6 +6,8 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
+	
+	
 	assign A = instruction[31];
 	assign B = instruction[30];
 	assign C = instruction[29];
@@ -27,7 +29,15 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	
 	assign ctrl_shamt = instruction[11:7];
 	assign immediate_value[16:0] = instruction[16:0];
-	assign immediate_value[31:17] = 15'b0;
+	
+	//Sign Extending
+	genvar i;
+	generate
+	for(i=17;i<=31;i=i+1) begin:loop
+		assign immediate_value[i] = instruction[16];
+	end
+	endgenerate
+	
 	assign jump_immediate_value[26:0] = instruction[26:0];
 	assign jump_immediate_value[31:27] = pc[31:27];
 	

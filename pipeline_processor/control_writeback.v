@@ -12,7 +12,7 @@ module control_writeback(instruction,write_reg_number,jal_signal,lw_signal,wren_
 	assign E = instruction[27];
 	
 	wire jal_signal_wire;
-	assign jal_signal_wire = ~A&~B&C&D&E;
+	assign jal_signal_wire = ~A&~B&~C&D&E;
 	
 	assign write_reg_number = (jal_signal_wire) ? 5'b11111 : instruction[26:22];
 	

@@ -1,4 +1,4 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out);
+module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out);
 
 	input 			clock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
@@ -6,7 +6,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	output 			lcd_write;
 	output 	[31:0] 	lcd_data;
 	
-	output[31:0] debug_out,ir_out;
+	output[31:0] debug_out,ir_out,pc_out; //debug tools
 	
 	// GRADER OUTPUTS - YOU MUST CONNECT TO YOUR DMEM
 	output 	[31:0] 	debug_data;
@@ -102,8 +102,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
-	
 	assign ir_out = mw_ir_output;
+	assign pc_out = mw_pc_output;
 	assign debug_out = write_data;
 	
 	
