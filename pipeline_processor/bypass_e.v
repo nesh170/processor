@@ -1,6 +1,6 @@
 module bypass_e(mw_instruction,em_instruction,de_instruction,bypass_A_sig,bypass_B_sig);
 	input[31:0] mw_instruction,em_instruction,de_instruction;
-	wire[1:0] bypass_A_sig,bypass_B_sig;
+	output[1:0] bypass_A_sig,bypass_B_sig;
 	
 	//1=comparison with mw, 0=comparison with em
 	wire[4:0] de_reg_S1,de_reg_S2,em_reg_D,mw_reg_D;

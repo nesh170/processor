@@ -98,8 +98,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire sw_sig;
 	control_memory memory_controller(.instruction(em_ir_output),.sw_signal(sw_sig));
 	wire[31:0] dmem_output;	
+	wire[31:0] dmem_data_input;
 	//DMEM
-	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(em_B_output),.wren(sw_sig),.q(dmem_output));
+	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(dmem_data_input),.wren(sw_sig),.q(dmem_output));
 
 	//MEMORY_WRITEBACK latch
 	wire[31:0] mw_pc_output,mw_ir_output,mw_A_output,mw_B_output;
@@ -113,6 +114,15 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
+	
+	
+	
+	//BYPASSING LOGIKZ
+	//Memory_Stage
+	wire bypass_m_sig;
+	bypass_m memory_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.bypass_sig(bypass_m_sig));
+	assign dmem_data_input = (bypass_m_sig) ? write_data : em_B_output;
+	
 	
 	/*
 	DEBUGGING TOOLS
