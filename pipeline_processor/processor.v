@@ -25,8 +25,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//PROGRAM COUNTER
 	wire[31:0] pc_input,pc_output;
 	wire stall_sig;
-	assign stall_sig = 1'b1;
-	register program_counter(.bitsIn(pc_input), .bitsOut(pc_output), .writeEnable(stall_sig), .reset(reset), .clk(clock));
+	register program_counter(.bitsIn(pc_input), .bitsOut(pc_output), .writeEnable(~stall_sig), .reset(reset), .clk(clock));
 	
 	//IMEM
 	wire[31:0] imem_output;	
@@ -41,7 +40,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//FETCH_DECODE LATCH
 	wire[31:0] fd_pc_output,fd_ir_output,fd_ir_input;
 	assign fd_ir_input = (j_sig | branch_sig) ? 32'b0 : imem_output; //noop stall if jump or branch
-	latch_350 fetch_decode_latch(.wren_signal(stall_sig),.program_counter(next_pc_output),.instruction(fd_ir_input),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
+	latch_350 fetch_decode_latch(.wren_signal(~stall_sig),.program_counter(next_pc_output),.instruction(fd_ir_input),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
 	
 	
 	//DECODE STAGE
@@ -156,6 +155,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & bypass_d_B_sig[0]) ?  ALU_output : 32'bZ;
 	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & ~bypass_d_B_sig[0]) ? read_data_B :32'bZ;
 	
+	//STALL_Logic
+	stall_logic stall_log(.fd_instruction(fd_ir_output),.de_instruction(de_ir_output),.stall_signal(stall_sig));
 	
 	/*
 	DEBUGGING TOOLS
