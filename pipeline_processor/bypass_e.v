@@ -8,8 +8,8 @@ module bypass_e(mw_instruction,em_instruction,de_instruction,bypass_A_sig,bypass
 	read_register_decoder em_decoder(.instruction(em_instruction),.reg_D(em_reg_D));
 	read_register_decoder mw_decoder(.instruction(mw_instruction),.reg_D(mw_reg_D));
 	
-	equal_comparator(.in_A(mw_reg_D),.in_B(de_reg_S1),.isEqual(bypass_A_sig[1]));
-	equal_comparator(.in_A(em_reg_D),.in_B(de_reg_S1),.isEqual(bypass_A_sig[0]));
-	equal_comparator(.in_A(mw_reg_D),.in_B(de_reg_S2),.isEqual(bypass_B_sig[1]));
-	equal_comparator(.in_A(em_reg_D),.in_B(de_reg_S2),.isEqual(bypass_B_sig[0]));
+	equal_comparator equal_A(.in_A(mw_reg_D),.in_B(de_reg_S1),.isEqual(bypass_A_sig[1]));
+	equal_comparator equal_B(.in_A(em_reg_D),.in_B(de_reg_S1),.isEqual(bypass_A_sig[0]));
+	equal_comparator equal_C(.in_A(mw_reg_D),.in_B(de_reg_S2),.isEqual(bypass_B_sig[1]));
+	equal_comparator equal_D(.in_A(em_reg_D),.in_B(de_reg_S2),.isEqual(bypass_B_sig[0]));
 endmodule

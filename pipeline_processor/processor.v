@@ -58,7 +58,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//BRANCH STUFF, mux is shown in execute but actually done in decoding 
 	wire branch_sig;
 	wire isNotEqual,isLessThan;
-	branch_detector detect(.in_A(read_data_A),.in_B(read_data_B),.blt(isLessThan),.bne(isNotEqual)); //bascially a subtract module :/
+	wire[31:0] temp_read_data_A,temp_read_data_B;
+	branch_detector detect(.in_A(temp_read_data_A),.in_B(temp_read_data_B),.blt(isLessThan),.bne(isNotEqual)); //bascially a subtract module :/
 	assign branch_sig = (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual);
 	wire[31:0] new_branch_pc;
 	carry_select_adder add_branch_pc(.in_A(fd_pc_output), .in_B(branch_to_add), .out(new_branch_pc), .carry_in(1'b0));
@@ -84,9 +85,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign pc_input = (j_sig | branch_sig) ? jump_branch_next_pc : next_pc_output;
 	
 	//ALU
-	wire[31:0] ALU_input_B,ALU_output;
-	assign ALU_input_B = (i_sig) ? immediate_data : de_B_output;
-	ALU alu(.data_operandA(de_A_output), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
+	wire[31:0] ALU_input_B,ALU_output,ALU_input_A,temp_ALU_input_B;
+	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
+	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
@@ -122,6 +123,36 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire bypass_m_sig;
 	bypass_m memory_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.bypass_sig(bypass_m_sig));
 	assign dmem_data_input = (bypass_m_sig) ? write_data : em_B_output;
+	
+	//Execute_Stage
+	wire[1:0] bypass_e_A_sig,bypass_e_B_sig;
+	bypass_e execute_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.bypass_A_sig(bypass_e_A_sig),.bypass_B_sig(bypass_e_B_sig));
+	
+	//ALU_input_A bypass
+	assign ALU_input_A = (bypass_e_A_sig[1]) ? write_data : 32'bZ;
+	assign ALU_input_A = (bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? em_A_output : 32'bZ;
+	assign ALU_input_A = (~bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? de_A_output :32'bZ;
+	
+	//ALU_input_B bypass
+	assign temp_ALU_input_B = (bypass_e_B_sig[1]) ? write_data : 32'bZ;
+	assign temp_ALU_input_B = (bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_ALU_input_B = (~bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? de_B_output :32'bZ;
+	
+	//Decode_Stage
+	wire[2:0] bypass_d_A_sig,bypass_d_B_sig;
+	bypass_d decode_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.fd_instruction(fd_ir_output),.bypass_A_sig(bypass_d_A_sig),.bypass_B_sig(bypass_d_B_sig));
+
+	//branch_predict_A_bypass
+	assign temp_read_data_A = (bypass_d_A_sig[2]) ? write_data : 32'bZ;
+	assign temp_read_data_A = (~bypass_d_A_sig[2] & bypass_d_A_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_read_data_A = (~bypass_d_A_sig[2] & ~bypass_d_A_sig[1] & bypass_d_A_sig[0]) ?  ALU_output : 32'bZ;
+	assign temp_read_data_A = (~bypass_d_A_sig[2] & ~bypass_d_A_sig[1] & ~bypass_d_A_sig[0]) ? read_data_A :32'bZ;
+	
+	//branch_predict_B_bypass
+	assign temp_read_data_B = (bypass_d_B_sig[2]) ? write_data : 32'bZ;
+	assign temp_read_data_B = (~bypass_d_B_sig[2] & bypass_d_B_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & bypass_d_B_sig[0]) ?  ALU_output : 32'bZ;
+	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & ~bypass_d_B_sig[0]) ? read_data_B :32'bZ;
 	
 	
 	/*
