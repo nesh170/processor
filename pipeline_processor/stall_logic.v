@@ -14,6 +14,6 @@ module stall_logic(fd_instruction,de_instruction,stall_signal);
 	equal_comparator equalator_a(.in_A(fd_rs1),.in_B(de_rd),.isEqual(equal_rs1_rd));
 	equal_comparator equalator_b(.in_A(fd_rs2),.in_B(de_rd),.isEqual(equal_rs2_rd));
 	
-	assign stall_signal = (de_load) & ((equal_rs1_rd) | (equal_rs2_rd&~fd_save))
+	assign stall_signal = (de_load) & ((equal_rs1_rd) | (equal_rs2_rd&~fd_save));
 
 endmodule

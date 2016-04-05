@@ -24,7 +24,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//FETCH STAGE
 	//PROGRAM COUNTER
 	wire[31:0] pc_input,pc_output;
-	register program_counter(.bitsIn(pc_input), .bitsOut(pc_output), .writeEnable(1'b1), .reset(reset), .clk(clock));
+	wire stall_sig;
+	assign stall_sig = 1'b1;
+	register program_counter(.bitsIn(pc_input), .bitsOut(pc_output), .writeEnable(stall_sig), .reset(reset), .clk(clock));
 	
 	//IMEM
 	wire[31:0] imem_output;	
@@ -39,7 +41,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//FETCH_DECODE LATCH
 	wire[31:0] fd_pc_output,fd_ir_output,fd_ir_input;
 	assign fd_ir_input = (j_sig | branch_sig) ? 32'b0 : imem_output; //noop stall if jump or branch
-	latch_350 fetch_decode_latch(.program_counter(next_pc_output),.instruction(fd_ir_input),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
+	latch_350 fetch_decode_latch(.wren_signal(stall_sig),.program_counter(next_pc_output),.instruction(fd_ir_input),.clock(clock),.output_PC(fd_pc_output),.output_ins(fd_ir_output));
 	
 	
 	//DECODE STAGE
@@ -68,7 +70,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//DECODE_EXECUTE LATCH
 	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output,de_ir_input;
 	assign de_ir_input = (j_sig) ? 32'b0 : fd_ir_output;
-	latch_350 decode_execute_latch(.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(de_ir_input),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
+	latch_350 decode_execute_latch(.wren_signal(1'b1),.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(de_ir_input),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
 	
 	
 	//EXECUTE controller
@@ -91,7 +93,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
-	latch_350 execute_memory_latch(.input_A(ALU_output),.input_B(de_B_output),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
+	latch_350 execute_memory_latch(.wren_signal(1'b1),.input_A(ALU_output),.input_B(de_B_output),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
 	
 
 	//MEMORY stage
@@ -105,7 +107,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 
 	//MEMORY_WRITEBACK latch
 	wire[31:0] mw_pc_output,mw_ir_output,mw_A_output,mw_B_output;
-	latch_350 memory_writeback_latch(.input_A(em_A_output),.input_B(dmem_output),.program_counter(em_pc_output),.instruction(em_ir_output),.clock(clock),.output_A(mw_A_output),.output_B(mw_B_output),.output_PC(mw_pc_output),.output_ins(mw_ir_output));
+	latch_350 memory_writeback_latch(.wren_signal(1'b1),.input_A(em_A_output),.input_B(dmem_output),.program_counter(em_pc_output),.instruction(em_ir_output),.clock(clock),.output_A(mw_A_output),.output_B(mw_B_output),.output_PC(mw_pc_output),.output_ins(mw_ir_output));
 	
 	
 	//WRITEBACK control
