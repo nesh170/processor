@@ -1,4 +1,4 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m);
+module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
 
 	input 			clock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
@@ -6,10 +6,10 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	output 			lcd_write;
 	output 	[31:0] 	lcd_data;
 	
-	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m; //debug tools
+	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m,pc_d,ir_d; //debug tools
 	output [3:0] bypass_e;
 	output bypass_m;
-	
+	output [5:0] bypass_d;
 	// GRADER OUTPUTS - YOU MUST CONNECT TO YOUR DMEM
 	output 	[31:0] 	debug_data;
 	output	[11:0]	debug_addr;
@@ -175,5 +175,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign dmem_input = dmem_data_input;
 	assign pc_m = em_pc_output;
 	assign bypass_m = bypass_m_sig;
+	assign pc_d = fd_pc_output;
+	assign ir_d = fd_ir_output;
+	assign bypass_d[2:0] = bypass_d_A_sig;
+	assign bypass_d[5:3] = bypass_d_B_sig;
 	
 endmodule
