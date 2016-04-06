@@ -70,7 +70,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	//DECODE_EXECUTE LATCH
 	wire[31:0] de_pc_output,de_ir_output,de_A_output,de_B_output,de_ir_input;
-	assign de_ir_input = (j_sig) ? 32'b0 : fd_ir_output;
+	assign de_ir_input = (j_sig | stall_sig) ? 32'b0 : fd_ir_output;
 	latch_350 decode_execute_latch(.wren_signal(1'b1),.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(de_ir_input),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
 	
 	
@@ -146,15 +146,15 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	bypass_d decode_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.fd_instruction(fd_ir_output),.bypass_A_sig(bypass_d_A_sig),.bypass_B_sig(bypass_d_B_sig));
 
 	//branch_predict_A_bypass
-	assign temp_read_data_A = (bypass_d_A_sig[2]) ? write_data : 32'bZ;
+	assign temp_read_data_A = (bypass_d_A_sig[2]) ? ALU_output : 32'bZ;
 	assign temp_read_data_A = (~bypass_d_A_sig[2] & bypass_d_A_sig[1]) ? em_A_output : 32'bZ;
-	assign temp_read_data_A = (~bypass_d_A_sig[2] & ~bypass_d_A_sig[1] & bypass_d_A_sig[0]) ?  ALU_output : 32'bZ;
+	assign temp_read_data_A = (~bypass_d_A_sig[2] & ~bypass_d_A_sig[1] & bypass_d_A_sig[0]) ?  write_data : 32'bZ;
 	assign temp_read_data_A = (~bypass_d_A_sig[2] & ~bypass_d_A_sig[1] & ~bypass_d_A_sig[0]) ? read_data_A :32'bZ;
 	
 	//branch_predict_B_bypass
-	assign temp_read_data_B = (bypass_d_B_sig[2]) ? write_data : 32'bZ;
+	assign temp_read_data_B = (bypass_d_B_sig[2]) ? ALU_output : 32'bZ;
 	assign temp_read_data_B = (~bypass_d_B_sig[2] & bypass_d_B_sig[1]) ? em_A_output : 32'bZ;
-	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & bypass_d_B_sig[0]) ?  ALU_output : 32'bZ;
+	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & bypass_d_B_sig[0]) ?  write_data : 32'bZ;
 	assign temp_read_data_B = (~bypass_d_B_sig[2] & ~bypass_d_B_sig[1] & ~bypass_d_B_sig[0]) ? read_data_B :32'bZ;
 	
 	//STALL_Logic

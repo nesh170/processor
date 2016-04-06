@@ -1,6 +1,7 @@
-module read_register_decoder(instruction,reg_S1,reg_S2,reg_D);
+module read_register_decoder(instruction,reg_S1,reg_S2,reg_D,rd_rt);
 	input[31:0] instruction;
 	output[4:0] reg_S1,reg_S2,reg_D;
+	output rd_rt;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -13,6 +14,7 @@ module read_register_decoder(instruction,reg_S1,reg_S2,reg_D);
 	//Signal to decide whether s2 should be read from rd(if true) or rt
 	wire rd_rt_signal;
 	assign rd_rt_signal = (~A&~B&~C&D&~E) | (~A&~B&C&~D&~E) | (~A&~B&C&D&~E) | (~A&~B&C&D&E); //00010 00100 00110 00111
+	assign rd_rt = rd_rt_signal;
 	
 	assign reg_S1 = instruction[21:17];
 	assign reg_S2 = (rd_rt_signal) ? instruction[26:22] : instruction[16:12];
