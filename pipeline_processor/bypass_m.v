@@ -10,6 +10,6 @@ module bypass_m(mw_instruction,em_instruction,bypass_sig);
 	
 	wire temp_bypass;
 	equal_comparator equalizer(.in_A(rd_mw),.in_B(rd_em),.isEqual(temp_bypass));
-	assign bypass_sig = temp_bypass &~rd_rt_sig;
+	assign bypass_sig = temp_bypass &~rd_rt_sig&(|rd_mw);
 	
 endmodule

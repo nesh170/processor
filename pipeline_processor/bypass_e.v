@@ -18,9 +18,9 @@ module bypass_e(mw_instruction,em_instruction,de_instruction,bypass_A_sig,bypass
 	equal_comparator equal_C(.in_A(mw_reg_D),.in_B(de_reg_S2),.isEqual(temp_B[0]));
 	equal_comparator equal_D(.in_A(em_reg_D),.in_B(de_reg_S2),.isEqual(temp_B[1]));
 	
-	assign bypass_A_sig[0] = temp_A[0]&~mw_rd_rt_signal;
-	assign bypass_A_sig[1] = temp_A[1]&~em_rd_rt_signal;
-	assign bypass_B_sig[0] = temp_B[0]&~mw_rd_rt_signal;
-	assign bypass_B_sig[1] = temp_B[1]&~em_rd_rt_signal;
+	assign bypass_A_sig[0] = temp_A[0]&~mw_rd_rt_signal&(|mw_reg_D);
+	assign bypass_A_sig[1] = temp_A[1]&~em_rd_rt_signal&(|em_reg_D);
+	assign bypass_B_sig[0] = temp_B[0]&~mw_rd_rt_signal&(|mw_reg_D);
+	assign bypass_B_sig[1] = temp_B[1]&~em_rd_rt_signal&(|em_reg_D);
 	
 endmodule
