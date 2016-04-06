@@ -13,7 +13,7 @@ module control_decode(instruction,read_reg_s1,read_reg_s2,bne_signal,blt_signal,
 	
 	//Signal to decide whether s2 should be read from rd(if true) or rt
 	wire rd_rt_signal;
-	assign rd_rt_signal = (~A&~B&~C&D&~E) | (~A&~B&C&~D&~E) | (~A&~B&C&D&~E) | (~A&~B&C&D&E) |(~A&~B&C&~D&E);
+	assign rd_rt_signal = (~A&~B&~C&D&~E) | (~A&~B&C&~D&~E) | (~A&~B&C&D&~E) | (~A&~B&C&D&E);
 	
 	
 	assign read_reg_s1 = instruction[21:17];

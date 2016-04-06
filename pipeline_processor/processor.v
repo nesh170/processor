@@ -1,4 +1,4 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out);
+module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m);
 
 	input 			clock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
@@ -6,7 +6,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	output 			lcd_write;
 	output 	[31:0] 	lcd_data;
 	
-	output[31:0] debug_out,ir_out,pc_out; //debug tools
+	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m; //debug tools
+	output [3:0] bypass_e;
+	output bypass_m;
 	
 	// GRADER OUTPUTS - YOU MUST CONNECT TO YOUR DMEM
 	output 	[31:0] 	debug_data;
@@ -92,7 +94,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
-	latch_350 execute_memory_latch(.wren_signal(1'b1),.input_A(ALU_output),.input_B(de_B_output),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
+	latch_350 execute_memory_latch(.wren_signal(1'b1),.input_A(ALU_output),.input_B(temp_ALU_input_B),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
 	
 
 	//MEMORY stage
@@ -130,13 +132,13 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	bypass_e execute_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.bypass_A_sig(bypass_e_A_sig),.bypass_B_sig(bypass_e_B_sig));
 	
 	//ALU_input_A bypass
-	assign ALU_input_A = (bypass_e_A_sig[1]) ? write_data : 32'bZ;
-	assign ALU_input_A = (bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? em_A_output : 32'bZ;
+	assign ALU_input_A = (bypass_e_A_sig[1]) ? em_A_output : 32'bZ;
+	assign ALU_input_A = (bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? write_data : 32'bZ;
 	assign ALU_input_A = (~bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? de_A_output :32'bZ;
 	
 	//ALU_input_B bypass
-	assign temp_ALU_input_B = (bypass_e_B_sig[1]) ? write_data : 32'bZ;
-	assign temp_ALU_input_B = (bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_ALU_input_B = (bypass_e_B_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_ALU_input_B = (bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? write_data : 32'bZ;
 	assign temp_ALU_input_B = (~bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? de_B_output :32'bZ;
 	
 	//Decode_Stage
@@ -165,5 +167,13 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign pc_out = mw_pc_output;
 	assign debug_out = write_data;
 	
+	assign debug_e = ALU_output;
+	assign pc_e = de_pc_output;
+	assign bypass_e[1:0] = bypass_e_A_sig;
+	assign bypass_e[3:2] = bypass_e_B_sig;
+	assign ir_e = de_ir_output;
+	assign dmem_input = dmem_data_input;
+	assign pc_m = em_pc_output;
+	assign bypass_m = bypass_m_sig;
 	
 endmodule
