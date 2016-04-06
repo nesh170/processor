@@ -15,13 +15,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	output	[11:0]	debug_addr;
 	
 	
-	//////////////////////////////////////
-	////// THIS IS REQUIRED FOR GRADING
-	// CHANGE THIS TO ASSIGN YOUR DMEM WRITE ADDRESS ALSO TO debug_addr
-	assign debug_addr = (12'b000000000001);
-	// CHANGE THIS TO ASSIGN YOUR DMEM DATA INPUT (TO BE WRITTEN) ALSO TO debug_data
-	assign debug_data = (12'b000000000001);
-	////////////////////////////////////////////////////////////
+
 	
 	//FETCH STAGE
 	//PROGRAM COUNTER
@@ -179,5 +173,14 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign ir_d = fd_ir_output;
 	assign bypass_d[2:0] = bypass_d_A_sig;
 	assign bypass_d[5:3] = bypass_d_B_sig;
+	
+	
+	//////////////////////////////////////
+	////// THIS IS REQUIRED FOR GRADING
+	// CHANGE THIS TO ASSIGN YOUR DMEM WRITE ADDRESS ALSO TO debug_addr
+	assign debug_addr = (em_A_output[11:0]);
+	// CHANGE THIS TO ASSIGN YOUR DMEM DATA INPUT (TO BE WRITTEN) ALSO TO debug_data
+	assign debug_data = (dmem_data_input);
+	////////////////////////////////////////////////////////////
 	
 endmodule
