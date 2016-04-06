@@ -23,6 +23,10 @@ module control_decode(instruction,read_reg_s1,read_reg_s2,bne_signal,blt_signal,
 	assign blt_signal = (~A&~B&C&D&~E);
 	
 	assign branch_N[16:0] = instruction[16:0];
-	assign branch_N[31:17] = 15'b0;
-	
+	genvar i;
+	generate
+	for(i=17;i<=31;i=i+1) begin:loop
+		assign branch_N[i] = instruction[16];
+	end
+	endgenerate
 endmodule
