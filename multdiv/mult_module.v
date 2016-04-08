@@ -46,7 +46,7 @@ module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, in
 	
 	
 	//LATCH 2
-	wire latch_2_important;
+	wire[31:0] latch_2_important;
 	wire[31:0] latch_2_output[7:0];
 	mult_latch_2 latch_2(.input_0(booth_output[0]),.input_1(booth_output[1]),.input_2(booth_output[2]),.input_3(booth_output[3]),.input_4(booth_output[4]),.input_5(booth_output[5]),.input_6(booth_output[6]),.input_7(booth_output[7]),.output_0(latch_2_output[0]),.output_1(latch_2_output[1]),.output_2(latch_2_output[2]),.output_3(latch_2_output[3]),.output_4(latch_2_output[4]),.output_5(latch_2_output[5]),.output_6(latch_2_output[6]),.output_7(latch_2_output[7]),.clock(clock),.reg_input(latch_1_important),.reg_output(latch_2_important));
 	

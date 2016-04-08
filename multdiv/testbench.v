@@ -1,9 +1,9 @@
 `timescale 1 ns / 100 ps
 module testbench();
     ///////////////////////////////////////////////////////////////////////////
-    parameter minfreq = 30;    // Min. clock freq. for testing (in MHz)
+    parameter minfreq = 40;    // Min. clock freq. for testing (in MHz)
     parameter maxfreq = 70;    // Max. clock freq. for testing (in MHz)
-    parameter freqstep = 5;    // Increment in clock freq. between tests (in MHz)
+    parameter freqstep = 10;    // Increment in clock freq. between tests (in MHz)
     parameter cycles_per_mult = 8;    // for multi-cycle multiplcation
     parameter cycles_per_div = 66;        // for mult-cycle division
     ///////////////////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ module testbench();
             $display("**Error in calculation: %d but expected %d.", data_result, inExp);
             errors = errors + 1;            
         end else begin
-          $display(ticks, "\t\t Operation correct.");
+          $display(ticks, "\t\t Operation correct. %d",data_result);
         end
     end
  endtask
@@ -205,7 +205,7 @@ module testbench();
             $display("**Error in calculation: %d but expected %d.", data_result, inExp);
             errors = errors + 1;            
         end else begin
-          $display(ticks, "\t\t Operation correct.");
+          $display(ticks, "\t\t Operation correct., %d",data_result);
         end
     end
  endtask
