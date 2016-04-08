@@ -1,8 +1,9 @@
-module booth_decoder(booth_operation,shifted_multiplicand,adder_output); //takes in the shifted multiplicand
-	input[2:0] booth_operation;
+module booth_decoder(shifted_multiplicand,booth_operation,output_multiplicand);
 	input[31:0] shifted_multiplicand;
-	output[31:0] adder_output;
+	input[2:0] booth_operation;
 	
+	output[31:0] output_multiplicand;
+		
 	wire[7:0] booth_operation_wire;
 	assign booth_operation_wire = 8'b00000001 << booth_operation; //this generates which operation should be performed
 	
@@ -26,9 +27,6 @@ module booth_decoder(booth_operation,shifted_multiplicand,adder_output); //takes
 	endgenerate
 	wire make_negative;
 	assign make_negative = booth_operation_wire[4] | booth_operation_wire[5] | booth_operation_wire[6];
-	carry_select_adder adder(temp_output, 32'b0, adder_output, make_negative); //generate a negative shifted multiplicand
+	carry_select_adder adder(temp_output, 32'b0, output_multiplicand, make_negative); //generate a negative shifted multiplicand
 	
 endmodule
-
-
-

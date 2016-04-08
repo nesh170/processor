@@ -1,53 +1,72 @@
-module mult_module(data_operandA, data_operandB,ctrl_MULT, clock, data_result, data_exception, data_inputRDY, data_resultRDY);
-   input [31:0] data_operandA;
-   input [15:0] data_operandB;
-   input clock,ctrl_MULT;      
-   output [31:0] data_result; 
-   output data_exception, data_inputRDY, data_resultRDY; 
+module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, input_RDY, result_RDY);
+	input[31:0] data_A;
+	input[15:0] data_B;
+	input mult_signal,clock;
+
+	output[31:0] data_result;
+	output exception,input_RDY,result_RDY;
 	
-	wire[31:0] output_booth[7:0];
-	booth_module booth(data_operandA,data_operandB, output_booth[0],output_booth[1],output_booth[2],output_booth[3],output_booth[4],output_booth[5],output_booth[6],output_booth[7]);
 	
-	wire[31:0] adder_stage_1_output[3:0];
-	wire[31:0] adder_stage_2_output[1:0];
-	wire[31:0] adder_stage_3_output;
+	//Latch 1
+	wire[31:0] multiplier,multiplicand,temp_data_B;
+	assign temp_data_B[31:16] = 16'b0;
+	assign temp_data_B[15:0] = data_B; //Registers are 32 bits wide
+	mult_latch_1_4 latch_1(.input_A(data_A),.input_B(temp_data_B),.output_A(multiplicand),.output_B(multiplier),.clock(clock));
+	
+	//Stage 1 operations - Handing the shifting operation and generating the shifted multiplicand to be added to the next stages
 	/*
-	Adding all the output_booth below
+	The code below handles the implicit 0 case
 	*/
-	/*
-	Stage 1 addition = 1 cycle
-	*/
-	carry_select_adder stage_1_1(output_booth[0], output_booth[1], adder_stage_1_output[0], 0);
-	carry_select_adder stage_1_2(output_booth[2], output_booth[3], adder_stage_1_output[1], 0);
-	carry_select_adder stage_1_3(output_booth[4], output_booth[5], adder_stage_1_output[2], 0);
-	carry_select_adder stage_1_4(output_booth[6], output_booth[7], adder_stage_1_output[3], 0);
-	
-	/*
-	Stage 2 addition = 1 cycle
-	*/
-	carry_select_adder stage_2_1(adder_stage_1_output[0], adder_stage_1_output[1], adder_stage_2_output[0], 0);
-	carry_select_adder stage_2_2(adder_stage_1_output[2], adder_stage_1_output[3], adder_stage_2_output[1], 0);
-	
-	/*
-	Stage 3 addition = 1 cycle, final stage
-	*/
-	carry_select_adder stage_3(adder_stage_2_output[0], adder_stage_2_output[1], adder_stage_3_output, 0);
-	assign data_result = adder_stage_3_output;
-	
+	wire[2:0] temp_booth_0;
+	assign temp_booth_0[0] = 0;
+	assign temp_booth_0[2:1] = multiplier[1:0];
+	wire[2:0] booth_input[7:0];
+	assign booth_input[0] = temp_booth_0;
+	assign booth_input[1] = multiplier[3:1];
+	assign booth_input[2] = multiplier[5:3];
+	assign booth_input[3] = multiplier[7:5];
+	assign booth_input[4] = multiplier[9:7];
+	assign booth_input[5] = multiplier[11:9];
+	assign booth_input[6] = multiplier[13:11];
+	assign booth_input[7] = multiplier[15:13];
 	
 	/*
-	Handle counter to assert the data_inputRDY and data_resultRDY
+	Adds all the booth value from the multiplier to a wire array so it could be used for calculation
 	*/
-	wire[2:0] counter_output;
-	wire in_signal; //the in_signal is used to reset the wire, effectively turning the counter to be a mod k counter where k <= 8
-	counter count_8(clock, in_signal, counter_output);
-	assign in_signal = ~ctrl_MULT; 
-	assign data_resultRDY = (counter_output[0] & counter_output[1] & counter_output[2]); //currently mod 8 counter; change here to change it
-	assign data_inputRDY = (~counter_output[0] & ~counter_output[1] & ~counter_output[2]) | (counter_output[0] & counter_output[1] & counter_output[2]);
-	//assign data_inputRDY=1; assign data_resultRDY=1;
+	wire[31:0] booth_output[7:0];
+	genvar index;
+	generate
+		for(index=0; index<8; index = index + 1) begin: loop_structure
+			booth_decoder decoder(.shifted_multiplicand((data_A << (2*index))),.booth_operation(booth_input[index]),.output_multiplicand(booth_output[index]));
+		end
+	endgenerate
 	
-	/*
-	Data exception is triggered when the sign bit of the output does not match the predicted output sign.
-	*/
-	assign data_exception= (data_operandA[31]^data_operandB[15])^adder_stage_3_output[31];
+	
+	//LATCH 2
+	wire[31:0] latch_2_output[7:0];
+	mult_latch_2 latch_2(.input_0(booth_output[0]),.input_1(booth_output[1]),.input_2(booth_output[2]),.input_3(booth_output[3]),.input_4(booth_output[4]),.input_5(booth_output[5]),.input_6(booth_output[6]),.input_7(booth_output[7]),.output_0(latch_2_output[0]),.output_1(latch_2_output[1]),.output_2(latch_2_output[2]),.output_3(latch_2_output[3]),.output_4(latch_2_output[4]),.output_5(latch_2_output[5]),.output_6(latch_2_output[6]),.output_7(latch_2_output[7]),.clock(clock));
+	
+	//Stage 2 operations, adding the a tree structure 0+1,2+3,4+5,6+7;
+	wire[31:0] adder_2_output[3:0];
+	carry_select_adder add_stage_2_1(.in_A(latch_2_output[0]), .in_B(latch_2_output[1]), .out(adder_2_output[0]), .carry_in(1'b0));
+	carry_select_adder add_stage_2_2(.in_A(latch_2_output[2]), .in_B(latch_2_output[3]), .out(adder_2_output[1]), .carry_in(1'b0));
+	carry_select_adder add_stage_2_3(.in_A(latch_2_output[4]), .in_B(latch_2_output[5]), .out(adder_2_output[2]), .carry_in(1'b0));
+	carry_select_adder add_stage_2_4(.in_A(latch_2_output[6]), .in_B(latch_2_output[7]), .out(adder_2_output[3]), .carry_in(1'b0));
+	
+	//LATCH 3
+	wire[31:0] latch_3_output[3:0];
+	mult_latch_3 latch_3(.input_0(adder_2_output[0]),.input_1(adder_2_output[1]),.input_2(adder_2_output[2]),.input_3(adder_2_output[3]),.output_0(latch_3_output[0]),.output_1(latch_3_output[1]),.output_2(latch_3_output[2]),.output_3(latch_3_output[3]),.clock(clock));
+	
+	//Stage 3 operations, adding in a tree structure (0+1) + (2+3), (4+5) + (6+7)
+	wire[31:0] adder_3_output[1:0];
+	carry_select_adder add_stage_3_1(.in_A(latch_3_output[0]), .in_B(latch_3_output[1]), .out(adder_3_output[0]), .carry_in(1'b0));
+	carry_select_adder add_stage_3_2(.in_A(latch_3_output[2]), .in_B(latch_3_output[3]), .out(adder_3_output[1]), .carry_in(1'b0));
+	
+	//LATCH 4
+	wire[31:0] latch_4_output[1:0];
+	mult_latch_1_4 latch_4(.input_A(adder_3_output[0]),.input_B(adder_3_output[1]),.output_A(latch_4_output[0]),.output_B(latch_4_output[1]),.clock(clock));
+
+	//Stage 4 operations, adding in a tree structure ((0+1) + (2+3)) + ((4+5) + (6+7))
+	carry_select_adder add_stage_4_1(.in_A(latch_4_output[0]), .in_B(latch_4_output[1]), .out(data_result), .carry_in(1'b0));
+	
 endmodule

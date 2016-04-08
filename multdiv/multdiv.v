@@ -21,11 +21,11 @@ module multdiv(data_operandA, data_operandB, ctrl_MULT, ctrl_DIV, clock, data_re
 	assign data_inputRDY = (ctrl_DIV) ? div_inputRDY : 1'bZ;
 	assign data_resultRDY = (ctrl_DIV) ? div_resultRDY : 1'bZ;
 	
-//	wire high_impedance;
-//	assign high_impedance = ctrl_DIV&ctrl_MULT | ~ctrl_DIV&~ctrl_MULT;
-//	assign data_result = (high_impedance) ? 32'b0 : 32'bZ;
-//	assign data_exception = (high_impedance) ? 32'b0 : 1'bZ;
-//	assign data_inputRDY = (high_impedance) ? 1'b0 : 1'bZ;
-//	assign data_resultRDY = (high_impedance) ? 1'b0 : 1'bZ;
+	wire high_impedance;
+	assign high_impedance = ctrl_DIV&ctrl_MULT | ~ctrl_DIV&~ctrl_MULT;
+	assign data_result = (high_impedance) ? 32'b0 : 32'bZ;
+	assign data_exception = (high_impedance) ? 32'b0 : 1'bZ;
+	assign data_inputRDY = (high_impedance) ? 1'b0 : 1'bZ;
+	assign data_resultRDY = (high_impedance) ? 1'b0 : 1'bZ;
 endmodule
 
