@@ -1,11 +1,12 @@
-module mult_latch_1_4(input_A,input_B,output_A,output_B,clock);
-	input[31:0] input_A,input_B;
+module mult_latch_1_4(input_A,input_B,reg_input,output_A,output_B,clock,reg_output);
+	input[31:0] input_A,input_B,reg_input;
 	input clock;
-	output[31:0] output_A,output_B;
+	output[31:0] output_A,output_B,reg_output;
 	
 
 	register reg_A(.bitsIn(input_A), .bitsOut(output_A), .writeEnable(1'b1), .reset(1'b0), .clk(clock));
 	register reg_B(.bitsIn(input_B), .bitsOut(output_B), .writeEnable(1'b1), .reset(1'b0), .clk(clock));
+	register reg_extra(.bitsIn(reg_input), .bitsOut(reg_output), .writeEnable(1'b1), .reset(1'b0), .clk(clock));
 	
 	
 endmodule
