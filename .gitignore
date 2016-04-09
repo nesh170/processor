@@ -3,6 +3,9 @@
 !*/
 !*.v
 !*.vwf
+!*.mif
+!*.asm
+!*.md
 
 */simulation
 */latex
