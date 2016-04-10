@@ -86,6 +86,11 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
 	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
 	
+	//MULT
+	wire mult_signal,mult_exception,mult_input_RDY,mult_result_RDY;
+	wire[31:0] mult_result,mult_ins_1,mult_ins_2,mult_ins_3,mult_ins_4;
+	mult_module multiplier_unit(.data_A(ALU_input_A), .data_B(ALU_input_B),.mult_signal(mult_signal), .clock(clock), .data_result(mult_result), .exception(mult_exception), .input_RDY(mult_input_RDY), .result_RDY(mult_result_RDY),.input_ins(de_ir_output),.instruction_1(mult_ins_1),.instruction_2(mult_ins_2),.instruction_3(mult_ins_3),.instruction_4(mult_ins_4));
+	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
 	latch_350 execute_memory_latch(.wren_signal(1'b1),.input_A(ALU_output),.input_B(temp_ALU_input_B),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
@@ -106,11 +111,12 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	
 	//WRITEBACK control
-	wire lw_sig,jal_sig;
-	control_writeback writeback_controller(.instruction(mw_ir_output),.write_reg_number(write_register),.jal_signal(jal_sig),.lw_signal(lw_sig),.wren_signal(wren_sig));
+	wire lw_sig,jal_sig,mult_ins_signal;
+	control_writeback writeback_controller(.instruction(mw_ir_output),.write_reg_number(write_register),.jal_signal(jal_sig),.lw_signal(lw_sig),.wren_signal(wren_sig),.mult_sig(mult_ins_signal));
 
-	wire[31:0] intermediate_value;
+	wire[31:0] intermediate_value,intermediate_2_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
+	assign intermediate_2_value = (mult_ins_signal) ? mult_result : intermediate_value;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
 	
 	

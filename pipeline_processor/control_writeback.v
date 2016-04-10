@@ -1,7 +1,7 @@
-module control_writeback(instruction,write_reg_number,jal_signal,lw_signal,wren_signal);
+module control_writeback(instruction,write_reg_number,jal_signal,lw_signal,wren_signal,mult_sig);
 	input[31:0] instruction;
 	output[4:0] write_reg_number;
-	output jal_signal,lw_signal,wren_signal;
+	output jal_signal,lw_signal,wren_signal,mult_sig;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -19,6 +19,7 @@ module control_writeback(instruction,write_reg_number,jal_signal,lw_signal,wren_
 	assign jal_signal = jal_signal_wire;
 	assign lw_signal = ~A&B&~C&~D&~E;
 	assign wren_signal = (~A&~B&~C&~D&~E) | (~A&~B&~C&D&E) | (~A&~B&C&~D&E) | (~A&B&~C&~D&~E);
+	assign mult_sig = (~instruction[6]&~instruction[5]&instruction[4]&instruction[3]&~instruction[2]);
 	
 	
 endmodule
