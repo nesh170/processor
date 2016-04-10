@@ -1,4 +1,5 @@
-module mult_stall_logic(fd_instruction,instruction_1,instruction_2,instruction_3,instruction_4,mult_stall_logic_signal);
+module mult_stall_logic(mult_ins_signal,fd_instruction,instruction_1,instruction_2,instruction_3,instruction_4,mult_stall_logic_signal);
+	input mult_ins_signal;
 	input[31:0] fd_instruction,instruction_1,instruction_2,instruction_3,instruction_4;
 	output mult_stall_logic_signal;
 	
