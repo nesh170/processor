@@ -6,6 +6,7 @@
 !*.mif
 !*.asm
 !*.md
+!*.pdf
 
 */simulation
 */latex
