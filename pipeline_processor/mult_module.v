@@ -6,7 +6,7 @@ module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, in
 	output[31:0] data_result,instruction_1,instruction_2,instruction_3,instruction_4;
 	output exception,input_RDY,result_RDY;
 	
-	//Operations before LATCH 1
+	//Operations before LATCH 1 pipeline
 	wire[31:0] multiplier,multiplicand,important_bits; //important bits hold predicted output and result_rdy
 	assign multiplicand = data_A;
 	assign multiplier[31:16] = 16'b0;
