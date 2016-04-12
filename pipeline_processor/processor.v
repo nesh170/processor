@@ -111,12 +111,11 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	
 	
 	//WRITEBACK control
-	wire lw_sig,jal_sig,mult_ins_signal;
-	control_writeback writeback_controller(.instruction(mw_ir_output),.write_reg_number(write_register),.jal_signal(jal_sig),.lw_signal(lw_sig),.wren_signal(wren_sig),.mult_sig(mult_ins_signal));
+	wire lw_sig,jal_sig;
+	control_writeback writeback_controller(.instruction(mw_ir_output),.write_reg_number(write_register),.jal_signal(jal_sig),.lw_signal(lw_sig),.wren_signal(wren_sig);
 
-	wire[31:0] intermediate_value,intermediate_2_value;
+	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
-	assign intermediate_2_value = (mult_ins_signal) ? mult_result : intermediate_value;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
 	
 	
