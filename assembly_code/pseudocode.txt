@@ -1,0 +1,38 @@
+Constants maybe:-
+y=10
+z=40
+x=100? maybe 
+
+Initialize the data
+    
+Run the game loop
+    increment time for game
+    check keyboard input
+        branch based on keyboard input
+            Player 1
+                Left key = move the player left by x pixels, make sure that it does not go out of bounds
+                Right key = move the player right by x pixels, make sure that it does not go out of bounds
+            Player 2 - Handle the 
+                Z key = Put a obstacle z pixels away from the player 1 in left lane (z must be a multiple of y)
+                X key = Put a obstacle z pixels away from the player 1 in middle lane
+                C key = Put a obstacle z pixels away from the player 1 in right lane
+    update
+        update position data in registers designated for position data (007 is not a good register name)
+             Player 1
+                Increment the player up by y pixels, if the player reaches max pixels (640) return it to 0
+    check collisions
+        collide with bird
+            To detect this collision
+                we are doing point based collision so if the player and the obstacle is on the same point then collision yay
+            Handle collision
+                light up the LED to show you lose
+                    In order to do this, have specialized hardware connected to a specific register and then when a value is placed in there
+                    halt the program after that :/
+    render
+        generate line
+            This line is stored in the user dmem, just redraw on the processor
+        generate player with new position (solid color)
+            read from the register and rerender the new position on the board
+        generate obstacle
+            read from generate data and
+            
