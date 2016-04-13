@@ -112,7 +112,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
-	
+	assign lcd_data = write_data;
+	assign lcd_write = lw_sig;
 	
 	
 	//BYPASSING LOGIKZ
