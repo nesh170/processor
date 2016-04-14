@@ -20,26 +20,27 @@ module skeleton(	inclock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_add
 
 	
 	// clock divider (by 5, i.e., 10 MHz)
-	pll div(inclock,clock);
+	//pll div(inclock,clock);
 	
 	// UNCOMMENT FOLLOWING LINE AND COMMENT ABOVE LINE TO RUN AT 50 MHz
-	//assign clock = inclock;
+	assign clock = inclock;
 	
 	// your processor
 	processor myprocessor(clock, ~resetn, ps2_key_pressed, ps2_out, lcd_write_en, lcd_write_data, debug_word, debug_addr);
-	
+
 	// keyboard controller
-	//PS2_Interface myps2(clock, resetn, ps2_clock, ps2_data, ps2_key_data, ps2_key_pressed, ps2_out);
+	PS2_Interface myps2(clock, resetn, ps2_clock, ps2_data, ps2_key_data, ps2_key_pressed, ps2_out);
 	
 	// lcd controller
 	lcd mylcd(clock, ~resetn, lcd_write_en, lcd_write_data[7:0], lcd_data, lcd_rw, lcd_en, lcd_rs, lcd_on, lcd_blon);
 	
 	// example for sending ps2 data to the first two seven segment displays
-	Hexadecimal_To_Seven_Segment hex1(ps2_out[3:0], seg1);
+	Hexadecimal_To_Seven_Segment hex1(ps2_out[3:0], 
+	);
 	Hexadecimal_To_Seven_Segment hex2(ps2_out[7:4], seg2);
 	
 	// the other seven segment displays are currently set to 0
-	Hexadecimal_To_Seven_Segment hex3(4'b0, seg3);
+	Hexadecimal_To_Seven_Segment hex3(4'b1, seg3);
 	Hexadecimal_To_Seven_Segment hex4(4'b0, seg4);
 	Hexadecimal_To_Seven_Segment hex5(4'b0, seg5);
 	Hexadecimal_To_Seven_Segment hex6(4'b0, seg6);
@@ -47,6 +48,6 @@ module skeleton(	inclock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_add
 	Hexadecimal_To_Seven_Segment hex8(4'b0, seg8);
 	
 	// some LEDs that you could use for debugging if you wanted
-	assign leds = 8'b00101011;
+	assign leds = debug_word[7:0];
 	
 endmodule

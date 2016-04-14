@@ -43,8 +43,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//DECODE controller
 	wire[4:0] read_reg_A,read_reg_B;
 	wire[31:0] branch_to_add;
-	wire blt_sig,bne_sig;
-	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add));
+	wire blt_sig,bne_sig,beq_sig;
+	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.beq_signal(beq_sig),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add));
 	
 	//REGISTER FILE
 	wire wren_sig;//WRITEBACK
@@ -57,7 +57,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire isNotEqual,isLessThan;
 	wire[31:0] temp_read_data_A,temp_read_data_B;
 	branch_detector detect(.in_A(temp_read_data_A),.in_B(temp_read_data_B),.blt(isLessThan),.bne(isNotEqual)); //bascially a subtract module :/
-	assign branch_sig = (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual);
+	assign branch_sig =(beq_sig & ~isNotEqual) | (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual);
 	wire[31:0] new_branch_pc;
 	carry_select_adder add_branch_pc(.in_A(fd_pc_output), .in_B(branch_to_add), .out(new_branch_pc), .carry_in(1'b0));
 	
@@ -112,7 +112,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] intermediate_value;
 	assign intermediate_value = (lw_sig) ? mw_B_output : mw_A_output;
 	assign write_data = (jal_sig) ? mw_pc_output : intermediate_value;
-	
+	assign lcd_data = write_data;
+	assign lcd_write = lw_sig;
 	
 	
 	//BYPASSING LOGIKZ
