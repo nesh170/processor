@@ -7,7 +7,7 @@
 !*.asm
 !*.md
 !*.pdf
-!*.txt
+!*/assembly_codes
 !*.htm
 
 */simulation
