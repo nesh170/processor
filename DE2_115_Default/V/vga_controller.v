@@ -5,18 +5,12 @@ module vga_controller(iRST_n,
                       oVS,
                       b_data,
                       g_data,
-                      r_data,
-							 write_addr,
-							 write_data,
-							 wren_signal);
+                      r_data);
 input iRST_n;
 input iVGA_CLK;
-input wren_signal;
 output reg oBLANK_n;
 output reg oHS;
 output reg oVS;
-input [18:0] write_addr;
-input [23:0] write_data;
 output [7:0] b_data;
 output [7:0] g_data;  
 output [7:0] r_data;                        
@@ -48,27 +42,17 @@ end
 //////////////////////////
 //////INDEX addr.
 assign VGA_CLK_n = ~iVGA_CLK;
-img_data_final img_data_memory(
-	.address_a(ADDR),
-	.address_b(write_addr),
-	.clock_a(VGA_CLK_n),
-	.clock_b(VGA_CLK_n),
-	.data_b(write_data),
-	.wren_b(wren_signal),
-	.q_a(index));
-	
-//img_data	img_data_inst (
-//	.address ( ADDR ),
-//	.clock ( VGA_CLK_n ),
-//	.q ( index )
-//	);
-	
+img_data  img_data_inst (
+  .address ( ADDR ),
+  .clock ( VGA_CLK_n ),
+  .q ( index )
+  );
 //////Color table output
-img_index	img_index_inst (
-	.address ( index ),
-	.clock ( iVGA_CLK ),
-	.q ( bgr_data_raw)
-	);	
+img_index img_index_inst (
+  .address ( index ),
+  .clock ( iVGA_CLK ),
+  .q ( bgr_data_raw)
+  );  
 //////
 //////latch valid data at falling edge;
 always@(posedge VGA_CLK_n) bgr_data <= bgr_data_raw;
@@ -85,7 +69,7 @@ begin
 end
 
 endmodule
- 	
+  
 
 
 
