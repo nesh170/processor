@@ -1,3 +1,5 @@
+//This module is used to synchronize things with VGA generator
+
 module video_sync_generator(reset,
                             vga_clk,
                             blank_n,
