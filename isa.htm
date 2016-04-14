@@ -1,0 +1,777 @@
+<table align="left" border="1" cellpadding="0" cellspacing="1" style="width:101.6%;" width="101%">
+	<thead>
+		<tr>
+			<th>
+				<p>
+					&nbsp;</p>
+			</th>
+			<th colspan="5" style="width:97.38%;">
+				<p align="center">
+					ECE 350 Instruction Set Architecture</p>
+			</th>
+			<th>
+				<p>
+					&nbsp;</p>
+			</th>
+		</tr>
+		<tr>
+			<th colspan="2" style="width:16.18%;">
+				<p align="center">
+					<strong>Instruction</strong></p>
+			</th>
+			<th style="width:14.82%;">
+				<p align="center">
+					<strong>Opcode<br />
+					(ALU Op)</strong></p>
+			</th>
+			<th style="width:11.28%;">
+				<p align="center">
+					<strong>Type</strong></p>
+			</th>
+			<th style="width:26.58%;">
+				<p align="center">
+					<strong>Usage</strong></p>
+			</th>
+			<th colspan="2" style="width:30.26%;">
+				<p align="center">
+					<strong>Operation</strong></p>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					add</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00000)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					add $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs + $rt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					addi</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00101</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					addi $rd, $rs, N</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs + N</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					sub</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00001)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					sub$rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs - $rt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					and</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00010)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					and $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs AND $rt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					<br />
+					or</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00011)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					or $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs OR $rt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					sll</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00100)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					sll $rd, $rs, shamt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs &lt;&lt; shamt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					sra</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00101)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					sra $rd, $rs, shamt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs / 2^shamt</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					mul</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00110)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					mul $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs * $rt (32b X 32b); STATUS=1 if overflow</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					div</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (00111)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					div $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = $rs / $rt (32b &divide; 32b); STATUS=1 if div0</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:16.18%;">
+				<p align="center">
+					CUSTOM R</p>
+				<p align="center">
+					(in ALU)</p>
+			</td>
+			<td style="width:14.82%;">
+				<p align="center">
+					00000 (01000)<br />
+					...<br />
+					00000 (11111)</p>
+			</td>
+			<td style="width:11.28%;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:26.58%;">
+				<p>
+					CUSTOM_R# $rd, $rs, $rt</p>
+			</td>
+			<td colspan="2" style="width:30.26%;">
+				<p>
+					$rd = CUSTOM#($rs, $rt)</p>
+			</td>
+		</tr>
+		<tr height="0">
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+			<td>
+				&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+<table align="left" border="1" cellpadding="0" cellspacing="1" style="width:100.0%;" width="100%">
+	<tbody>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					j</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00001</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					JI</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					j N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					PC = N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					bne</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00010</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					bne $rd, $rs, N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					if($rd != $rs) PC = PC+1+N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					beq</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					10000</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					beq $rd, $rs, N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					if($rd == $rs) PC = PC+1+N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					<br />
+					jal</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00011</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					JI</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					jal N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					$r31 = PC+1; PC=N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					jr</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00100</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					JII</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					jr $rd</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					PC = $rd</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					blt</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00110</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					blt $rd, $rs, N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					if($rd &lt; $rs) PC=PC+1+N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					bex</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					10110</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					JI</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					bex N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					if(STATUS &gt; 0) PC=PC+1+N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					setx</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					10101</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					JI</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					setx N</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					STATUS = N</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					sw</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					00111</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					sw $rd, N($rs)</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					MEM[$rs + N] = $rd</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					lw</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					01000</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					lw $rd, N($rs)</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					$rd = MEM[$rs + N]</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:100px;">
+				<p align="center">
+					swd</p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					10001</p>
+			</td>
+			<td style="width:75px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:162px;">
+				<p>
+					swd $rd, N($rs)</p>
+			</td>
+			<td style="width:188px;">
+				<p>
+					DISPLAY_MEM[$rs + N] = $rd</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<br />
+	&nbsp;</p>
+<table align="left" border="1" cellpadding="0" cellspacing="1" style="width:100.0%;" width="100%">
+	<tbody>
+		<tr>
+			<td style="width:50px;">
+				<p align="center">
+					<strong>Instruction Type</strong></p>
+			</td>
+			<td style="width:100px;">
+				<p align="center">
+					<strong>Instruction Format</strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:50px;">
+				<p align="center">
+					R</p>
+			</td>
+			<td style="width:100px;">
+				<table align="center" border="1" cellpadding="0" cellspacing="0" style="width:100.0%;" width="100%">
+					<tbody>
+						<tr>
+							<td style="width:100px;">
+								<p align="center">
+									Opcode [31:27]</p>
+							</td>
+							<td>
+								<p align="center">
+									RD [26:22]</p>
+							</td>
+							<td>
+								<p align="center">
+									RS [21:17]</p>
+							</td>
+							<td>
+								<p align="center">
+									RT [16:12]</p>
+							</td>
+							<td>
+								<p align="center">
+									shiftamt [11:7]</p>
+							</td>
+							<td>
+								<p align="center">
+									ALUop [6:2]</p>
+							</td>
+							<td>
+								<p align="center">
+									Zeros [1:0]</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="clear:both;">
+					&nbsp;</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:50px;">
+				<p align="center">
+					I</p>
+			</td>
+			<td style="width:100px;">
+				<table align="center" border="1" cellpadding="0" cellspacing="0" style="width:100.0%;" width="100%">
+					<tbody>
+						<tr>
+							<td style="width:100px;">
+								<p align="center">
+									Opcode [31:27]</p>
+							</td>
+							<td>
+								<p align="center">
+									RD [26:22]</p>
+							</td>
+							<td>
+								<p align="center">
+									RS [21:17]</p>
+							</td>
+							<td>
+								<p align="center">
+									Immediate [16:0]</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="clear:both;">
+					&nbsp;</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:50px;">
+				<p align="center">
+					J (I/II)</p>
+			</td>
+			<td style="width:100px;">
+				<table align="center" border="1" cellpadding="0" cellspacing="0" style="width:100.0%;" width="100%">
+					<tbody>
+						<tr>
+							<td style="width:100px;">
+								<p align="center">
+									Opcode [31:27]</p>
+							</td>
+							<td>
+								<p align="center">
+									Target [26:0]</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px;">
+								<p align="center">
+									Opcode [31:27]</p>
+							</td>
+							<td>
+								<p align="center">
+									RD [26:22]</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="clear:both;">
+					&nbsp;</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<br />
+	<br />
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+<p>
+	<br />
+	&nbsp;</p>
+<p>
+	I-type immediate field [16:0] is signed 2&rsquo;s complement and sign-extended to the full 32-bit word size.</p>
+<p>
+	&nbsp;</p>
+<p>
+	J-type target field [26:0] is extended to the full 32-bit PC size using the upper bits from the current PC+1.</p>
+<p>
+	&nbsp;</p>
+<p>
+	Register fields that are undefined are filled with zeroes by the assembler.</p>
+<p>
+	&nbsp;</p>
+<p>
+	Register $r0 always equals zero. Registers $r1 through $r30 are general purpose. Register $r31 stores the</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link address of a jump-and-link instruction.</p>
+<p>
+	&nbsp;</p>
+<p>
+	Instructions that change control flow (beq, blt, j, jal, jr) do not have a delay slot.</p>
+<p>
+	&nbsp;</p>
+<p>
+	Memory is word-addressed. The instruction and data memory address spaces are separate. Static data</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begins at data memory address zero. Stack data begins at the end of the data memory and grows</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;downwards. There is no preset boundary between the end of static data and the start of the upwardsgrowing</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heap; this is a property of the assembly program.</p>
+<p>
+	&nbsp;</p>
+<p>
+	After a reset, all register values are zero and program execution begins from instruction memory address</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zero. The memory&#39;s contents are not reset.</p>
+<p>
+	&nbsp;</p>
+<p>
+	Useful hints for the Assembulator:</p>
+<p>
+	This assembly fragment (paste it into, and save- always save the file before assembling- the main window):</p>
+<table border="0" cellpadding="0" cellspacing="1" style="width:500px;" width="500">
+	<tbody>
+		<tr>
+			<td>
+				<p>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</td>
+			<td>
+				<p>
+					.text<br />
+					main: lw $r3, wow($r0)<br />
+					lw $r4, wow($r0)<br />
+					mul $r5, $r3, $r4<br />
+					bex dead<br />
+					addi $r7, $r0, 0x0FEEDF00<br />
+					j quit<br />
+					dead: addi $r7, $r0, 0x0DEADF00<br />
+					quit: halt<br />
+					.data<br />
+					wow: .word 0x0000B504<br />
+					mystring: .string ASDASDASDASDASDASD<br />
+					var: .char Z<br />
+					label: .char A<br />
+					heapsize: .word 0x00000000<br />
+					myheap: .word 0x00000000</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p>
+					Comments</p>
+			</td>
+			<td>
+				<p>
+					A simple program fragment, illustrating various assembly syntax for the Assembulator, which calculates the square of the value stored in location <em>&quot;wow&quot;</em> and sets the value of R7 to either 0x0FEEDF00 if the product doesn&#39;t overflow, otherwise&nbsp; 0x0DEADF00.</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	Every program needs a &quot;.text&quot; and &quot;.data&quot; region, and a &quot;main:&quot; label. Program execution starts at &quot;main:&quot; Data variables can be allocated in the .data segment and referenced by their labels. For example, &quot;mystring&quot; is shorthand for the &quot;location in memory of a .data labelled &#39;mystring&#39;&quot;.</p>
+<p>
+	To assemble this fragment, enter the code (or open a file), save the code (to a file which INCLUDES a &quot;.&quot; in it&#39;s name, like &quot;mything.asm&quot;), verify it (button with a check), and then you can simulate it (button with a play symbol). Next, you&#39;ll want to output some machine code and data in .mif files. Use the Assemble (or Assemble To) buttons (down arrows) to specify an output name (like &quot;mything_output&quot;) which will be used to create two files (dmem.mif and imem.mif). You can inspect these files from within the Assembulator, or add them to your project in Quartus (ultimately).</p>
+<p>
+	The assembulator also expands certain &quot;pseudo opcodes&quot; like this:</p>
+<p>
+	ldia = $rd, label + ldi $rd, N<br />
+	ldi = $rd, N + addi $rd, $r0, N<br />
+	ret = jr $ra<br />
+	bgt = $rd, $rs, N + blt $rs, $rd, N<br />
+	nop = add $r0, $r0, $r0<br />
+	halt = j PC</p>
+<p>
+	It will also expand certain constants like:</p>
+<p>
+	$zero = $R0<br />
+	$Ra = $R31</p>
+<p>
+	<em>Revised for ECE350, Spring 2015.</em></p>
+<p>
+	CD.<br />
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
