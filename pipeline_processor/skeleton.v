@@ -20,10 +20,10 @@ module skeleton(	inclock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_add
 
 	
 	// clock divider (by 5, i.e., 10 MHz)
-	pll div(inclock,clock);
+	//pll div(inclock,clock);
 	
 	// UNCOMMENT FOLLOWING LINE AND COMMENT ABOVE LINE TO RUN AT 50 MHz
-	//assign clock = inclock;
+	assign clock = inclock;
 	
 	// your processor
 	processor myprocessor(clock, ~resetn, ps2_key_pressed, ps2_out, lcd_write_en, lcd_write_data, debug_word, debug_addr);
@@ -40,7 +40,7 @@ module skeleton(	inclock, resetn, /*ps2_clock, ps2_data,*/ debug_word, debug_add
 	Hexadecimal_To_Seven_Segment hex2(ps2_out[7:4], seg2);
 	
 	// the other seven segment displays are currently set to 0
-	Hexadecimal_To_Seven_Segment hex3(4'b0, seg3);
+	Hexadecimal_To_Seven_Segment hex3(4'b1, seg3);
 	Hexadecimal_To_Seven_Segment hex4(4'b0, seg4);
 	Hexadecimal_To_Seven_Segment hex5(4'b0, seg5);
 	Hexadecimal_To_Seven_Segment hex6(4'b0, seg6);
