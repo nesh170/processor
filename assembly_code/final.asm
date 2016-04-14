@@ -8,6 +8,7 @@ main:
 # register 7 holds the player's position
 # register 8-10 holds the positions of the birds to check against (a, s, d)
 #registers 11-13 holds the position of the birds
+# register 30 holds losing status
 j game_loop
 game_loop:
 addi $r7, $r7,-120 #increment player's position for time - UPDATE CALL TO REFLECT CORRECT VALUE
@@ -19,15 +20,21 @@ beq $r6, $r4, move_left #z pressed
 beq $r6, $r5, move_right #x pressed
 continue_game_loop:
 lw $r8, a($r0) #load value of a
-lw $r9, s($r0)
-lw $r10, d($r0)
+lw $r9, s($r0) # load value of s 
+lw $r10, d($r0) # load value of d
 beq $r6, $r8, a_press
 beq $r6, $r9, s_press
 beq $r6, $r10, d_press
-check_bird_bug:
-beq $r7, $r11, bird_one_hit
-beq $r7, $r12, bird_two_hit
-beq $r7, $r13, bird_three_hit
+check_bird_bug: #check for bug intersecting bird
+beq $r7, $r11, quit
+beq $r7, $r12, quit
+beq $r7, $r13, quit
+# render screen
+jal draw_line
+jal draw_bug
+jal draw_bird
+# jump back to game loop
+j game_loop
 check_time:
 addi $r2, $r0, 50000 #add 50000 to register 2 - 50000 is clock freq
 beq $r1, $r2, update_time
@@ -53,6 +60,7 @@ d_press:
 addi $r13, $r7, 100 # CHANGE THIS CALL
 j check_bird_bug
 quit:
+addi $r30, $r0, -1
 halt
 .data
 left: .char z
