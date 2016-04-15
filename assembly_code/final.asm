@@ -102,8 +102,6 @@ j draw_line
 stop_draw_line:
 jr $ra
 draw_bug:
-
-
 stop_draw_bug:
 jr $ra
 quit:
