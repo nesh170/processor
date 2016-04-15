@@ -10,6 +10,8 @@ main:
 #registers 11-13 holds the position of the birds
 # registers 14-16 hold the bound limits for the screen
 # register 30 holds losing status
+# register 17 holds the indexing for the for loop
+# register 18 holds the color that is loaded from data memory
 # register 19 holds the coordinate value limit for drawing
 lw $r4, left($r0)
 lw $r5, right($r0)
@@ -35,9 +37,20 @@ check_bird_bug: #check for bug intersecting bird
 beq $r7, $r11, quit
 beq $r7, $r12, quit
 beq $r7, $r13, quit
-# render screen
+# render screen, draw right line first
+addi $r17, $r0, 307040
+lw $r18, color_line($r0)
 addi $r19, $r0, 480
-jal draw_line_right
+jal draw_line
+addi $r17, $r0, 306880
+# register18 should still have the color of the line, draw middle line
+addi $r19, $r0, 320
+jal draw_line
+# draw left line
+addi $r17, $r0, 304160
+addi $r19, $r0, 160
+jal draw_line
+lw $r18, color_line($r0)
 jal draw_bug
 jal draw_bird
 # jump back to game loop
@@ -81,15 +94,17 @@ j check_bird_bug
 d_press:
 addi $r13, $r7, 100 # CHANGE THIS CALL
 j check_bird_bug
-draw_line_right:
-addi $r19, $r0, 480
-addi $r17, $r0, 307040
-lw $r18, color_one($r0)
+draw_line:
 swd r18, 0($r17)
 addi $r17, $r17, -640
 blt $r17, $r19, stop_draw_line
 j draw_line
 stop_draw_line:
+jr $ra
+draw_bug:
+
+
+stop_draw_bug:
 jr $ra
 quit:
 addi $r30, $r0, -1
@@ -100,6 +115,6 @@ right: .char x
 a: .char a
 s: .char s
 d: .char d
-color_one .word 0x00ffffff
-color_two .word 0x00ffffff
-color_three .word 0x00ffffff
+color_line .word 0x00ffffff
+color_bug .word 0x00ffffff
+color_bird .word 0x00ffffff
