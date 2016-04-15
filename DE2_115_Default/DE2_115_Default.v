@@ -44,7 +44,7 @@
 module DE2_115_Default(
 
 	//////// CLOCK //////////
-   CLOCK2_50,CLOCK_50,
+   write_clock,CLOCK_50,
 	
 	/////// ADDRESS ////////
 	vga_data_write,vga_data_addr,vga_wren_enable,
@@ -70,7 +70,7 @@ module DE2_115_Default(
 //=======================================================
 
 //////////// CLOCK //////////
-input		          		CLOCK2_50,CLOCK_50;
+input		          		write_clock,CLOCK_50;
 
 /////////// ADDR ///////////
 input vga_wren_enable;
@@ -98,7 +98,7 @@ wire			mVGA_CLK;
 //	Reset Delay Timer
 Reset_Delay			r0	(	.iCLK(CLOCK_50),.oRESET(DLY_RST)	);
 
-VGA_Audio_PLL 		p1	(	.areset(~DLY_RST),.inclk0(CLOCK2_50),.c0(VGA_CTRL_CLK),.c2(mVGA_CLK)	);
+VGA_Audio_PLL 		p1	(	.areset(~DLY_RST),.inclk0(CLOCK_50),.c0(VGA_CTRL_CLK),.c2(mVGA_CLK)	);
 
 //	VGA Controller
 assign VGA_CLK = VGA_CTRL_CLK;
@@ -109,7 +109,8 @@ vga_controller vga_ins(.iRST_n(DLY_RST),
                       .oVS(VGA_VS),
                       .b_data(VGA_B),
                       .g_data(VGA_G),
-                      .r_data(VGA_R),							 
+                      .r_data(VGA_R),
+							 .write_clock(write_clock),
 							 .write_addr(vga_data_addr),
 							 .write_data(vga_data_write),
 							 .wren_signal(vga_wren_enable));
