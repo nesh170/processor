@@ -1,7 +1,7 @@
 .text
 main:
-addi $r2, $r0, 165761
-addi $r3, $r0, 191361
+addi $r2, $r0, 0
+lw $r3, addr($r0)
 addi $r1, $r0, 255
 j loop
 loop:
@@ -12,3 +12,4 @@ j loop
 exit:
 halt
 .data
+addr: .word 0x0004AFFF
