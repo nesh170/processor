@@ -1,7 +1,7 @@
 .text
 main:
 addi $r2, $r0, 0
-addi $r3, $r0, 307199
+addi $r3, $r0, 3071990
 addi $r1, $r0, 255
 j loop
 loop:
