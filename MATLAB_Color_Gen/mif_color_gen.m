@@ -5,12 +5,14 @@ function [color_index_matrix] = mif_color_gen( input_file,output_file,numrows,nu
 %  Indexes all the colors and finds them in the closest 8 bit range
 fid = fopen('color.txt');
 line1 = fgetl(fid);
-res=line1;
+res=0;
+count = 1;
 while ischar(line1)
-   res =char(res,line1);
+   res(count) = hex2dec(char(res,line1));
    line1 = fgetl(fid);
+   count=count + 1;
 end
-color_index = res(2:257,:);
+color_index = res(2:257); %check this line
 fclose(fid);
 
 img = imread(input_file);
@@ -35,8 +37,8 @@ for r = 1:rows
         red = uint8(imgscaled(r,c,1));
         green = uint8(imgscaled(r,c,2));
         blue = uint8(imgscaled(r,c,3));
-        color = red*(2^16) + green*(2^8) + blue;
-        index_color = find_closest_8bit(color);
+        color = red*(2^16) + green*(2^8) + blue
+        index_color = find_closest_8bit(color,color_index);
         fprintf(fid,'%4u : %4u;\n',count, index_color);
         color_index_matrix(r,c) = index_color;
         count = count + 1;
@@ -45,17 +47,12 @@ end
 fprintf(fid,'END;');
 fclose(fid);
 
-    function[bit_index] = find_closest_8bit(color)
-        min_diff_index = 0;
-        smallest_diff = 1e9;
-        for i=1:size(color_index,1)
-            new_number = hex2dec(color_index(i,:));
-            if(abs(color-new_number)<=smallest_diff)
-                smallest_diff = abs(color-new_number); 
-                min_diff_index = i;
-            end
-        end
-        bit_index = min_diff_index;
+    function[bit_index] = find_closest_8bit(color,color_list)
+        color_repeat = ones(size(color_list,1),1)*color;
+        diff_vec = abs(color_repeat-color_list);
+        small_diff = find(diff_vec==min(diff_vec));
+        bit_index = small_diff+1;
+
     end
 
 end
