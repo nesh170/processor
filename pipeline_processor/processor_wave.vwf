@@ -3483,6 +3483,306 @@ SIGNAL("bypass_d[0]")
 	PARENT = "bypass_d";
 }
 
+SIGNAL("vga_data_write")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 8;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("vga_data_write[7]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[6]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_write[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_write";
+}
+
+SIGNAL("vga_data_addr")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 19;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("vga_data_addr[18]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[17]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[16]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[15]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[14]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[13]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[12]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[11]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[10]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[9]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[8]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[7]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[6]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_data_addr[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "vga_data_addr";
+}
+
+SIGNAL("vga_wren_enable")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
 TRANSITION_LIST("clock")
 {
 	NODE
@@ -6815,6 +7115,258 @@ TRANSITION_LIST("bypass_d[0]")
 		REPEAT = 1;
 		LEVEL X FOR 999.0;
 		LEVEL 0 FOR 14001.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[7]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_write[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[18]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[17]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[16]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[15]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[14]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[13]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[12]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[11]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[10]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[9]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[8]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[7]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_data_addr[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
+	}
+}
+
+TRANSITION_LIST("vga_wren_enable")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 15000.0;
 	}
 }
 
@@ -10263,6 +10815,305 @@ DISPLAY_LINE
 	TREE_INDEX = 344;
 	TREE_LEVEL = 1;
 	PARENT = 338;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 345;
+	TREE_LEVEL = 0;
+	CHILDREN = 346, 347, 348, 349, 350, 351, 352, 353;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[7]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 346;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[6]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 347;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[5]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 348;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[4]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 349;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 350;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 351;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 352;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_write[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 353;
+	TREE_LEVEL = 1;
+	PARENT = 345;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 354;
+	TREE_LEVEL = 0;
+	CHILDREN = 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[18]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 355;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[17]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 356;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[16]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 357;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[15]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 358;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[14]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 359;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[13]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 360;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[12]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 361;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[11]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 362;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[10]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 363;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[9]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 364;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[8]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 365;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[7]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 366;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[6]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 367;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[5]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 368;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[4]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 369;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 370;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 371;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 372;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_data_addr[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 373;
+	TREE_LEVEL = 1;
+	PARENT = 354;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "vga_wren_enable";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 374;
+	TREE_LEVEL = 0;
 }
 
 TIME_BAR

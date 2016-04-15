@@ -9,6 +9,7 @@
 !*.pdf
 !*/assembly_codes
 !*.htm
+!*.m
 
 */simulation
 */latex
