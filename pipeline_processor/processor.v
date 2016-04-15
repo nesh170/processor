@@ -1,4 +1,4 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
+module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
 
 	input 			clock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
@@ -13,6 +13,12 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	// GRADER OUTPUTS - YOU MUST CONNECT TO YOUR DMEM
 	output 	[31:0] 	debug_data;
 	output	[11:0]	debug_addr;
+	
+	
+	//VGA IO
+	output vga_wren_enable;
+	output[18:0] vga_data_addr;
+	output[23:0] vga_data_write;
 	
 	
 

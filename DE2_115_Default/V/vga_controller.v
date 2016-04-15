@@ -5,13 +5,14 @@ module vga_controller(iRST_n,
                       oVS,
                       b_data,
                       g_data,
-                      r_data,
+                      r_data,write_clock,
                write_addr,
                write_data,
                wren_signal);
 input iRST_n;
 input iVGA_CLK;
 input wren_signal;
+input write_clock;
 output reg oBLANK_n;
 output reg oHS;
 output reg oVS;
@@ -52,7 +53,7 @@ img_data_final img_data_memory(
   .address_a(ADDR),
   .address_b(write_addr),
   .clock_a(VGA_CLK_n),
-  .clock_b(VGA_CLK_n),
+  .clock_b(write_clock),
   .data_b(write_data),
   .wren_b(wren_signal),
   .q_a(index));
