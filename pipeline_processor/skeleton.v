@@ -45,9 +45,11 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	
 	// your processor
 	wire vga_wren_enable;
+	wire[31:0] output_from_register;
 	wire[18:0] vga_data_addr;
 	wire[7:0] vga_data_write;
-	processor myprocessor(.clock(clock), .reset(~resetn), .ps2_key_pressed(ps2_key_pressed), .ps2_out(ps2_out), 
+	processor myprocessor(.clock(clock), .reset(~resetn), .ps2_key_pressed(ps2_key_pressed), .ps2_out(ps2_out),
+	.output_reg(output_from_register),
 	.lcd_write(lcd_write_en), .lcd_data(lcd_write_data), .debug_data(debug_word), .debug_addr(debug_addr),
 	.vga_wren_enable(vga_wren_enable),.vga_data_addr(vga_data_addr),.vga_data_write(vga_data_write));
 	
@@ -84,6 +86,6 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	Hexadecimal_To_Seven_Segment hex8(4'b0, seg8);
 	
 	// some LEDs that you could use for debugging if you wanted
-	assign leds = debug_word[7:0];
+	assign leds = output_from_register[7:0];
 	
 endmodule

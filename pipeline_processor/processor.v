@@ -1,10 +1,10 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
+module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,output_reg,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
 
 	input 			clock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
 	
 	output 			lcd_write;
-	output 	[31:0] 	lcd_data;
+	output 	[31:0] 	lcd_data,output_reg;
 	
 	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m,pc_d,ir_d; //debug tools
 	output [3:0] bypass_e;
@@ -56,7 +56,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire wren_sig;//WRITEBACK
 	wire[4:0] write_register;//WRITEBACK
 	wire[31:0] write_data,read_data_A,read_data_B;
-	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_sig), .ctrl_reset(reset), .ctrl_writeReg(write_register), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
+	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_sig), .ctrl_reset(reset), .ctrl_writeReg(write_register),.output_register(output_reg), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
 
 	//BRANCH STUFF, mux is shown in execute but actually done in decoding 
 	wire branch_sig;
