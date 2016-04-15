@@ -15,7 +15,7 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	assign E = instruction[27];
 	
 	wire addi_operation,subi_operation;
-	assign addi_operation = (~A&~B&C&~D&E) | (~A&~B&C&D&E) | (~A&B&~C&~D&~E);
+	assign addi_operation = (~A&~B&C&~D&E) | (~A&~B&C&D&E) | (~A&B&~C&~D&~E) | (A&~B&~C&~D&E);
 	assign subi_operation = (~A&~B&~C&D&~E) | (~A&~B&C&D&~E);
 	
 	assign i_signal = addi_operation; //signal to pick up choose immediate bits over register output

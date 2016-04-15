@@ -17,7 +17,7 @@ output reg oBLANK_n;
 output reg oHS;
 output reg oVS;
 input [18:0] write_addr;
-input [23:0] write_data;
+input [7:0] write_data;
 output [7:0] b_data;
 output [7:0] g_data;  
 output [7:0] r_data;                        

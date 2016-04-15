@@ -75,7 +75,7 @@ input		          		write_clock,CLOCK_50;
 /////////// ADDR ///////////
 input vga_wren_enable;
 input[18:0] vga_data_addr;
-input[23:0] vga_data_write;
+input[7:0] vga_data_write;
 
 //////////// VGA //////////
 output		   [7:0]		VGA_B;

@@ -46,7 +46,7 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	// your processor
 	wire vga_wren_enable;
 	wire[18:0] vga_data_addr;
-	wire[23:0] vga_data_write;
+	wire[7:0] vga_data_write;
 	processor myprocessor(.clock(clock), .reset(~resetn), .ps2_key_pressed(ps2_key_pressed), .ps2_out(ps2_out), 
 	.lcd_write(lcd_write_en), .lcd_data(lcd_write_data), .debug_data(debug_word), .debug_addr(debug_addr),
 	.vga_wren_enable(vga_wren_enable),.vga_data_addr(vga_data_addr),.vga_data_write(vga_data_write));
@@ -72,8 +72,7 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	lcd mylcd(clock, ~resetn, lcd_write_en, lcd_write_data[7:0], lcd_data, lcd_rw, lcd_en, lcd_rs, lcd_on, lcd_blon);
 	
 	// example for sending ps2 data to the first two seven segment displays
-	Hexadecimal_To_Seven_Segment hex1(ps2_out[3:0], 
-	);
+	Hexadecimal_To_Seven_Segment hex1(ps2_out[3:0], seg1);
 	Hexadecimal_To_Seven_Segment hex2(ps2_out[7:4], seg2);
 	
 	// the other seven segment displays are currently set to 0

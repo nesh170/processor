@@ -8,7 +8,7 @@ module stall_logic(fd_instruction,de_instruction,stall_signal);
 	read_register_decoder de_decoder(.instruction(de_instruction),.reg_D(de_rd));
 	
 	assign de_load = ~de_instruction[31]&de_instruction[30]&~de_instruction[29]&~de_instruction[28]&~de_instruction[27];
-	assign fd_save = ~fd_instruction[31]&~fd_instruction[30]&fd_instruction[29]&fd_instruction[28]&fd_instruction[27];
+	assign fd_save = (~fd_instruction[31]&~fd_instruction[30]&fd_instruction[29]&fd_instruction[28]&fd_instruction[27]) | (fd_instruction[31]&~fd_instruction[30]&~fd_instruction[29]&~fd_instruction[28]&fd_instruction[27]) ;
 	
 	wire equal_rs1_rd,equal_rs2_rd;
 	equal_comparator equalator_a(.in_A(fd_rs1),.in_B(de_rd),.isEqual(equal_rs1_rd));

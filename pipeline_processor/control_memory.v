@@ -1,6 +1,6 @@
-module control_memory(instruction,sw_signal);
+module control_memory(instruction,sw_signal,swd_signal);
 	input[31:0] instruction;
-	output sw_signal;
+	output sw_signal,swd_signal;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -11,5 +11,6 @@ module control_memory(instruction,sw_signal);
 	assign E = instruction[27];
 	
 	assign sw_signal = ~A&~B&C&D&E;
+	assign swd_signal = A&~B&~C&~D&E;
 
 endmodule

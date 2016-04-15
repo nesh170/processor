@@ -13,7 +13,7 @@ module read_register_decoder(instruction,reg_S1,reg_S2,reg_D,rd_rt);
 	
 	//Signal to decide whether s2 should be read from rd(if true) or rt
 	wire rd_rt_signal;
-	assign rd_rt_signal = (~A&~B&~C&D&~E) | (~A&~B&C&~D&~E) | (~A&~B&C&D&~E) | (~A&~B&C&D&E) | (A&~B&~C&~D&~E); //00010 00100 00110 00111 10000
+	assign rd_rt_signal = (~A&~B&~C&D&~E) | (~A&~B&C&~D&~E) | (~A&~B&C&D&~E) | (~A&~B&C&D&E) | (A&~B&~C&~D&~E) | (A&~B&~C&~D&E); //00010 00100 00110 00111 10000 10001
 	assign rd_rt = rd_rt_signal;
 	
 	assign reg_S1 = instruction[21:17];

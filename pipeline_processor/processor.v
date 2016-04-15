@@ -18,7 +18,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//VGA IO
 	output vga_wren_enable;
 	output[18:0] vga_data_addr;
-	output[23:0] vga_data_write;
+	output[7:0] vga_data_write;
 	
 	
 
@@ -99,12 +99,15 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 
 	//MEMORY stage
 	//MEMORY controller
-	wire sw_sig;
-	control_memory memory_controller(.instruction(em_ir_output),.sw_signal(sw_sig));
+	wire sw_sig,swd_sig;
+	control_memory memory_controller(.instruction(em_ir_output),.sw_signal(sw_sig),.swd_signal(swd_sig));
 	wire[31:0] dmem_output;	
 	wire[31:0] dmem_data_input;
 	//DMEM
 	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(dmem_data_input),.wren(sw_sig),.q(dmem_output));
+	assign vga_wren_enable = swd_sig;
+	assign vga_data_addr = em_A_output[18:0];
+	assign vga_data_write = dmem_data_input[7:0];
 
 	//MEMORY_WRITEBACK latch
 	wire[31:0] mw_pc_output,mw_ir_output,mw_A_output,mw_B_output;
