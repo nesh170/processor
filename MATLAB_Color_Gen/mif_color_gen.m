@@ -1,6 +1,6 @@
 clear
-input_file = 'matrix.jpg';
-output_file = 'matrix.mif';
+input_file = 'tikna.jpg';
+output_file = 'tikna.mif';
 numrows=640;
 numcols=480;
 
