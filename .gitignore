@@ -10,6 +10,7 @@
 !*/assembly_codes
 !*.htm
 !*.m
+!*.java
 
 */simulation
 */latex
