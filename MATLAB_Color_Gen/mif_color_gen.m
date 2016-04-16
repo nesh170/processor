@@ -1,6 +1,6 @@
 clear
-input_file = 'horizon.jpg';
-output_file = 'horizon.mif';
+input_file = 'matrix.jpg';
+output_file = 'matrix.mif';
 numrows=640;
 numcols=480;
 
