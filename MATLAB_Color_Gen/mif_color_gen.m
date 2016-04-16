@@ -1,21 +1,24 @@
-function [color_index_matrix] = mif_color_gen( input_file,output_file,numrows,numcols)
-%mif_color_gen This method takes in an image from the user and outputs a
-%.mif file
+clear
+input_file = 'horizon.jpg';
+output_file = 'horizon.mif';
+numrows=640;
+numcols=480;
 
-%  Indexes all the colors and finds them in the closest 8 bit range
+res=0;
 fid = fopen('color.txt');
 line1 = fgetl(fid);
-res=0;
+color_index=ones(255,1);
 count = 1;
 while ischar(line1)
-   res(count) = hex2dec(char(res,line1));
+   res = char(res,line1);
+   color_index(count) = hex2dec(res(count,:));
    line1 = fgetl(fid);
    count=count + 1;
 end
-color_index = res(2:257); %check this line
+color_index = color_index(2:end);
 fclose(fid);
 
-img = imread(input_file);
+[img] = imread(input_file);
 imgresized = imresize(img, [numrows numcols]);
 
 [rows, cols, rgb] = size(imgresized);
@@ -30,31 +33,22 @@ fprintf(fid,'DEPTH = %4u;\n\n',rows*cols);
 fprintf(fid,'ADDRESS_RADIX = UNS;\n');
 fprintf(fid,'DATA_RADIX = UNS;\n\n');
 fprintf(fid,'CONTENT BEGIN\n');
-
+tic
 count = 0;
 for r = 1:rows
     for c = 1:cols
-        red = uint8(imgscaled(r,c,1));
-        green = uint8(imgscaled(r,c,2));
-        blue = uint8(imgscaled(r,c,3));
-        color = red*(2^16) + green*(2^8) + blue
-        index_color = find_closest_8bit(color,color_index);
+        color =  double(imgresized(r, c, 1)).*double(imgresized(r, c, 2)).*double(imgresized(r, c, 3));
+        color = double(color);
+        [index_color] = find_closest_8bit(color,color_index);
         fprintf(fid,'%4u : %4u;\n',count, index_color);
-        color_index_matrix(r,c) = index_color;
+        color_index_matrix(r,c) = index_color(1);
         count = count + 1;
     end
 end
+toc
 fprintf(fid,'END;');
 fclose(fid);
 
-    function[bit_index] = find_closest_8bit(color,color_list)
-        color_repeat = ones(size(color_list,1),1)*color;
-        diff_vec = abs(color_repeat-color_list);
-        small_diff = find(diff_vec==min(diff_vec));
-        bit_index = small_diff+1;
 
-    end
-
-end
 
 
