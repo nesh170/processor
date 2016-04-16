@@ -73,17 +73,15 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	// lcd controller
 	lcd mylcd(clock, ~resetn, lcd_write_en, lcd_write_data[7:0], lcd_data, lcd_rw, lcd_en, lcd_rs, lcd_on, lcd_blon);
 	
-	// example for sending ps2 data to the first two seven segment displays
-	Hexadecimal_To_Seven_Segment hex1(ps2_out[3:0], seg1);
-	Hexadecimal_To_Seven_Segment hex2(ps2_out[7:4], seg2);
-	
-	// the other seven segment displays are currently set to 0
-	Hexadecimal_To_Seven_Segment hex3(4'b1, seg3);
-	Hexadecimal_To_Seven_Segment hex4(4'b0, seg4);
-	Hexadecimal_To_Seven_Segment hex5(4'b0, seg5);
-	Hexadecimal_To_Seven_Segment hex6(4'b0, seg6);
-	Hexadecimal_To_Seven_Segment hex7(4'b0, seg7);
-	Hexadecimal_To_Seven_Segment hex8(4'b0, seg8);
+	// HEXADECIMAL DISPLAY FOR TIME
+	Hexadecimal_To_Seven_Segment hex1(output_from_register[3:0], seg1);
+	Hexadecimal_To_Seven_Segment hex2(output_from_register[7:4], seg2);
+	Hexadecimal_To_Seven_Segment hex3(output_from_register[11:8], seg3);
+	Hexadecimal_To_Seven_Segment hex4(output_from_register[15:12], seg4);
+	Hexadecimal_To_Seven_Segment hex5(output_from_register[19:16], seg5);
+	Hexadecimal_To_Seven_Segment hex6(output_from_register[23:20], seg6);
+	Hexadecimal_To_Seven_Segment hex7(output_from_register[27:24], seg7);
+	Hexadecimal_To_Seven_Segment hex8(output_from_register[31:28], seg8);
 	
 	// some LEDs that you could use for debugging if you wanted
 	assign leds = output_from_register[7:0];
