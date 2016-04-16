@@ -12,7 +12,7 @@ public class color_gen {
 			writer.newLine();
 			writer.write("ADDRESS_RADIX = UNS;");
 			writer.newLine();
-			writer.write("DATA_RADIX = UNS;");
+			writer.write("DATA_RADIX = HEX;");
 			writer.newLine();
 			writer.newLine();
 			writer.write("CONTENT BEGIN");
