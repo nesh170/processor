@@ -35,7 +35,7 @@ module regfile(clock, ctrl_writeEnable, ctrl_reset, ctrl_writeReg, ctrl_readRegA
 		end
 	endgenerate
 	
-	assign output_register = out_array[1]; //CHANGE THE VALUE HERE TO DETERMINE WHICH REGISTER YOU WANT THE DATA FROM
+	assign output_register = out_array[3]; //CHANGE THE VALUE HERE TO DETERMINE WHICH REGISTER YOU WANT THE DATA FROM
 
 endmodule
 
