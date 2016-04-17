@@ -126,12 +126,12 @@ move_left:
 addi $r26, $r0, 1
 bne $r25, $r26, continue_game_loop
 addi $r25, $r25, -1
-addi $r7, $r7, -120
+addi $r7, $r7, -160
 j continue_game_loop
 move_right:
 addi $r26, $r0, 3
 bne $r2, $r26, continue_game_loop
-addi $r7, $r7, 120
+addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
 a_press:
@@ -201,5 +201,5 @@ color_background: .word 0x0004AFFF
 right_line_limit: .word 0x0004AF60
 middle_line_limit: .word 0x0004AEC0
 left_line_limit: .word 0x0004A420
-initial_position: .word 0x0004A4C0
+initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
