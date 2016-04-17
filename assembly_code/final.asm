@@ -18,9 +18,13 @@ main:
 # register 22 holds the color to store (red)
 # register 23 holds the offset for drawing bounding box (50)
 # register 24 holds the offset for drawing other offset of bounding box (-50)
+# register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
+# register 26 holds the position to check against (1)
+nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
+addi $r25, $r0, 2
 lw $r8, 2($r0)
 lw $r9, 3($r0)
 lw $r10, 4($r0)
@@ -31,7 +35,7 @@ addi $r16, $r0, 480
 lw $r20, 8($r0)
 addi $r21, $r21, 0
 addi $r22, $r0, 92
-j game_loop # edit to write background
+j background_loop # edit to write background
 background_loop:
 bgt $r21, $r20, exit_background
 sw $r22, 0($r21)
@@ -60,15 +64,15 @@ lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
 # draws right bounding box
-jal draw_bounding_box
+#jal draw_bounding_box
 # draw middle bounding box
 lw $r17, 10($r0)
 addi $r19, $r0, 320
-jal draw_bounding_box
+#jal draw_bounding_box
 # draw left bounding box
 lw $r17, 11($r0)
 addi $r19, $r0, 160
-jal draw_bounding_box
+#jal draw_bounding_box
 lw $r17, 9($r0)
 lw $r18, 5($r0)
 addi $r19, $r0, 480
@@ -112,17 +116,23 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 32
+addi $r2, $r0, 16
 bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
 addi $r7, $r7, -640
 jr $r31
 move_left:
-addi $r7, $r7, -200
+addi $r26, $r0, 1
+bne $r25, $r26, continue_game_loop
+addi $r25, $r25, -1
+addi $r7, $r7, -120
 j continue_game_loop
 move_right:
-addi $r7, $r7, 200
+addi $r26, $r0, 3
+bne $r2, $r26, continue_game_loop
+addi $r7, $r7, 120
+addi $r25, $r25, 1
 j continue_game_loop
 a_press:
 addi $r11, $r7, 100 # CHANGE THIS CALL
