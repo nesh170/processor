@@ -18,7 +18,7 @@ module control_writeback(instruction,write_reg_number,jal_signal,lw_signal,wren_
 	
 	assign jal_signal = jal_signal_wire;
 	assign lw_signal = ~A&B&~C&~D&~E;
-	assign wren_signal = (~A&~B&~C&~D&~E) | (~A&~B&~C&D&E) | (~A&~B&C&~D&E) | (~A&B&~C&~D&~E);
+	assign wren_signal = (~A&~B&~C&~D&~E) | (~A&~B&~C&D&E) | (~A&~B&C&~D&E) | (~A&B&~C&~D&~E) | (A&B&C&D&~E);
 	
 	
 endmodule

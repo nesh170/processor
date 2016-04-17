@@ -111,7 +111,7 @@ module img_data_final (
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.clock_enable_output_b = "BYPASS",
 		altsyncram_component.indata_reg_b = "CLOCK1",
-		altsyncram_component.init_file = "VGA_DATA/img_data_logo2.mif",
+		altsyncram_component.init_file = "VGA_DATA/white_walls.mif",
 		altsyncram_component.intended_device_family = "Cyclone IV E",
 		altsyncram_component.lpm_type = "altsyncram",
 		altsyncram_component.numwords_a = 307200,
