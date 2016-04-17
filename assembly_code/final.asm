@@ -31,7 +31,7 @@ addi $r16, $r0, 480
 lw $r20, 8($r0)
 addi $r21, $r21, 0
 addi $r22, $r0, 92
-j background_loop
+j game_loop # edit to write background
 background_loop:
 bgt $r21, $r20, exit_background
 sw $r22, 0($r21)
@@ -40,10 +40,9 @@ j background_loop
 exit_background:
 j game_loop
 game_loop:
-#addi $r7, $r7,-640 #increment player's position for time - UPDATE CALL TO REFLECT CORRECT VALUE
-#jal check_player_pos
 addi $r1, $r1, 1 #register 1 holds time
 jal check_time
+jal increment_player_pos
 jal check_player_pos
 addi $r6, $r0, 0 # TTY display
 bne $r6, $r4, move_left #z pressed
@@ -110,14 +109,20 @@ bne $r1, $r2, update_time
 jr $r31
 update_time:
 addi $r3, $r3, 1
-addi $r7, $r7, -3200
 add $r1, $r0, $r0
 jr $r31
+increment_player_pos:
+addi $r2, $r0, 32
+bne $r1, $r2, update_player_pos
+jr $r31
+update_player_pos:
+addi $r7, $r7, -640
+jr $r31
 move_left:
-addi $r7, $r7, -120
+addi $r7, $r7, -200
 j continue_game_loop
 move_right:
-addi $r7, $r7, 120
+addi $r7, $r7, 200
 j continue_game_loop
 a_press:
 addi $r11, $r7, 100 # CHANGE THIS CALL
