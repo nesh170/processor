@@ -89,9 +89,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 
 	//TTY Operations
 	wire[31:0] ps2_in_32,ps2_out_32;
-	assign ps2_in_32[31:8] = 24'b0;
-	assign ps2_in_32[7:0] = ps2_out;
-	register ps2_register(.bitsIn(ps2_in_32), .bitsOut(ps2_out_32), .writeEnable(ps2_key_pressed), .reset(reset), .clk(~clock));
+	assign ps2_out_32[31:8] = 24'b0;
+	assign ps2_out_32[7:0] = ps2_out;
+	//register ps2_register(.bitsIn(ps2_in_32), .bitsOut(ps2_out_32), .writeEnable(ps2_key_pressed), .reset(reset), .clk(clock));
 
 	//ALU
 	wire[31:0] ALU_input_B,ALU_output,temp_ALU_input_A,ALU_input_A,temp_ALU_input_B;
