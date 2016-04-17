@@ -104,7 +104,7 @@ mod_right:
 lw $r7, 9($r0)
 jr $r31
 check_time:
-addi $r2, $r0, 5000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 2000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -152,14 +152,17 @@ sw $r18, 638($r7)
 jr $ra
 draw_bounding_box:
 add $r30, $r31, $r0 # move previous ra to $r30
+j pls_draw_bounding_box
+pls_draw_bounding_box:
 addi $r23, $r17, -50
 addi $r24, $r17, 50
 jal actual_draw
 blt $r17, $r19, stop_drawing
 addi $r17, $r17, -640
-j draw_bounding_box
+j pls_draw_bounding_box
 stop_drawing:
-jr $r30
+add $ra,$r0,$r30
+jr $ra
 actual_draw:
 bgt $r23, $r24, exit_actual_draw
 sw $r18, 0($r23)
