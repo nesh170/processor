@@ -45,7 +45,7 @@ game_loop:
 addi $r1, $r1, 1 #register 1 holds time
 jal check_time
 jal check_player_pos
-addi $r6, $r0, 0
+addi $r6, $r0, 0 # TTY display
 bne $r6, $r4, move_left #z pressed
 bne $r6, $r5, move_right #x pressed
 continue_game_loop:
