@@ -116,7 +116,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 16
+addi $r2, $r0, 1
 bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
@@ -130,7 +130,7 @@ addi $r7, $r7, -160
 j continue_game_loop
 move_right:
 addi $r26, $r0, 3
-bne $r2, $r26, continue_game_loop
+bne $r25, $r26, continue_game_loop
 addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
@@ -169,8 +169,8 @@ draw_bounding_box:
 add $r30, $r31, $r0 # move previous ra to $r30
 j pls_draw_bounding_box
 pls_draw_bounding_box:
-addi $r23, $r17, -20
-addi $r24, $r17, 20
+addi $r23, $r17, -8
+addi $r24, $r17, 8
 jal actual_draw
 blt $r17, $r19, stop_drawing
 addi $r17, $r17, -640
@@ -200,6 +200,6 @@ color_bird: .word 0x00ffffff
 color_background: .word 0x0004AFFF
 right_line_limit: .word 0x0004AF60
 middle_line_limit: .word 0x0004AEC0
-left_line_limit: .word 0x0004A420
+left_line_limit: .word 0x0004AE20
 initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
