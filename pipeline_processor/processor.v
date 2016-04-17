@@ -78,18 +78,25 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
 	wire[31:0] jump_immediate_data;
-	wire i_sig,j_sig,jr_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output));
+	wire i_sig,j_sig,jr_sig,tty_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig));
 	
 	//JUMP Stuff
 	wire[31:0] jump_branch_next_pc,temp_jump_next_pc;
 	assign temp_jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
 	assign jump_branch_next_pc = (branch_sig) ? new_branch_pc : temp_jump_next_pc; //branch_sig calculations are done in the decode stage
 	assign pc_input = (j_sig | branch_sig) ? jump_branch_next_pc : next_pc_output;
-	
+
+	//TTY Operations
+	wire[31:0] ps2_out_32;
+	assign ps2_out_32[31:8] = 24'b0;
+	assign ps2_out_32[7:0] = ps2_out;
+
 	//ALU
-	wire[31:0] ALU_input_B,ALU_output,ALU_input_A,temp_ALU_input_B;
+	wire[31:0] ALU_input_B,ALU_output,temp_ALU_input_A,ALU_input_A,temp_ALU_input_B;
 	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
+	assign ALU_input_A = (tty_sig) ? ps2_out_32 : 32'bZ;
+	assign ALU_input_A = (~tty_sig) ? temp_ALU_input_A : 32'bZ;
 	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
 	
 	//EXECUTE_MEMORY_LATCH
@@ -105,6 +112,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] dmem_data_input;
 	//DMEM
 	dmem mydmem(.address(em_A_output[11:0]),.clock(~clock),.data(dmem_data_input),.wren(sw_sig),.q(dmem_output));
+	
+	//VGA DMEM
 	assign vga_wren_enable = swd_sig;
 	assign vga_data_addr = em_A_output[18:0];
 	assign vga_data_write = dmem_data_input[7:0];
@@ -136,9 +145,10 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	bypass_e execute_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.bypass_A_sig(bypass_e_A_sig),.bypass_B_sig(bypass_e_B_sig));
 	
 	//ALU_input_A bypass
-	assign ALU_input_A = (bypass_e_A_sig[1]) ? em_A_output : 32'bZ;
-	assign ALU_input_A = (bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? write_data : 32'bZ;
-	assign ALU_input_A = (~bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? de_A_output :32'bZ;
+	assign temp_ALU_input_A = (bypass_e_A_sig[1]) ? em_A_output : 32'bZ;
+	assign temp_ALU_input_A = (bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? write_data : 32'bZ;
+	assign temp_ALU_input_A = (~bypass_e_A_sig[0] & ~bypass_e_A_sig[1]) ? de_A_output :32'bZ;
+
 	
 	//ALU_input_B bypass
 	assign temp_ALU_input_B = (bypass_e_B_sig[1]) ? em_A_output : 32'bZ;

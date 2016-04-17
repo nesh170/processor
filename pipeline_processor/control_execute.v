@@ -1,8 +1,8 @@
-module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc);
+module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc,tty_signal);
 	input[31:0] instruction,pc;
 	output[4:0] ALU_opcode,ctrl_shamt;
 	output[31:0] immediate_value,jump_immediate_value;
-	output i_signal,j_signal,jr_signal;
+	output i_signal,j_signal,jr_signal,tty_signal;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -15,12 +15,13 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	assign E = instruction[27];
 	
 	wire addi_operation,subi_operation;
-	assign addi_operation = (~A&~B&C&~D&E) | (~A&~B&C&D&E) | (~A&B&~C&~D&~E) | (A&~B&~C&~D&E);
+	assign addi_operation = (~A&~B&C&~D&E) | (~A&~B&C&D&E) | (~A&B&~C&~D&~E) | (A&~B&~C&~D&E) | (A&B&C&D&~E);
 	assign subi_operation = (~A&~B&~C&D&~E) | (~A&~B&C&D&~E);
 	
 	assign i_signal = addi_operation; //signal to pick up choose immediate bits over register output
 	assign j_signal = (~A&~B&~C&~D&E) | (~A&~B&~C&D&E) | (~A&~B&C&~D&~E); //this is 3 jumps
 	assign jr_signal = (~A&~B&C&~D&~E);
+	assign tty_signal = (A&B&C&D&~E); //This is for the keyboard input
 	assign ALU_opcode = (addi_operation&~subi_operation) ? 5'b00000 : 5'bZ; //addi,sw,lw
 	assign ALU_opcode = (subi_operation&~addi_operation) ? 5'b00001 : 5'bZ; //for branching
 	assign ALU_opcode = (~addi_operation&~subi_operation) ? instruction[6:2] : 5'bZ; //regular operations

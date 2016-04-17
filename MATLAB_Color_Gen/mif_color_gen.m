@@ -1,6 +1,6 @@
 clear
-input_file = 'matrix.jpg';
-output_file = 'matrix.mif';
+input_file = 'white_walls.jpg';
+output_file = 'white_walls.mif';
 numrows=640;
 numcols=480;
 
@@ -18,14 +18,12 @@ end
 color_index = color_index(2:end);
 fclose(fid);
 
-[img] = imread(input_file);
-imgresized = imresize(img, [numrows numcols]);
-
-[rows, cols, rgb] = size(imgresized);
-
-imgscaled = imgresized/16 - 1;
-imshow(imgscaled*16);
+img = imread(input_file);
+cols = 640;
+rows = 480;
+imshow(img);
 color_index_matrix = ones(rows,cols);
+color_matrix = ones(rows,cols,3);
 fid = fopen(output_file,'w');
 fprintf(fid,'-- %3ux%3u 12bit image color values\n\n',rows,cols);
 fprintf(fid,'WIDTH = 12;\n');
@@ -37,15 +35,20 @@ tic
 count = 0;
 for r = 1:rows
     for c = 1:cols
-        color =  double(imgresized(r, c, 1)).*double(imgresized(r, c, 2)).*double(imgresized(r, c, 3));
+        color =  double(img(r, c, 1)).*double(img(r, c, 2)).*double(img(r, c, 3));
         color = double(color);
-        [index_color] = find_closest_8bit(color,color_index);
+        [index_color,out_pixels] = find_closest_8bit(color,color_index);
         fprintf(fid,'%4u : %4u;\n',count, index_color);
         color_index_matrix(r,c) = index_color(1);
+        color_matrix(r,c, :) = out_pixels;
         count = count + 1;
     end
 end
 toc
+
+figure(2)
+imshow(color_matrix)
+
 fprintf(fid,'END;');
 fclose(fid);
 
