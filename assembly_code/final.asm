@@ -20,11 +20,13 @@ main:
 # register 24 holds the offset for drawing other offset of bounding box (-50)
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
 # register 26 holds the position to check against (1)
+# register 27 holds position of player with respect to center line
 nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
 addi $r25, $r0, 2
+addi $r27, $r7, 0
 lw $r8, 2($r0)
 lw $r9, 3($r0)
 lw $r10, 4($r0)
@@ -85,7 +87,7 @@ bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
 # render screen, draw right line first
-
+jal update_center_pos
 lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 7($r0)
@@ -100,15 +102,18 @@ bne $r7, $r16, mod_right
 jr $r31
 mod_left:
 lw $r7, 11($r0)
+addi $r27, $r7, 160
 jr $r31
 mod_center:
 lw $r7, 10($r0)
+addi $r27, $r7, 0
 jr $r31
 mod_right:
 lw $r7, 9($r0)
+addi $r27, $r7, -160
 jr $r31
 check_time:
-addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 50000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -117,15 +122,16 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 1
+addi $r2, $r0, 2500
 bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
 addi $r7, $r7, -640
+addi $r27, $r27, -640
 jr $r31
 move_left:
 addi $r26, $r0, 1
-bne $r25, $r26, continue_game_loop
+bne $r25, $r26, continue_game_loop # mod check
 addi $r25, $r25, -1
 addi $r7, $r7, -160
 j continue_game_loop
@@ -185,6 +191,33 @@ sw $r18, 0($r23)
 addi $r23, $r23, 1
 j actual_draw
 exit_actual_draw:
+jr $ra
+update_center_pos:
+# register 27 has the position of the bug relative to the center wire
+addi $r28, $r27, -12800 # 2o pixels up
+lw $r18, 13($r0)
+addi $r30, $r27, 12800
+j draw_right_portion
+draw_right_portion:
+bgt $r28, $r30, stop_drawing_box
+addi $r29, $r28, 8
+blt $r29, $r28, exit_draw_right
+sw $r18, 0($r29)
+addi $r29, $r29, -1
+j draw_right_portion
+exit_draw_right:
+addi $r29, $r28, -8
+bgt $r29, $r28, exit_draw_left
+sw $r18, 0($r29)
+addi $r29, $r29, 1
+j exit_draw_right
+exit_draw_left:
+lw $r18, 5($r0) #load white
+sw $r18, 0($r28)
+addi $r28, $r28, 640
+lw $r18, 13($r0)
+j draw_right_portion
+stop_drawing_box:
 jr $ra
 quit:
 addi $r30, $r0, -1
