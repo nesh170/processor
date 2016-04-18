@@ -21,6 +21,7 @@ main:
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
 # register 26 holds the position to check against (1)
 # register 27 holds position of player with respect to center line
+# registers we can use: $r2 (is overwritten on every iteration of loop)
 nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
