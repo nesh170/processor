@@ -20,8 +20,6 @@ main:
 # register 24 holds the offset for drawing other offset of bounding box (-50)
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
 # register 26 holds the position to check against (1)
-# register 27 holds the player position check
-# register 28 holds the render loop check
 nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
@@ -47,8 +45,6 @@ exit_background:
 j game_loop
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
-addi $r27, $r27, 1
-addi $r28, $r28, 1
 jal check_time
 jal increment_player_pos
 jal check_player_pos
@@ -63,9 +59,36 @@ check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
-addi $r2, $r0, 300
-bne $r28, $r2, render_loop
-# render screen, draw right line first - every 500 iterations of game loop
+# render screen, draw right line first
+lw $r18, 13($r0)
+lw $r17, 9($r0)
+addi $r19, $r0, 480
+# draws right bounding box
+jal draw_bounding_box
+# draw middle bounding box
+lw $r17, 10($r0)
+addi $r19, $r0, 320
+jal draw_bounding_box
+# draw left bounding box
+lw $r17, 11($r0)
+addi $r19, $r0, 160
+jal draw_bounding_box
+lw $r17, 9($r0)
+lw $r18, 5($r0)
+addi $r19, $r0, 480
+jal draw_line
+lw $r17, 10($r0)
+# register18 should still have the color of the line, draw middle line
+addi $r19, $r0, 320
+jal draw_line
+# draw left line
+lw $r17, 11($r0)
+addi $r19, $r0, 160
+jal draw_line
+lw $r18, 6($r0)
+jal draw_bug
+lw $r18, 7($r0)
+#jal draw_bird
 # jump back to game loop
 j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
@@ -84,7 +107,7 @@ mod_right:
 lw $r7, 9($r0)
 jr $r31
 check_time:
-addi $r2, $r0, 60000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -93,12 +116,11 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 2000
-bne $r27, $r2, update_player_pos
+addi $r2, $r0, 1
+bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
 addi $r7, $r7, -640
-add $r27, $r0, $r0
 jr $r31
 move_left:
 addi $r26, $r0, 1
@@ -163,38 +185,6 @@ addi $r23, $r23, 1
 j actual_draw
 exit_actual_draw:
 jr $ra
-render_loop:
-addi $r28, $r0, 0
-lw $r18, 13($r0)
-lw $r17, 9($r0)
-addi $r19, $r0, 480
-# draws right bounding box
-jal draw_bounding_box
-# draw middle bounding box
-lw $r17, 10($r0)
-addi $r19, $r0, 320
-jal draw_bounding_box
-# draw left bounding box
-lw $r17, 11($r0)
-addi $r19, $r0, 160
-#jal draw_bounding_box
-lw $r17, 9($r0)
-lw $r18, 5($r0)
-addi $r19, $r0, 480
-jal draw_line
-lw $r17, 10($r0)
-# register18 should still have the color of the line, draw middle line
-addi $r19, $r0, 320
-jal draw_line
-# draw left line
-lw $r17, 11($r0)
-addi $r19, $r0, 160
-jal draw_line
-lw $r18, 6($r0)
-jal draw_bug
-lw $r18, 7($r0)
-#jal draw_bird
-j game_loop
 quit:
 addi $r30, $r0, -1
 halt
