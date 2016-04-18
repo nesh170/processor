@@ -95,8 +95,9 @@ bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
 # render screen, draw right line first
+j configure_bounding_box
 # jump back to game loop
-j game_loop
+#j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
 bne $r7, $r14, mod_left
@@ -197,6 +198,13 @@ exit_actual_draw:
 jr $ra
 
 
+configure_bounding_box:
+# draws center bounding box
+addi $r28, $r27, -12800
+addi $r30, $r27, 12800
+jal update_bounding_box
+jal draw_bug
+j game_loop
 
 update_bounding_box:
 bgt $r28, $r30, finish_update
@@ -227,10 +235,8 @@ sw $r18, -8($r28)
 addi $r28, $r28, 640
 j update_bounding_box
 
-
-
 finish_update:
-
+jr $ra
 
 quit:
 addi $r30, $r0, -1
