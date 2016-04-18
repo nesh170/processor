@@ -132,7 +132,11 @@ add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
 <<<<<<< HEAD
+<<<<<<< HEAD
 addi $r2, $r0, 200
+=======
+addi $r2, $r0, 16
+>>>>>>> parent of 61e0538... more changes
 =======
 addi $r2, $r0, 16
 >>>>>>> parent of 61e0538... more changes
