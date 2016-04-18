@@ -122,7 +122,7 @@ mod_right:
 lw $r7, 9($r0)
 jr $r31
 check_time:
-addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 2000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -131,7 +131,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 1
+addi $r2, $r0, 200
 bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
