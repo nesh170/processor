@@ -20,10 +20,14 @@ main:
 # register 24 holds the offset for drawing other offset of bounding box (-50)
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
 # register 26 holds the position to check against (1)
+# register 27 holds the position of the bug relative to the center
+# register 28 holds the coordinate 20 pixels north of register 27
+# register 30 holds the coordinates 20 pixels south of register 27
 nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
+addi $r27, $r7, 0
 addi $r25, $r0, 2
 lw $r8, 2($r0)
 lw $r9, 3($r0)
@@ -42,24 +46,8 @@ sw $r22, 0($r21)
 addi $r21, $r21, 1
 j background_loop
 exit_background:
-j game_loop
-game_loop:
-addi $r1, $r1, 1 #register 1 holds time
-jal check_time
-jal increment_player_pos
-jal check_player_pos
-addi $r6, $r0, 0 # TTY display
-bne $r6, $r4, move_left #z pressed
-bne $r6, $r5, move_right #x pressed
-continue_game_loop:
-bne $r6, $r8, a_press 
-bne $r6, $r9, s_press
-bne $r6, $r10, d_press
-check_bird_bug: #check for bug intersecting bird
-bne $r7, $r11, quit
-bne $r7, $r12, quit
-bne $r7, $r13, quit
-# render screen, draw right line first
+j initialize_screen
+initialize_screen:
 lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
@@ -89,6 +77,24 @@ lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 7($r0)
 #jal draw_bird
+j game_loop
+game_loop:
+addi $r1, $r1, 1 #register 1 holds time
+jal check_time
+jal increment_player_pos
+jal check_player_pos
+addi $r6, $r0, 0 # TTY display
+bne $r6, $r4, move_left #z pressed
+bne $r6, $r5, move_right #x pressed
+continue_game_loop:
+bne $r6, $r8, a_press 
+bne $r6, $r9, s_press
+bne $r6, $r10, d_press
+check_bird_bug: #check for bug intersecting bird
+bne $r7, $r11, quit
+bne $r7, $r12, quit
+bne $r7, $r13, quit
+# render screen, draw right line first
 # jump back to game loop
 j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
@@ -99,12 +105,15 @@ bne $r7, $r16, mod_right
 jr $r31
 mod_left:
 lw $r7, 11($r0)
+addi $r27, $r7, 640
 jr $r31
 mod_center:
 lw $r7, 10($r0)
+addi $r27, $r7, 0
 jr $r31
 mod_right:
 lw $r7, 9($r0)
+addi $r27, $r7, -640
 jr $r31
 check_time:
 addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
@@ -121,6 +130,7 @@ bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
 addi $r7, $r7, -640
+addi $r27, $r27, -640
 jr $r31
 move_left:
 addi $r26, $r0, 1
@@ -185,6 +195,43 @@ addi $r23, $r23, 1
 j actual_draw
 exit_actual_draw:
 jr $ra
+
+
+
+update_bounding_box:
+bgt $r28, $r30, finish_update
+j inner_bounding_box_loop
+
+
+
+inner_bounding_box_loop:
+lw $r18, 5($r0)
+sw $r18, 0($r28)
+lw $r18, 13($r0) # load color
+sw $r18, 1($r28)
+sw $r18, 2($r28)
+sw $r18, 3($r28)
+sw $r18, 4($r28)
+sw $r18, 5($r28)
+sw $r18, 6($r28)
+sw $r18, 7($r28)
+sw $r18, 8($r28)
+sw $r18, -1($r28)
+sw $r18, -2($r28)
+sw $r18, -3($r28)
+sw $r18, -4($r28)
+sw $r18, -5($r28)
+sw $r18, -6($r28)
+sw $r18, -7($r28)
+sw $r18, -8($r28)
+addi $r28, $r28, 640
+j update_bounding_box
+
+
+
+finish_update:
+
+
 quit:
 addi $r30, $r0, -1
 halt
