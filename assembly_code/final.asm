@@ -213,6 +213,8 @@ configure_bounding_box:
 #addi $r27, $r27, -160
 addi $r28, $r27, -12800
 addi $r29, $r27, 12800
+lw $r30, 14($r0)
+bgt $r27, $r30, game_loop
 jal update_bounding_box
 lw $r18, 6($r0)
 jal draw_bug
@@ -268,3 +270,4 @@ middle_line_limit: .word 0x0004AEC0
 left_line_limit: .word 0x0004AE20
 initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
+limit_drawing: .word 0x00047CC0
