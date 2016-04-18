@@ -94,10 +94,16 @@ check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
-# render screen, draw right line first
+# render screen, update center
 addi $r28, $r27, -12800
 addi $r29, $r27, 12800
 jal update_bounding_box
+# update left bounding box
+#addi $r27, $r27, -160
+#addi $r28, $r27, -12800
+#addi $r29, $r27, 12800
+#jal update_bounding_box
+#addi $r27, $r27, 160 # add offset back
 lw $r18, 6($r0)
 jal draw_bug
 # jump back to game loop
