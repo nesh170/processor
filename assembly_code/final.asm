@@ -106,7 +106,7 @@ bne $r7, $r16, mod_right
 jr $r31
 mod_left:
 lw $r7, 11($r0)
-addi $r27, $r7, 640
+addi $r27, $r7, 160
 jr $r31
 mod_center:
 lw $r7, 10($r0)
@@ -114,7 +114,7 @@ addi $r27, $r7, 0
 jr $r31
 mod_right:
 lw $r7, 9($r0)
-addi $r27, $r7, -640
+addi $r27, $r7, -160
 jr $r31
 check_time:
 addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
@@ -213,7 +213,8 @@ configure_bounding_box:
 #addi $r27, $r27, -160
 addi $r28, $r27, -12800
 addi $r29, $r27, 12800
-#jal update_bounding_box
+jal update_bounding_box
+lw $r18, 6($r0)
 jal draw_bug
 j game_loop
 
