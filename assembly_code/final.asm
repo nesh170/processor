@@ -63,7 +63,7 @@ check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
-addi $r2, $r0, 1000
+addi $r2, $r0, 200
 bne $r28, $r2, render_loop
 # render screen, draw right line first - every 500 iterations of game loop
 # jump back to game loop
@@ -84,7 +84,7 @@ mod_right:
 lw $r7, 9($r0)
 jr $r31
 check_time:
-addi $r2, $r0, 50000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 100000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -93,7 +93,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 1000
+addi $r2, $r0, 5000
 bne $r27, $r2, update_player_pos
 jr $r31
 update_player_pos:
