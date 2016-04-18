@@ -20,8 +20,6 @@ main:
 # register 24 holds the offset for drawing other offset of bounding box (-50)
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
 # register 26 holds the position to check against (1)
-# register 27 holds the horizontal offsets to add to redraw the boxes
-# register 28 holds the upward offsets to redraw the boxes
 nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
@@ -44,8 +42,24 @@ sw $r22, 0($r21)
 addi $r21, $r21, 1
 j background_loop
 exit_background:
-j initialize_screen
-initialize_screen:
+j game_loop
+game_loop:
+addi $r1, $r1, 1 #register 1 holds time
+jal check_time
+jal increment_player_pos
+jal check_player_pos
+addi $r6, $r0, 0 # TTY display
+bne $r6, $r4, move_left #z pressed
+bne $r6, $r5, move_right #x pressed
+continue_game_loop:
+bne $r6, $r8, a_press 
+bne $r6, $r9, s_press
+bne $r6, $r10, d_press
+check_bird_bug: #check for bug intersecting bird
+bne $r7, $r11, quit
+bne $r7, $r12, quit
+bne $r7, $r13, quit
+# render screen, draw right line first
 lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
@@ -71,35 +85,6 @@ jal draw_line
 lw $r17, 11($r0)
 addi $r19, $r0, 160
 jal draw_line
-j game_loop
-game_loop:
-addi $r1, $r1, 1 #register 1 holds time
-jal check_time
-jal increment_player_pos
-jal check_player_pos
-addi $r6, $r0, 0 # TTY display
-bne $r6, $r4, move_left #z pressed
-bne $r6, $r5, move_right #x pressed
-continue_game_loop:
-bne $r6, $r8, a_press 
-bne $r6, $r9, s_press
-bne $r6, $r10, d_press
-check_bird_bug: #check for bug intersecting bird
-bne $r7, $r11, quit
-bne $r7, $r12, quit
-bne $r7, $r13, quit
-# render screen, draw right line first
-# if bug is on left line, redraw bounding box and line around that bug on all three
-addi $r26, $r0, 1
-bne $r25, $r26, update_left
-continue_pls_drawing:
-# bug on center line
-addi $r26, $r0, 2
-#bne $r25, $r26, update_center
-# bug on right line
-addi $r26, $r0, 3
-#bne $r25, $r26, update_right
-resume_drawing:
 lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 7($r0)
@@ -122,7 +107,7 @@ mod_right:
 lw $r7, 9($r0)
 jr $r31
 check_time:
-addi $r2, $r0, 2000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -131,11 +116,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-<<<<<<< HEAD
-addi $r2, $r0, 200
-=======
-addi $r2, $r0, 16
->>>>>>> parent of 61e0538... more changes
+addi $r2, $r0, 1
 bne $r1, $r2, update_player_pos
 jr $r31
 update_player_pos:
@@ -149,7 +130,7 @@ addi $r7, $r7, -160
 j continue_game_loop
 move_right:
 addi $r26, $r0, 3
-bne $r2, $r26, continue_game_loop
+bne $r25, $r26, continue_game_loop
 addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
@@ -169,34 +150,6 @@ blt $r17, $r19, stop_draw_line
 j draw_line
 stop_draw_line:
 jr $ra
-update_left:
-addi $r27, $r7, 0
-addi $r28, $r27, -12800
-lw $r18, 13($r0)
-update_pls:
-addi $r29, $r28, 8
-blt $r29, $r28, stop_drawing_right
-sw $r18, 0($r29)
-addi $r29, $r29, -1
-j update_pls
-stop_drawing_right:
-# draw on the left side
-addi $r29, $r28, -8
-bgt $r29, $r28, stop_drawing_left
-sw $r18, 0($r29)
-addi $r29, $r29, 1
-j stop_drawing_right
-stop_drawing_left:
-lw $r18, 5($r0)
-sw $r18, 0($r28) # store white at center point
-addi $r28, $r28, 640
-bgt $r28, $r27, exit_update
-lw $r18, 13($r0)
-j update_pls
-exit_update:
-j continue_pls_drawing
-#addi $r27, $r7, 160
-#addi $r27, $r7, 320
 draw_bug: # contains position of bug
 sw $r18, 0($r7)
 sw $r18, -640($r7)
@@ -216,8 +169,8 @@ draw_bounding_box:
 add $r30, $r31, $r0 # move previous ra to $r30
 j pls_draw_bounding_box
 pls_draw_bounding_box:
-addi $r23, $r17, -20
-addi $r24, $r17, 20
+addi $r23, $r17, -8
+addi $r24, $r17, 8
 jal actual_draw
 blt $r17, $r19, stop_drawing
 addi $r17, $r17, -640
@@ -247,6 +200,6 @@ color_bird: .word 0x00ffffff
 color_background: .word 0x0004AFFF
 right_line_limit: .word 0x0004AF60
 middle_line_limit: .word 0x0004AEC0
-left_line_limit: .word 0x0004A420
+left_line_limit: .word 0x0004AE20
 initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
