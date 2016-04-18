@@ -63,7 +63,7 @@ check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
-addi $r2, $r0, 800
+addi $r2, $r0, 300
 bne $r28, $r2, render_loop
 # render screen, draw right line first - every 500 iterations of game loop
 # jump back to game loop
