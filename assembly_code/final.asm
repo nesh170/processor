@@ -27,7 +27,7 @@ nop
 lw $r4, 0($r0)
 lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
-addi $r27, $r7, 0
+lw $r27, 12($r0) #upload initial position
 addi $r25, $r0, 2
 lw $r8, 2($r0)
 lw $r9, 3($r0)
@@ -95,9 +95,13 @@ bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
 # render screen, draw right line first
-j configure_bounding_box
+addi $r28, $r27, -12800
+addi $r29, $r27, 12800
+jal update_bounding_box
+lw $r18, 6($r0)
+jal draw_bug
 # jump back to game loop
-#j game_loop
+j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
 bne $r7, $r14, mod_left
@@ -197,7 +201,7 @@ j actual_draw
 exit_actual_draw:
 jr $ra
 
-
+#THIS ROUTINE IS NOW NEVER CALLED BASED ON THE MODIFIED STRUCTURE
 configure_bounding_box:
 # draw left bounding box
 #addi $r27, $r27, -160
@@ -211,11 +215,11 @@ configure_bounding_box:
 #jal update_bounding_box
 # draws center bounding box
 #addi $r27, $r27, -160
-addi $r28, $r27, -12800
-addi $r29, $r27, 12800
-lw $r30, 14($r0)
-bgt $r27, $r30, game_loop
-jal update_bounding_box
+addi $r28, $r7, -12800
+addi $r29, $r7, 12800
+#lw $r30, 14($r0)
+#bgt $r27, $r30, game_loop
+#jal update_bounding_box
 lw $r18, 6($r0)
 jal draw_bug
 j game_loop
@@ -251,7 +255,6 @@ j update_bounding_box
 
 finish_update:
 jr $ra
-
 quit:
 addi $r30, $r0, -1
 halt
