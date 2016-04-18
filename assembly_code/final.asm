@@ -169,11 +169,11 @@ lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
 # draws right bounding box
-#jal draw_bounding_box
+jal draw_bounding_box
 # draw middle bounding box
 lw $r17, 10($r0)
 addi $r19, $r0, 320
-#jal draw_bounding_box
+jal draw_bounding_box
 # draw left bounding box
 lw $r17, 11($r0)
 addi $r19, $r0, 160
