@@ -199,15 +199,26 @@ jr $ra
 
 
 configure_bounding_box:
+# draw left bounding box
+#addi $r27, $r27, -160
+#addi $r28, $r27, -12800
+#addi $r30, $r27, 12800
+#jal update_bounding_box
+# draw right bounding box
+#addi $r27, $r27, 320
+#addi $r28, $r27, -12800
+#addi $r30, $r27, 12800
+#jal update_bounding_box
 # draws center bounding box
+#addi $r27, $r27, -160
 addi $r28, $r27, -12800
-addi $r30, $r27, 12800
-jal update_bounding_box
+addi $r29, $r27, 12800
+#jal update_bounding_box
 jal draw_bug
 j game_loop
 
 update_bounding_box:
-bgt $r28, $r30, finish_update
+bgt $r28, $r29, finish_update
 j inner_bounding_box_loop
 
 
