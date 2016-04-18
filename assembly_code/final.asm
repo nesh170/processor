@@ -42,24 +42,6 @@ sw $r22, 0($r21)
 addi $r21, $r21, 1
 j background_loop
 exit_background:
-j game_loop
-game_loop:
-addi $r1, $r1, 1 #register 1 holds time
-jal check_time
-jal increment_player_pos
-jal check_player_pos
-addi $r6, $r0, 0 # TTY display
-bne $r6, $r4, move_left #z pressed
-bne $r6, $r5, move_right #x pressed
-continue_game_loop:
-bne $r6, $r8, a_press 
-bne $r6, $r9, s_press
-bne $r6, $r10, d_press
-check_bird_bug: #check for bug intersecting bird
-bne $r7, $r11, quit
-bne $r7, $r12, quit
-bne $r7, $r13, quit
-# render screen, draw right line first
 lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
@@ -85,6 +67,25 @@ jal draw_line
 lw $r17, 11($r0)
 addi $r19, $r0, 160
 jal draw_line
+j game_loop
+game_loop:
+addi $r1, $r1, 1 #register 1 holds time
+jal check_time
+jal increment_player_pos
+jal check_player_pos
+addi $r6, $r0, 0 # TTY display
+bne $r6, $r4, move_left #z pressed
+bne $r6, $r5, move_right #x pressed
+continue_game_loop:
+bne $r6, $r8, a_press 
+bne $r6, $r9, s_press
+bne $r6, $r10, d_press
+check_bird_bug: #check for bug intersecting bird
+bne $r7, $r11, quit
+bne $r7, $r12, quit
+bne $r7, $r13, quit
+# render screen, draw right line first
+
 lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 7($r0)
