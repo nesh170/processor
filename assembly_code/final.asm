@@ -106,15 +106,15 @@ bne $r7, $r16, mod_right
 jr $r31
 mod_left:
 lw $r7, 11($r0)
-addi $r27, $r7, 160
+lw $r27, 12($r0) #upload initial position
 jr $r31
 mod_center:
 lw $r7, 10($r0)
-addi $r27, $r7, 0
+lw $r27, 12($r0) #upload initial position
 jr $r31
 mod_right:
 lw $r7, 9($r0)
-addi $r27, $r7, -160
+lw $r27, 12($r0) #upload initial position
 jr $r31
 check_time:
 addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
