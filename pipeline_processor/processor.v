@@ -94,10 +94,11 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 
 	//ALU
 	wire[31:0] ALU_input_B,ALU_output,temp_ALU_input_A,ALU_input_A,temp_ALU_input_B;
+	wire div_exp,mult_exp;
 	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
 	assign ALU_input_A = (tty_sig) ? ps2_out_32 : 32'bZ;
 	assign ALU_input_A = (~tty_sig) ? temp_ALU_input_A : 32'bZ;
-	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
+	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output),.mult_exception(mult_exp), .div_exception(div_exp),.clock(clock));
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
