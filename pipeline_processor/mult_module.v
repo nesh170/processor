@@ -1,9 +1,10 @@
-module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, input_RDY, result_RDY,input_ins,instruction_1,instruction_2,instruction_3,instruction_4);
+module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, input_RDY, result_RDY,input_ins,instruction_1,instruction_2,instruction_3,instruction_4,mult_in_pipeline);
 	input[31:0] data_A,input_ins;
 	input[15:0] data_B;
 	input mult_signal,clock;
 
 	output[31:0] data_result,instruction_1,instruction_2,instruction_3,instruction_4;
+	output mult_in_pipeline;
 	output exception,input_RDY,result_RDY;
 	
 	//Operations before LATCH 1 pipeline
@@ -14,6 +15,17 @@ module mult_module(data_A, data_B,mult_signal, clock, data_result, exception, in
 	assign important_bits[0] = data_A[31]^data_B[15]; //0 bit is predicted sign
 	assign important_bits[1] = mult_signal; //bit 1 is the mult signal
 	
+
+	assign mult_in_pipeline = ~instruction_1[31]&~instruction_1[30]&~instruction_1[29]&~instruction_1[28]&~instruction_1[27] |
+~instruction_2[31]&~instruction_2[30]&~instruction_2[29]&~instruction_2[28]&~instruction_2[27] |
+~instruction_3[31]&~instruction_3[30]&~instruction_3[29]&~instruction_3[28]&~instruction_3[27] |
+~instruction_4[31]&~instruction_4[30]&~instruction_4[29]&~instruction_4[28]&~instruction_4[27] |
+~instruction_1[6]&~instruction_1[5]&instruction_1[4]&instruction_1[3]&~instruction_1[2] |
+~instruction_2[6]&~instruction_2[5]&instruction_2[4]&instruction_2[3]&~instruction_2[2] |
+~instruction_3[6]&~instruction_3[5]&instruction_3[4]&instruction_3[3]&~instruction_3[2] |
+~instruction_4[6]&~instruction_4[5]&instruction_4[4]&instruction_4[3]&~instruction_4[2] |
+~instruction_5[6]&~instruction_5[5]&instruction_5[4]&instruction_5[3]&~instruction_5[2];
+
 	//Stage 1 operations - Handing the shifting operation and generating the shifted multiplicand to be added to the next stages
 	/*
 	The code below handles the implicit 0 case
