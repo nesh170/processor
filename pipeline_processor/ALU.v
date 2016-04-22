@@ -1,10 +1,9 @@
-module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_result, isNotEqual, isLessThan, mult_exception, div_exception,clock);
+module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_result, isNotEqual, isLessThan, mult_exception, div_exception);
    input [31:0] data_operandA, data_operandB;
    input [4:0] ctrl_ALUopcode, ctrl_shiftamt;
    output [31:0] data_result;
    output isNotEqual, isLessThan;
    output div_exception,mult_exception;
-   output clock;
 	
 	wire[31:0] decoder_output;
 	
@@ -55,14 +54,14 @@ module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	
 	//Mult Opcode: 00110
 	wire[31:0] mult_output;
-	wire temp_mult_exception
+	wire temp_mult_exception;
 	tri_state tri_state_MULT(mult_output,data_result,decoder_output[6]);
 	tri_state tri_state_MULT_exception(temp_mult_exception,mult_exception,decoder_output[6]);
 
 	//DIV module Opcode: 00111
 	wire[31:0] div_output;
 	wire temp_div_exception;
-	div_module(.data_operandA(data_operandA), .data_operandB(data_operandB[15:0]), .ctrl_DIV(1'b1), .clock(clock), .data_result(div_output), .data_exception(temp_div_exception));
+	div_module(.data_operandA(data_operandA), .data_operandB(data_operandB[15:0]), .ctrl_DIV(1'b1), .data_result(div_output), .data_exception(temp_div_exception));
 	tri_state tri_state_DIV(div_output,data_result,decoder_output[7]);
 	tri_state tri_state_DIV_exception(temp_div_exception,div_exception,decoder_output[7]);
 endmodule
