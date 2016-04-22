@@ -7,15 +7,21 @@ numcols=480;
 res=0;
 fid = fopen('color.txt');
 line1 = fgetl(fid);
-color_index=ones(255,1);
+red_index=ones(255,1);
+green_index=ones(255,1);
+blue_index=ones(255,1);
 count = 1;
 while ischar(line1)
    res = char(res,line1);
-   color_index(count) = hex2dec(res(count,:));
+   red_index(count) = hex2dec(res(count,1:2));
+   green_index(count) = hex2dec(res(count,3:4));
+   blue_index(count) = hex2dec(res(count,5:6));
    line1 = fgetl(fid);
    count=count + 1;
 end
-color_index = color_index(2:end);
+red_index = red_index(2:end);
+green_index = green_index(2:end);
+blue_index = blue_index(2:end);
 fclose(fid);
 
 img = imread(input_file);
