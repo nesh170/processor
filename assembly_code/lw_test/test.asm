@@ -3,8 +3,10 @@ main:
 addi $r6, $r0, 2
 lw $r4, 1($r0)
 nop
+nop
 beq $r4, $r6, move_left #z pressed
 lw $r4, 0($r0)
+nop
 nop
 beq $r4, $r6, move_right #x pressed
 move_left:
