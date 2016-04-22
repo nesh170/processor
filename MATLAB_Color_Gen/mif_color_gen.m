@@ -1,6 +1,6 @@
 clear
-input_file = 'white_walls.jpg';
-output_file = 'white_walls.mif';
+input_file = 'horizon.jpg';
+output_file = 'horizon.mif';
 numrows=640;
 numcols=480;
 
@@ -23,7 +23,7 @@ red_index = red_index(2:end);
 green_index = green_index(2:end);
 blue_index = blue_index(2:end);
 fclose(fid);
-
+fail_index = 0;
 img = imread(input_file);
 cols = 640;
 rows = 480;
@@ -37,24 +37,22 @@ fprintf(fid,'DEPTH = %4u;\n\n',rows*cols);
 fprintf(fid,'ADDRESS_RADIX = UNS;\n');
 fprintf(fid,'DATA_RADIX = UNS;\n\n');
 fprintf(fid,'CONTENT BEGIN\n');
+
 tic
 count = 0;
 for r = 1:rows
     for c = 1:cols
-        color =  double(img(r, c, 1)).*double(img(r, c, 2)).*double(img(r, c, 3));
-        color = double(color);
-        [index_color,out_pixels] = find_closest_8bit(color,color_index);
+        [index_color,fail_index,color] = find_closest_8bit(double(img(r, c, 1)),double(img(r, c, 2)),double(img(r, c, 3)),red_index,blue_index,green_index,fail_index);
         fprintf(fid,'%4u : %4u;\n',count, index_color);
         color_index_matrix(r,c) = index_color(1);
-        color_matrix(r,c, :) = out_pixels;
+        color_matrix(r,c,:) = color;
         count = count + 1;
     end
 end
 toc
-
-figure(2)
-imshow(color_matrix)
-
+disp(fail_index);
+figure(2);
+imshow(color_matrix);
 fprintf(fid,'END;');
 fclose(fid);
 
