@@ -3,7 +3,8 @@ main:
 #register 1 holds time in terms of clock frequency
 # register 2 holds 50000
 # register 3 holds time to be displayed
-# register 4 and 5 hold the potential keyboard inputs to check against
+# register 4 holds the potential keyboard inputs to check against
+# regster 5 holds the time to increment player
 # register 6 holds the keyboard input
 # register 7 holds the player's position
 # register 8-10 holds the positions of the birds to check against (a, s, d)
@@ -24,8 +25,8 @@ main:
 # register 28 holds the coordinate 20 pixels north of register 27
 # register 30 holds the coordinates 20 pixels south of register 27
 nop
-lw $r4, 0($r0)
-lw $r5, 1($r0)
+#lw $r4, 0($r0)
+#lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
 lw $r27, 12($r0) #upload initial position
 addi $r25, $r0, 2
@@ -80,12 +81,23 @@ lw $r18, 7($r0)
 j game_loop
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
+addi $r5, $r5, 1
 jal check_time
 jal increment_player_pos
 jal check_player_pos
 addi $r6, $r0, 0 # TTY display
+lw $r4, 0($r0)
+nop
+nop
+nop
+nop
 bne $r6, $r4, move_left #z pressed
-bne $r6, $r5, move_right #x pressed
+lw $r4, 1($r0)
+nop
+nop
+nop
+nop
+bne $r6, $r4, move_right #x pressed
 continue_game_loop:
 bne $r6, $r8, a_press 
 bne $r6, $r9, s_press
@@ -142,12 +154,13 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 1
-bne $r1, $r2, update_player_pos
+addi $r2, $r0, 1000
+bne $r5, $r2, update_player_pos
 jr $r31
 update_player_pos:
 addi $r7, $r7, -640
 addi $r27, $r27, -640
+add $r5, $r0, $r0
 jr $r31
 move_left:
 addi $r26, $r0, 1
