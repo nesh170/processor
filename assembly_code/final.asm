@@ -104,6 +104,12 @@ addi $r28, $r27, -12800
 addi $r29, $r27, 12800
 jal update_bounding_box
 addi $r27, $r27, 160 # add offset back
+# update rounding box
+addi $r27, $r27, 160
+addi $r28, $r27, -12800
+addi $r29, $r27, 12800
+jal update_bounding_box
+addi $r27, $r27, -160
 lw $r18, 6($r0)
 jal draw_bug
 # jump back to game loop
@@ -127,7 +133,7 @@ lw $r7, 9($r0)
 lw $r27, 12($r0) #upload initial position
 jr $r31
 check_time:
-addi $r2, $r0, 200 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 10000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -207,29 +213,6 @@ j actual_draw
 exit_actual_draw:
 jr $ra
 
-#THIS ROUTINE IS NOW NEVER CALLED BASED ON THE MODIFIED STRUCTURE
-configure_bounding_box:
-# draw left bounding box
-#addi $r27, $r27, -160
-#addi $r28, $r27, -12800
-#addi $r30, $r27, 12800
-#jal update_bounding_box
-# draw right bounding box
-#addi $r27, $r27, 320
-#addi $r28, $r27, -12800
-#addi $r30, $r27, 12800
-#jal update_bounding_box
-# draws center bounding box
-#addi $r27, $r27, -160
-addi $r28, $r7, -12800
-addi $r29, $r7, 12800
-#lw $r30, 14($r0)
-#bgt $r27, $r30, game_loop
-#jal update_bounding_box
-lw $r18, 6($r0)
-jal draw_bug
-j game_loop
-
 update_bounding_box:
 bgt $r28, $r29, finish_update
 j inner_bounding_box_loop
@@ -263,6 +246,18 @@ finish_update:
 jr $ra
 quit:
 addi $r30, $r0, -1
+j update_background
+# refresh background
+lw $r20, 8($r0) # load last pixel index on screen
+addi $r21, $r21, 0 # index
+addi $r22, $r22, 255 # white color
+j update_background
+update_background:
+bgt $r21, $r20, exit_update_background
+sw $r22, 0($r21)
+addi $r21, $r21, 1
+j update_background
+exit_update_background:
 halt
 .data
 left: .word 0x0000006B
@@ -273,10 +268,10 @@ d: .char d
 color_line: .word 0x000000ff
 color_bug: .word 0x0000000C
 color_bird: .word 0x00ffffff
-color_background: .word 0x0004AFFF
+color_background_limit: .word 0x0004AFFF
 right_line_limit: .word 0x0004AF60
 middle_line_limit: .word 0x0004AEC0
 left_line_limit: .word 0x0004AE20
-initial_position: .word 0x0004AF60
+initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
 limit_drawing: .word 0x00047CC0
