@@ -16,7 +16,7 @@ main:
 # register 19 holds the coordinate value limit for drawing
 # register 20 holds the ending address for background color for testing (black)
 # register 21 holds the index for the for loop
-# register 22 holds the color to store (red)
+# register 22 holds the color to store (blue) for initialization, and for white screen at end, will also be used for storing previous keyboard input
 # register 23 holds the offset for drawing bounding box (50)
 # register 24 holds the offset for drawing other offset of bounding box (-50)
 # register 25 holds whether the player is in position 1, 2 or 3 (left, center, or right)
@@ -25,8 +25,6 @@ main:
 # register 28 holds the coordinate 20 pixels north of register 27
 # register 30 holds the coordinates 20 pixels south of register 27
 nop
-#lw $r4, 0($r0)
-#lw $r5, 1($r0)
 lw $r7, 12($r0) #upload initial position
 lw $r27, 12($r0) #upload initial position
 addi $r25, $r0, 2
@@ -78,7 +76,9 @@ lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 7($r0)
 #jal draw_bird
+addi $r22, $r0, 0
 j game_loop
+
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
 addi $r5, $r5, 1
@@ -86,15 +86,13 @@ jal check_time
 jal increment_player_pos
 jal check_player_pos
 addi $r6, $r0, 0 # TTY display
+bne $r22, $r6, check_bird_bug # if previous input is same as current one, don't do anything, if it branches, they are equal, no need to update, if it doens't branch, they are not equal, so have to update current input into r22 to relfect on next iteration
+add $r22, $r6,$r0
 lw $r4, 0($r0)
-nop
-nop
 nop
 nop
 bne $r6, $r4, move_left #z pressed
 lw $r4, 1($r0)
-nop
-nop
 nop
 nop
 bne $r6, $r4, move_right #x pressed
@@ -259,11 +257,10 @@ finish_update:
 jr $ra
 quit:
 addi $r30, $r0, -1
-j update_background
 # refresh background
 lw $r20, 8($r0) # load last pixel index on screen
 addi $r21, $r21, 0 # index
-addi $r22, $r22, 255 # white color
+addi $r22, $r0, 255 # reset r22 to white color
 j update_background
 update_background:
 bgt $r21, $r20, exit_update_background
