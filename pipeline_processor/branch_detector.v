@@ -1,6 +1,6 @@
-module branch_detector(in_A,in_B,blt,bne);
-	input[31:0] in_A,in_B;
-	output blt,bne;
+module branch_detector(in_A,in_B,blt,bne,bex,status);
+	input[31:0] in_A,in_B,status;
+	output blt,bne,bex;
 	
 	wire[31:0] subtract_output;
 	subtractor_32bit sub(.in_A(in_A), .in_B(in_B), .out(subtract_output));
@@ -19,4 +19,7 @@ module branch_detector(in_A,in_B,blt,bne);
 	assign blt	= (less_then_case_selector[1]) ? 1'b1 : 1'bZ;
 	assign blt = (less_then_case_selector[2]) ? subtract_output[31] : 1'bZ;
 	assign blt = (less_then_case_selector[3]) ? subtract_output[31] : 1'bZ;
+
+	//Doing status
+	assign bex = (|status) & ~status[31]; // status must be positive and non zero hence >0
 endmodule

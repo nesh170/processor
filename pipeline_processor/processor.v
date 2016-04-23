@@ -49,8 +49,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	//DECODE controller
 	wire[4:0] read_reg_A,read_reg_B;
 	wire[31:0] branch_to_add;
-	wire blt_sig,bne_sig,beq_sig;
-	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.beq_signal(beq_sig),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add));
+	wire blt_sig,bne_sig,beq_sig,bex_sig,setx_sig;
+	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.beq_signal(beq_sig),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add),.bex_signal(bex_sig),.setx_signal(setx_signal));
 	
 	//REGISTER FILE
 	wire wren_sig;//WRITEBACK
@@ -58,12 +58,18 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[31:0] write_data,read_data_A,read_data_B;
 	regfile register_file(.clock(~clock), .ctrl_writeEnable(wren_sig), .ctrl_reset(reset), .ctrl_writeReg(write_register),.output_register(output_reg), .ctrl_readRegA(read_reg_A), .ctrl_readRegB(read_reg_B), .data_writeReg(write_data), .data_readRegA(read_data_A), .data_readRegB(read_data_B));
 
+	//STATUS register
+	wire[31:0] status_in,status_out;
+	wire wren_STATUS;
+	register status_register(.bitsIn(status_in), .bitsOut(status_out), .writeEnable(wren_STATUS), .reset(reset), .clk(~clock));
+
+
 	//BRANCH STUFF, mux is shown in execute but actually done in decoding 
 	wire branch_sig;
-	wire isNotEqual,isLessThan;
+	wire isNotEqual,isLessThan,exception_branch;
 	wire[31:0] temp_read_data_A,temp_read_data_B;
-	branch_detector detect(.in_A(temp_read_data_A),.in_B(temp_read_data_B),.blt(isLessThan),.bne(isNotEqual)); //bascially a subtract module :/
-	assign branch_sig =(beq_sig & ~isNotEqual) | (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual);
+	branch_detector detect(.in_A(temp_read_data_A),.in_B(temp_read_data_B),.blt(isLessThan),.bne(isNotEqual),.status(status_out),.bex(exception_branch)); //bascially a subtract module :/
+	assign branch_sig =(beq_sig & ~isNotEqual) | (bne_sig & isNotEqual) | (blt_sig & ~isLessThan & isNotEqual) | (exception_branch & bex_sig);
 	wire[31:0] new_branch_pc;
 	carry_select_adder add_branch_pc(.in_A(fd_pc_output), .in_B(branch_to_add), .out(new_branch_pc), .carry_in(1'b0));
 	
@@ -99,7 +105,14 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign ALU_input_A = (tty_sig) ? ps2_out_32 : 32'bZ;
 	assign ALU_input_A = (~tty_sig) ? temp_ALU_input_A : 32'bZ;
 	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output),.mult_exception(mult_exp), .div_exception(div_exp));
-	
+
+
+	//HANDLING STATUS_IN
+	assign status_in = (setx_sig) ? branch_to_add : 32'bZ;
+	assign status_in = (~setx_sig & mult_exp) ? 32'd1 : 32'bZ;
+	assign status_in = (~setx_sig & ~mult_exp & div_exp) ? 32'd2 : 32'bZ;
+	assign wren_STATUS = setx_sig | mult_exp | div_exp;
+
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
 	latch_350 execute_memory_latch(.wren_signal(1'b1),.input_A(ALU_output),.input_B(temp_ALU_input_B),.program_counter(de_pc_output),.instruction(de_ir_output),.clock(clock),.output_A(em_A_output),.output_B(em_B_output),.output_PC(em_pc_output),.output_ins(em_ir_output));
@@ -155,7 +168,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign temp_ALU_input_B = (bypass_e_B_sig[1]) ? em_A_output : 32'bZ;
 	assign temp_ALU_input_B = (bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? write_data : 32'bZ;
 	assign temp_ALU_input_B = (~bypass_e_B_sig[0] & ~bypass_e_B_sig[1]) ? de_B_output :32'bZ;
-	
+
 	//Decode_Stage
 	wire[2:0] bypass_d_A_sig,bypass_d_B_sig;
 	bypass_d decode_bypass_controller(.mw_instruction(mw_ir_output),.em_instruction(em_ir_output),.de_instruction(de_ir_output),.fd_instruction(fd_ir_output),.bypass_A_sig(bypass_d_A_sig),.bypass_B_sig(bypass_d_B_sig));
@@ -201,7 +214,8 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	// CHANGE THIS TO ASSIGN YOUR DMEM WRITE ADDRESS ALSO TO debug_addr
 	assign debug_addr = (em_A_output[11:0]);
 	// CHANGE THIS TO ASSIGN YOUR DMEM DATA INPUT (TO BE WRITTEN) ALSO TO debug_data
-	assign debug_data = (dmem_data_input);
+	//assign debug_data = (dmem_data_input);
+	assign debug_data = status_out;
 	////////////////////////////////////////////////////////////
 	
 endmodule
