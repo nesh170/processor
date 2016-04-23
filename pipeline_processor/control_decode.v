@@ -45,6 +45,7 @@ module control_decode(instruction,read_reg_s1,read_reg_s2,bne_signal,blt_signal,
 	end
 	endgenerate
 
-	assign branch_N = ((bne_signal|blt_signal|beq_signal)&~bex_signal) ? temp_branch_add : 32'bZ;
-	assign branch_N = (~(bne_signal|blt_signal|beq_signal)&bex_signal) ? temp_status_branch : 32'bZ;
+	assign branch_N = ((bne_signal|blt_signal|beq_signal)&~bex_signal&~setx_signal) ? temp_branch_add : 32'bZ;
+	assign branch_N = (~(bne_signal|blt_signal|beq_signal)&(bex_signal|setx_signal)) ? temp_status_branch : 32'bZ;
+	assign branch_N = ((~bne_signal&~blt_signal&~beq_signal&~bex_signal&~setx_signal)) ? 32'b0 : 32'bZ;
 endmodule

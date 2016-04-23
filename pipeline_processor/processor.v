@@ -193,9 +193,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	*/
 	assign ir_out = fd_ir_output;
 	assign pc_out = fd_pc_output;
-	assign debug_out = branch_to_add;
+	assign debug_out = write_data;
 	
-	assign debug_e = ALU_output;
+	assign debug_e = ALU_output; //originally aLU_output
 	assign pc_e = de_pc_output;
 	assign bypass_e[1:0] = bypass_e_A_sig;
 	assign bypass_e[3:2] = bypass_e_B_sig;
