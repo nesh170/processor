@@ -50,7 +50,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	wire[4:0] read_reg_A,read_reg_B;
 	wire[31:0] branch_to_add;
 	wire blt_sig,bne_sig,beq_sig,bex_sig,setx_sig;
-	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.beq_signal(beq_sig),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add),.bex_signal(bex_sig),.setx_signal(setx_signal));
+	control_decode decode_controller(.instruction(fd_ir_output),.read_reg_s1(read_reg_A),.read_reg_s2(read_reg_B),.beq_signal(beq_sig),.bne_signal(bne_sig),.blt_signal(blt_sig),.branch_N(branch_to_add),.bex_signal(bex_sig),.setx_signal(setx_sig));
 	
 	//REGISTER FILE
 	wire wren_sig;//WRITEBACK
@@ -191,9 +191,9 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	/*
 	DEBUGGING TOOLS
 	*/
-	assign ir_out = mw_ir_output;
-	assign pc_out = mw_pc_output;
-	assign debug_out = write_data;
+	assign ir_out = fd_ir_output;
+	assign pc_out = fd_pc_output;
+	assign debug_out = branch_to_add;
 	
 	assign debug_e = ALU_output;
 	assign pc_e = de_pc_output;
@@ -215,7 +215,7 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	assign debug_addr = (em_A_output[11:0]);
 	// CHANGE THIS TO ASSIGN YOUR DMEM DATA INPUT (TO BE WRITTEN) ALSO TO debug_data
 	//assign debug_data = (dmem_data_input);
-	assign debug_data = status_out;
+	assign debug_data = dmem_data_input;
 	////////////////////////////////////////////////////////////
 	
 endmodule
