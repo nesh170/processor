@@ -51,6 +51,11 @@ module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	shift_right_arithmetic SRA_gate(data_operandA, ctrl_shiftamt, SRA_output);
 	tri_state tri_state_SRA(SRA_output,data_result,decoder_output[5]);
 	
+	//Mult Opcode: 00110
+	wire[31:0] mult_output;
+	
+	//DIV module Opcode: 00111
+	
 endmodule
 
 module tri_state(in, out, enable);
