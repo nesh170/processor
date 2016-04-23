@@ -3788,14 +3788,14 @@ TRANSITION_LIST("clock")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 5.0;
+		LEVEL 1 FOR 25.0;
 		NODE
 		{
-			REPEAT = 199;
-			LEVEL 0 FOR 5.0;
-			LEVEL 1 FOR 5.0;
+			REPEAT = 39;
+			LEVEL 0 FOR 25.0;
+			LEVEL 1 FOR 25.0;
 		}
-		LEVEL 0 FOR 5.0;
+		LEVEL 0 FOR 25.0;
 	}
 }
 
