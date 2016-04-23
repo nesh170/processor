@@ -28,11 +28,23 @@ module control_decode(instruction,read_reg_s1,read_reg_s2,bne_signal,blt_signal,
 	//SET STATUS signal
 	assign setx_signal = (A&~B&C&~D&E);
 	
-	assign branch_N[16:0] = instruction[16:0];
+	wire[31:0] temp_branch_add,temp_status_branch;
+	assign temp_branch_add[16:0] = instruction[16:0];
 	genvar i;
 	generate
 	for(i=17;i<=31;i=i+1) begin:loop
-		assign branch_N[i] = instruction[16];
+		assign temp_branch_add[i] = instruction[16];
 	end
 	endgenerate
+
+	assign temp_status_branch[26:0] = instruction[26:0];
+	genvar k;
+	generate
+	for(k=27;k<=31;k=k+1) begin:loop_status
+		assign temp_status_branch[k] = instruction[26];
+	end
+	endgenerate
+
+	assign branch_N = ((bne_signal|blt_signal|beq_signal)&~bex_signal) temp_branch_add : 32'bZ;
+	assign branch_N = (~(bne_signal|blt_signal|beq_signal)&bex_signal) temp_status_branch : 32'bZ;
 endmodule
