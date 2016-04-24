@@ -1,6 +1,6 @@
 clear
-input_file = 'horizon.jpg';
-output_file = 'horizon.mif';
+input_file = 'trees.jpg';
+output_file = 'trees.mif';
 numrows=640;
 numcols=480;
 
