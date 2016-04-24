@@ -45,8 +45,8 @@ sw $r22, 0($r21)
 addi $r21, $r21, 1
 j background_loop
 exit_background:
-j initialize_screen
-initialize_screen:
+j draw_initial_box
+draw_initial_box:
 lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
@@ -73,6 +73,8 @@ lw $r17, 11($r0)
 addi $r19, $r0, 160
 jal draw_line
 lw $r18, 6($r0)
+j draw_bug_start
+draw_bug_start:
 jal draw_bug
 lw $r18, 7($r0)
 #jal draw_bird
@@ -126,6 +128,7 @@ jal draw_bird_left
 jal draw_bird_middle
 jal draw_bird_right
 #jump back to game loop
+jal draw_initial_box
 j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
@@ -176,8 +179,8 @@ addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
 a_press:
-addi $r11, $r27, -9760
-addi $r12, $r27, -9600
+addi $r11, $r27, -19360
+addi $r12, $r27, -10880
 addi $r13, $r27, -9440
 j check_bird_bug
 s_press:
@@ -194,18 +197,102 @@ j draw_line
 stop_draw_line:
 jr $ra
 draw_bug: # contains position of bug
-sw $r18, 0($r7)
-sw $r18, -640($r7)
+sw $r18, -3847($r7)
+sw $r18, -3833($r7)
+sw $r18, -3207($r7)
+sw $r18, -3206($r7)
+sw $r18, -2567($r7)
+sw $r18, -2566($r7)
+sw $r18, -2565($r7)
+sw $r18, -2562($r7)
+sw $r18, -2561($r7)
+sw $r18, -2560($r7)
+sw $r18, -2559($r7)
+sw $r18, -2558($r7)
+sw $r18, -2555($r7)
+sw $r18, -2554($r7)
+sw $r18, -2553($r7)
+sw $r18, -1927($r7)
+sw $r18, -1926($r7)
+sw $r18, -1925($r7)
+sw $r18, -1924($r7)
+sw $r18, -1923($r7)
+sw $r18, -1922($r7)
+sw $r18, -1921($r7)
+sw $r18, -1920($r7)
+sw $r18, -1919($r7)
+sw $r18, -1918($r7)
+sw $r18, -1917($r7)
+sw $r18, -1916($r7)
+sw $r18, -1915($r7)
+sw $r18, -1914($r7)
+sw $r18, -1913($r7)
+sw $r18, -1282($r7)
+sw $r18, -1281($r7)
 sw $r18, -1280($r7)
-sw $r18, 1($r7)
-sw $r18, -1($r7)
-sw $r18, 2($r7)
+sw $r18, -1279($r7)
+sw $r18, -1278($r7)
+sw $r18, -642($r7)
+sw $r18, -641($r7)
+sw $r18, -640($r7)
+sw $r18, -639($r7)
+sw $r18, -638($r7)
 sw $r18, -2($r7)
+sw $r18, -1($r7)
+sw $r18, 0($r7)
+sw $r18, 1($r7)
+sw $r18, 2($r7)
+sw $r18, 638($r7)
+sw $r18, 639($r7)
 sw $r18, 640($r7)
 sw $r18, 641($r7)
 sw $r18, 642($r7)
-sw $r18, 639($r7)
-sw $r18, 638($r7)
+sw $r18, 1278($r7)
+sw $r18, 1279($r7)
+sw $r18, 1280($r7)
+sw $r18, 1281($r7)
+sw $r18, 1282($r7)
+sw $r18, 1913($r7)
+sw $r18, 1914($r7)
+sw $r18, 1915($r7)
+sw $r18, 1916($r7)
+sw $r18, 1917($r7)
+sw $r18, 1918($r7)
+sw $r18, 1919($r7)
+sw $r18, 1920($r7)
+sw $r18, 1921($r7)
+sw $r18, 1922($r7)
+sw $r18, 1923($r7)
+sw $r18, 1924($r7)
+sw $r18, 1925($r7)
+sw $r18, 1926($r7)
+sw $r18, 1927($r7)
+sw $r18, 2553($r7)
+sw $r18, 2554($r7)
+sw $r18, 2555($r7)
+sw $r18, 2556($r7)
+sw $r18, 2557($r7)
+sw $r18, 2558($r7)
+sw $r18, 2559($r7)
+sw $r18, 2560($r7)
+sw $r18, 2561($r7)
+sw $r18, 2562($r7)
+sw $r18, 2563($r7)
+sw $r18, 2564($r7)
+sw $r18, 2565($r7)
+sw $r18, 2566($r7)
+sw $r18, 2567($r7)
+sw $r18, 3193($r7)
+sw $r18, 3194($r7)
+sw $r18, 3195($r7)
+sw $r18, 3198($r7)
+sw $r18, 3199($r7)
+sw $r18, 3200($r7)
+sw $r18, 3201($r7)
+sw $r18, 3202($r7)
+sw $r18, 3205($r7)
+sw $r18, 3206($r7)
+sw $r18, 3207($r7)
 #stop_draw_bug:
 jr $ra
 draw_bird_left: # for now is a red square
@@ -342,4 +429,4 @@ left_line_limit: .word 0x0004AE20
 initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
 limit_drawing: .word 0x00047CC0
-color_bird: .word 0x0000000B
+color_bird: .word 0x0000000E
