@@ -36,19 +36,14 @@ module skeleton(	inclock, resetn, ps2_clock, ps2_data, debug_word, debug_addr, l
 	wire			ps2_key_pressed;
 	wire	[7:0]	ps2_out;	
 
-	
-	// clock divider (by 5, i.e., 10 MHz)
-	//pll div(inclock,clock);
-	
-	// UNCOMMENT FOLLOWING LINE AND COMMENT ABOVE LINE TO RUN AT 50 MHz
-	assign clock = inclock;
+	assign clock = inclock; //50Mhz
 	
 	// your processor
 	wire vga_wren_enable;
 	wire[31:0] output_from_register;
 	wire[18:0] vga_data_addr;
 	wire[7:0] vga_data_write;
-	processor myprocessor(.clock(clock), .reset(~resetn), .ps2_key_pressed(ps2_key_pressed), .ps2_out(ps2_out),
+	processor myprocessor(.inclock(clock), .reset(~resetn), .ps2_key_pressed(ps2_key_pressed), .ps2_out(ps2_out),
 	.output_reg(output_from_register),
 	.lcd_write(lcd_write_en), .lcd_data(lcd_write_data), .debug_data(debug_word), .debug_addr(debug_addr),
 	.vga_wren_enable(vga_wren_enable),.vga_data_addr(vga_data_addr),.vga_data_write(vga_data_write));
