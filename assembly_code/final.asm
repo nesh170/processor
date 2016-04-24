@@ -88,6 +88,8 @@ jr $ra
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
 addi $r5, $r5, 1
+lw $r30, 500($r0)
+addi $r30, $r30, 1
 jal check_time
 jal increment_player_pos
 jal check_player_pos
@@ -115,6 +117,13 @@ bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
 # render screen, update center
+addi $r2,$r0, 400 #render time
+bne $r30, $r2, render_loop
+sw $r30,500($r0)
+j game_loop
+render_loop:
+addi $r30,$r0,0
+sw $r30,500($r0)
 addi $r28, $r27, -12800
 addi $r29, $r27, 12800
 jal update_bounding_box
@@ -142,7 +151,7 @@ add $r11, $r13, $r0
 jal draw_bird
 lw $r11, 400($r0)
 #jump back to game loop
-j game_loop
+j game_loop #ankit no
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
 bne $r7, $r14, mod_left
@@ -181,7 +190,7 @@ add $r12, $r0, $r0
 add $r13, $r0, $r0
 jr $r31
 check_time:
-addi $r2, $r0, 10000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r0, 40000 #add 50000 to register 2 - 50000 is clock freq
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -190,7 +199,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 1000
+addi $r2, $r0, 6000
 bne $r5, $r2, update_player_pos
 jr $r31
 update_player_pos:
@@ -211,15 +220,21 @@ addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
 a_press:
-addi $r11, $r27, -19360
-addi $r12, $r27, -10880
-addi $r13, $r27, -9440
+addi $r11, $r27, -25760
+addi $r12, $r27, -51200
+addi $r13, $r27, -25440
 j check_bird_bug
 s_press:
-addi $r12, $r7, -9600 #CHANGE THIS CALL
+addi $r11, $r27, -25760
+addi $r11, $r11, -51200
+addi $r12, $r27, -51200 #CHANGE THIS CALL
+addi $r13, $r27, -25440
 j check_bird_bug
 d_press:
-addi $r13, $r7, -9600 # CHANGE THIS CALL
+addi $r11, $r27, -51360
+addi $r12, $r27, -25600
+addi $r13, $r27, -25440 # CHANGE THIS CALL
+addi $r13, $r13, -51200
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
