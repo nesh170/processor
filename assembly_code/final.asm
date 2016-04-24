@@ -78,7 +78,6 @@ lw $r18, 7($r0)
 #jal draw_bird
 addi $r22, $r0, 0
 j game_loop
-
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
 addi $r5, $r5, 1
@@ -122,7 +121,11 @@ jal update_bounding_box
 addi $r27, $r27, -160
 lw $r18, 6($r0)
 jal draw_bug
-# jump back to game loop
+lw $r18, 15($r0)
+jal draw_bird_left
+jal draw_bird_middle
+jal draw_bird_right
+#jump back to game loop
 j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
@@ -173,13 +176,15 @@ addi $r7, $r7, 160
 addi $r25, $r25, 1
 j continue_game_loop
 a_press:
-addi $r11, $r7, 100 # CHANGE THIS CALL
+addi $r11, $r27, -9760
+addi $r12, $r27, -9600
+addi $r13, $r27, -9440
 j check_bird_bug
 s_press:
-addi $r12, $r7, 100 #CHANGE THIS CALL
+addi $r12, $r7, -9600 #CHANGE THIS CALL
 j check_bird_bug
 d_press:
-addi $r13, $r7, 100 # CHANGE THIS CALL
+addi $r13, $r7, -9600 # CHANGE THIS CALL
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
@@ -202,6 +207,58 @@ sw $r18, 642($r7)
 sw $r18, 639($r7)
 sw $r18, 638($r7)
 #stop_draw_bug:
+jr $ra
+draw_bird_left: # for now is a red square
+# 8 pixels on each side
+sw $r18, 0($r11)
+sw $r18, 1($r11)
+sw $r18, 2($r11)
+sw $r18, 3($r11)
+sw $r18, 4($r11)
+sw $r18, 5($r11)
+sw $r18, 6($r11)
+sw $r18, 7($r11)
+sw $r18, -1($r11)
+sw $r18, -2($r11)
+sw $r18, -3($r11)
+sw $r18, -4($r11)
+sw $r18, -5($r11)
+sw $r18, -6($r11)
+sw $r18, -7($r11)
+jr $ra
+draw_bird_middle:
+sw $r18, 0($r12)
+sw $r18, 1($r12)
+sw $r18, 2($r12)
+sw $r18, 3($r12)
+sw $r18, 4($r12)
+sw $r18, 5($r12)
+sw $r18, 6($r12)
+sw $r18, 7($r12)
+sw $r18, -1($r12)
+sw $r18, -2($r12)
+sw $r18, -3($r12)
+sw $r18, -4($r12)
+sw $r18, -5($r12)
+sw $r18, -6($r12)
+sw $r18, -7($r12)
+jr $ra
+draw_bird_right:
+sw $r18, 0($r13)
+sw $r18, 1($r13)
+sw $r18, 2($r13)
+sw $r18, 3($r13)
+sw $r18, 4($r13)
+sw $r18, 5($r13)
+sw $r18, 6($r13)
+sw $r18, 7($r13)
+sw $r18, -1($r13)
+sw $r18, -2($r13)
+sw $r18, -3($r13)
+sw $r18, -4($r13)
+sw $r18, -5($r13)
+sw $r18, -6($r13)
+sw $r18, -7($r13)
 jr $ra
 draw_bounding_box:
 add $r30, $r31, $r0 # move previous ra to $r30
@@ -259,7 +316,7 @@ quit:
 addi $r30, $r0, -1
 # refresh background
 lw $r20, 8($r0) # load last pixel index on screen
-addi $r21, $r21, 0 # index
+add $r21, $r0, $r0 # index
 addi $r22, $r0, 255 # reset r22 to white color
 j update_background
 update_background:
@@ -272,9 +329,9 @@ halt
 .data
 left: .word 0x0000006B
 right: .word 0x00000074
-a: .char a
-s: .char s
-d: .char d
+a: .word 0x0000001C
+s: .word 0x0000001B
+d: .word 0x00000023
 color_line: .word 0x000000ff
 color_bug: .word 0x0000000C
 color_bird: .word 0x00ffffff
@@ -285,3 +342,4 @@ left_line_limit: .word 0x0004AE20
 initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
 limit_drawing: .word 0x00047CC0
+color_bird: .word 0x0000000B
