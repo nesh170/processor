@@ -1,7 +1,7 @@
-module div_module(data_operandA, data_operandB, ctrl_DIV, clock, data_result, data_exception, data_inputRDY, data_resultRDY);
+module div_module(data_operandA, data_operandB, ctrl_DIV, data_result, data_exception, data_inputRDY, data_resultRDY);
    input [31:0] data_operandA;
    input [15:0] data_operandB;
-   input clock,ctrl_DIV;      
+   input ctrl_DIV;      
    output [31:0] data_result; 
    output data_exception, data_inputRDY, data_resultRDY;
 	/*
@@ -14,11 +14,7 @@ module div_module(data_operandA, data_operandB, ctrl_DIV, clock, data_result, da
 	
 	assign data_exception = ~|data_operandB;
 	
-	wire[1:0] counter_output;
-	div_counter counter_33(clock, ~ctrl_DIV, counter_output);
-	assign data_inputRDY = (counter_output[1] & ~counter_output[0]) | (~counter_output[1] & counter_output[0]);
-	assign data_resultRDY = counter_output[1] & ~counter_output[0];
-//	assign data_inputRDY = 1; assign data_resultRDY = 1;
+	assign data_inputRDY = 1'b1; assign data_resultRDY = 1'b1;
 	
 	wire[31:0] remainder[32:0];
 	wire[31:0] temp_quotient;

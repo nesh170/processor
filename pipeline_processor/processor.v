@@ -76,14 +76,27 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	assign de_ir_input = (j_sig | stall_sig) ? 32'b0 : fd_ir_output;
 	latch_350 decode_execute_latch(.wren_signal(1'b1),.input_A(read_data_A),.input_B(read_data_B),.program_counter(fd_pc_output),.instruction(de_ir_input),.clock(clock),.output_A(de_A_output),.output_B(de_B_output),.output_PC(de_pc_output),.output_ins(de_ir_output));
 	
+	//STATUS Register
+	wire mult_exp,div_exp;
+	wire[31:0] STATUS_in,STATUS_out;
+	wire wren_STATUS;
+	register STATUS_register(.bitsIn(STATUS_in), .bitsOut(STATUS_out), .writeEnable(wren_STATUS), .reset(reset), .clk(~clock));
+
 	
 	//EXECUTE controller
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
 	wire[31:0] jump_immediate_data;
-	wire i_sig,j_sig,jr_sig,tty_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig));
+	wire i_sig,j_sig,jr_sig,tty_sig,setx_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig),.status(STATUS_out),.setx_signal(setx_sig));
 	
+//	//This is here only due to immediate data being decoded in the execute controller
+	assign wren_STATUS = setx_sig | mult_exp | div_exp;
+	wire[31:0] temp_status_wire,temp_status_wire_2;
+	assign temp_status_wire = (mult_exp) ? 32'd1 : 32'b0;
+	assign temp_status_wire_2 = (div_exp) ? 32'd2 : temp_status_wire; 
+	assign STATUS_in = (setx_sig) ? immediate_data : temp_status_wire_2;
+
 	//JUMP Stuff
 	wire[31:0] jump_branch_next_pc,temp_jump_next_pc;
 	assign temp_jump_next_pc = (jr_sig) ? de_B_output : jump_immediate_data;
@@ -100,7 +113,7 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
 	assign ALU_input_A = (tty_sig) ? ps2_out_32 : 32'bZ;
 	assign ALU_input_A = (~tty_sig) ? temp_ALU_input_A : 32'bZ;
-	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output));
+	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output),.mult_exception(mult_exp), .div_exception(div_exp));
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
