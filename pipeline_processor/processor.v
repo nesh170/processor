@@ -1,6 +1,6 @@
-module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,output_reg,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
+module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,output_reg,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
 
-	input 			clock, reset, ps2_key_pressed;
+	input 			inclock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
 	
 	output 			lcd_write;
@@ -20,7 +20,10 @@ module processor(clock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, de
 	output[18:0] vga_data_addr;
 	output[7:0] vga_data_write;
 	
-	
+	//CLOCKS
+	wire clock;
+	assign clock = inclock; //50Mhz
+	//half_clock clock_halfer(.areset(reset),.inclk0(inclock),.c0(clock)); //25Mhz
 
 	
 	//FETCH STAGE
