@@ -1,5 +1,5 @@
 function[bit_index,fail_index,color] = find_closest_8bit(red,green,blue,red_list,green_list,blue_list,fail_index)
-    tolerance = 30;
+    tolerance = 40;
     red_indices = find(abs(red_list-red) <= tolerance);
     green_indices = find(abs(green_list-green) <= tolerance);
     blue_indices = find(abs(blue_list-blue) <= tolerance);
