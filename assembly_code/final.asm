@@ -45,8 +45,12 @@ sw $r22, 0($r21)
 addi $r21, $r21, 1
 j background_loop
 exit_background:
-j draw_initial_box
+jal draw_initial_box
+addi $r22, $r0, 0
+j game_loop
+
 draw_initial_box:
+sw $r31,200($r0)
 lw $r18, 13($r0)
 lw $r17, 9($r0)
 addi $r19, $r0, 480
@@ -77,9 +81,10 @@ j draw_bug_start
 draw_bug_start:
 jal draw_bug
 lw $r18, 7($r0)
+lw $r31,200($r0)
 #jal draw_bird
-addi $r22, $r0, 0
-j game_loop
+jr $ra
+
 game_loop:
 addi $r1, $r1, 1 #register 1 holds time
 addi $r5, $r5, 1
@@ -87,8 +92,12 @@ jal check_time
 jal increment_player_pos
 jal check_player_pos
 addi $r6, $r0, 0 # TTY display
+lw $r22, 100($r0)
+nop
+nop
 bne $r22, $r6, check_bird_bug # if previous input is same as current one, don't do anything, if it branches, they are equal, no need to update, if it doens't branch, they are not equal, so have to update current input into r22 to relfect on next iteration
-add $r22, $r6,$r0
+#add $r22, $r6,$r0
+sw $r6, 100($r0)
 lw $r4, 0($r0)
 nop
 nop
@@ -124,11 +133,15 @@ addi $r27, $r27, -160
 lw $r18, 6($r0)
 jal draw_bug
 lw $r18, 15($r0)
-jal draw_bird_left
-jal draw_bird_middle
-jal draw_bird_right
+# register 11 will be used to draw all of the birds - so store it into memory, and then restore it back, to get the left bird's position back
+sw $r11, 400($r0)
+jal draw_bird
+add $r11, $r12, $r0
+jal draw_bird
+add $r11, $r13, $r0
+jal draw_bird
+lw $r11, 400($r0)
 #jump back to game loop
-jal draw_initial_box
 j game_loop
 # if player position less than (160, 320, 480) mod back to bottom of screen
 check_player_pos:
@@ -139,14 +152,33 @@ jr $r31
 mod_left:
 lw $r7, 11($r0)
 lw $r27, 12($r0) #upload initial position
+sw $r31, 300($r0)
+jal draw_initial_box
+lw $r31, 300($r0)
+add $r11, $r0, $r0
+add $r12, $r0, $r0
+add $r13, $r0, $r0
 jr $r31
 mod_center:
 lw $r7, 10($r0)
 lw $r27, 12($r0) #upload initial position
+sw $r31, 300($r0)
+jal draw_initial_box
+lw $r31, 300($r0)
+# zero out bird registers, otherwise they will be re-drawn
+add $r11, $r0, $r0
+add $r12, $r0, $r0
+add $r13, $r0, $r0
 jr $r31
 mod_right:
 lw $r7, 9($r0)
 lw $r27, 12($r0) #upload initial position
+sw $r31, 300($r0)
+jal draw_initial_box
+lw $r31, 300($r0)
+add $r11, $r0, $r0
+add $r12, $r0, $r0
+add $r13, $r0, $r0
 jr $r31
 check_time:
 addi $r2, $r0, 10000 #add 50000 to register 2 - 50000 is clock freq
@@ -295,58 +327,132 @@ sw $r18, 3206($r7)
 sw $r18, 3207($r7)
 #stop_draw_bug:
 jr $ra
-draw_bird_left: # for now is a red square
+draw_bird: # for now is a red square
 # 8 pixels on each side
+sw $r18, -3199($r11)
+sw $r18, -3198($r11)
+sw $r18, -3197($r11)
+sw $r18, -3196($r11)
+sw $r18, -2561($r11)
+sw $r18, -2560($r11)
+sw $r18, -2559($r11)
+sw $r18, -2558($r11)
+sw $r18, -2557($r11)
+sw $r18, -2556($r11)
+sw $r18, -2555($r11)
+sw $r18, -2554($r11)
+sw $r18, -1921($r11)
+sw $r18, -1920($r11)
+sw $r18, -1919($r11)
+sw $r18, -1918($r11)
+sw $r18, -1917($r11)
+sw $r18, -1916($r11)
+sw $r18, -1915($r11)
+sw $r18, -1914($r11)
+sw $r18, -1281($r11)
+sw $r18, -1280($r11)
+sw $r18, -1279($r11)
+sw $r18, -1278($r11)
+sw $r18, -1277($r11)
+sw $r18, -641($r11)
+sw $r18, -640($r11)
+sw $r18, -639($r11)
+sw $r18, -638($r11)
+sw $r18, -637($r11)
+sw $r18, -4($r11)
+sw $r18, -3($r11)
+sw $r18, -2($r11)
+sw $r18, -1($r11)
 sw $r18, 0($r11)
 sw $r18, 1($r11)
 sw $r18, 2($r11)
 sw $r18, 3($r11)
 sw $r18, 4($r11)
-sw $r18, 5($r11)
-sw $r18, 6($r11)
-sw $r18, 7($r11)
-sw $r18, -1($r11)
-sw $r18, -2($r11)
-sw $r18, -3($r11)
-sw $r18, -4($r11)
-sw $r18, -5($r11)
-sw $r18, -6($r11)
-sw $r18, -7($r11)
+sw $r18, 633($r11)
+sw $r18, 634($r11)
+sw $r18, 635($r11)
+sw $r18, 636($r11)
+sw $r18, 637($r11)
+sw $r18, 638($r11)
+sw $r18, 639($r11)
+sw $r18, 640($r11)
+sw $r18, 641($r11)
+sw $r18, 642($r11)
+sw $r18, 643($r11)
+sw $r18, 644($r11)
+sw $r18, 1273($r11)
+sw $r18, 1274($r11)
+sw $r18, 1275($r11)
+sw $r18, 1276($r11)
+sw $r18, 1277($r11)
+sw $r18, 1278($r11)
+sw $r18, 1279($r11)
+sw $r18, 1280($r11)
+sw $r18, 1281($r11)
+sw $r18, 1282($r11)
+sw $r18, 1283($r11)
+sw $r18, 1284($r11)
+sw $r18, 1913($r11)
+sw $r18, 1914($r11)
+sw $r18, 1915($r11)
+sw $r18, 1916($r11)
+sw $r18, 1917($r11)
+sw $r18, 1918($r11)
+sw $r18, 1919($r11)
+sw $r18, 1920($r11)
+sw $r18, 1921($r11)
+sw $r18, 1922($r11)
+sw $r18, 1923($r11)
+sw $r18, 1924($r11)
+sw $r18, 2553($r11)
+sw $r18, 2554($r11)
+sw $r18, 2555($r11)
+sw $r18, 2556($r11)
+sw $r18, 2557($r11)
+sw $r18, 2558($r11)
+sw $r18, 2559($r11)
+sw $r18, 2560($r11)
+sw $r18, 2561($r11)
+sw $r18, 2562($r11)
+sw $r18, 2563($r11)
+sw $r18, 2564($r11)
+sw $r18, 3193($r11)
+sw $r18, 3194($r11)
+sw $r18, 3195($r11)
+sw $r18, 3196($r11)
+sw $r18, 3197($r11)
+sw $r18, 3198($r11)
+sw $r18, 3199($r11)
+sw $r18, 3200($r11)
+sw $r18, 3201($r11)
+sw $r18, 3202($r11)
+sw $r18, 3203($r11)
+sw $r18, 3204($r11)
+sw $r18, 3833($r11)
+sw $r18, 3834($r11)
+sw $r18, 3836($r11)
+sw $r18, 3837($r11)
+sw $r18, 3840($r11)
+sw $r18, 3841($r11)
 jr $ra
-draw_bird_middle:
-sw $r18, 0($r12)
-sw $r18, 1($r12)
-sw $r18, 2($r12)
-sw $r18, 3($r12)
-sw $r18, 4($r12)
-sw $r18, 5($r12)
-sw $r18, 6($r12)
-sw $r18, 7($r12)
-sw $r18, -1($r12)
-sw $r18, -2($r12)
-sw $r18, -3($r12)
-sw $r18, -4($r12)
-sw $r18, -5($r12)
-sw $r18, -6($r12)
-sw $r18, -7($r12)
-jr $ra
-draw_bird_right:
-sw $r18, 0($r13)
-sw $r18, 1($r13)
-sw $r18, 2($r13)
-sw $r18, 3($r13)
-sw $r18, 4($r13)
-sw $r18, 5($r13)
-sw $r18, 6($r13)
-sw $r18, 7($r13)
-sw $r18, -1($r13)
-sw $r18, -2($r13)
-sw $r18, -3($r13)
-sw $r18, -4($r13)
-sw $r18, -5($r13)
-sw $r18, -6($r13)
-sw $r18, -7($r13)
-jr $ra
+#draw_bird_middle:
+#sw $r18, 0($r12)
+#sw $r18, 1($r12)
+#sw $r18, 2($r12)
+#sw $r18, 3($r12)
+#sw $r18, 4($r12)
+#sw $r18, 5($r12)
+#sw $r18, 6($r12)
+#sw $r18, 7($r12)
+#sw $r18, -1($r12)
+#sw $r18, -2($r12)
+#sw $r18, -3($r12)
+#sw $r18, -4($r12)
+#sw $r18, -5($r12)
+#sw $r18, -6($r12)
+#sw $r18, -7($r12)
+#r $ra
+
 draw_bounding_box:
 add $r30, $r31, $r0 # move previous ra to $r30
 j pls_draw_bounding_box
