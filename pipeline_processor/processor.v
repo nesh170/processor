@@ -1,10 +1,12 @@
-module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,output_reg,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d);
+module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, debug_data, debug_addr,debug_out,output_reg,vga_wren_enable,vga_data_addr,vga_data_write,ir_out,pc_out,debug_e,pc_e,ir_e,bypass_e,dmem_input,bypass_m,pc_m,pc_d,ir_d,bypass_d,setx_sig_output,bex_sig_output);
 
 	input 			inclock, reset, ps2_key_pressed;
 	input 	[7:0]	ps2_out;
 	
 	output 			lcd_write;
 	output 	[31:0] 	lcd_data,output_reg;
+
+	output setx_sig_output,bex_sig_output;
 	
 	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m,pc_d,ir_d; //debug tools
 	output [3:0] bypass_e;
@@ -199,6 +201,8 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	
 	assign debug_e = ALU_output;
 	assign pc_e = de_pc_output;
+	assign setx_sig_output = setx_sig;
+	assign bex_sig_output = j_sig;
 	assign bypass_e[1:0] = bypass_e_A_sig;
 	assign bypass_e[3:2] = bypass_e_B_sig;
 	assign ir_e = de_ir_output;
