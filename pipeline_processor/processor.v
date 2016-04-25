@@ -6,7 +6,8 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	output 			lcd_write;
 	output 	[31:0] 	lcd_data,output_reg;
 
-	output setx_sig_output,bex_sig_output;
+	output[2:0] setx_sig_output;
+	output bex_sig_output;
 	
 	output[31:0] debug_out,ir_out,pc_out,debug_e,pc_e,ir_e,dmem_input,pc_m,pc_d,ir_d; //debug tools
 	output [3:0] bypass_e;
@@ -92,7 +93,7 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	wire i_sig,j_sig,jr_sig,tty_sig,setx_sig;
 	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig),.status(STATUS_out),.setx_signal(setx_sig));
 	
-//	//This is here only due to immediate data being decoded in the execute controller
+	//This is here only due to immediate data being decoded in the execute controller
 	assign wren_STATUS = setx_sig | mult_exp | div_exp;
 	wire[31:0] temp_status_wire,temp_status_wire_2;
 	assign temp_status_wire = (mult_exp) ? 32'd1 : 32'b0;
@@ -195,13 +196,15 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	/*
 	DEBUGGING TOOLS
 	*/
-	assign ir_out = mw_ir_output;
-	assign pc_out = mw_pc_output;
+	assign ir_out = de_ir_output;
+	assign pc_out = de_pc_output;
 	assign debug_out = write_data;
 	
-	assign debug_e = ALU_output;
+	assign debug_e = jump_branch_next_pc;
 	assign pc_e = de_pc_output;
-	assign setx_sig_output = setx_sig;
+	assign setx_sig_output[0] = setx_sig;
+	assign setx_sig_output[1] = div_exp;
+	assign setx_sig_output[2] = mult_exp;
 	assign bex_sig_output = j_sig;
 	assign bypass_e[1:0] = bypass_e_A_sig;
 	assign bypass_e[3:2] = bypass_e_B_sig;

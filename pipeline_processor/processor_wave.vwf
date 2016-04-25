@@ -33,16 +33,6 @@ HEADER
 	GRID_DUTY_CYCLE = 50;
 }
 
-SIGNAL("clock")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
 SIGNAL("debug_out")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
@@ -3783,20 +3773,64 @@ SIGNAL("vga_wren_enable")
 	PARENT = "";
 }
 
-TRANSITION_LIST("clock")
+SIGNAL("bex_sig_output")
 {
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 5.0;
-		NODE
-		{
-			REPEAT = 199;
-			LEVEL 0 FOR 5.0;
-			LEVEL 1 FOR 5.0;
-		}
-		LEVEL 0 FOR 5.0;
-	}
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("inclock")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("setx_sig_output")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 3;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("setx_sig_output[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "setx_sig_output";
+}
+
+SIGNAL("setx_sig_output[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "setx_sig_output";
+}
+
+SIGNAL("setx_sig_output[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "setx_sig_output";
 }
 
 TRANSITION_LIST("debug_out[31]")
@@ -7370,6 +7404,58 @@ TRANSITION_LIST("vga_wren_enable")
 	}
 }
 
+TRANSITION_LIST("bex_sig_output")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 2000.0;
+	}
+}
+
+TRANSITION_LIST("inclock")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 25.0;
+		NODE
+		{
+			REPEAT = 39;
+			LEVEL 0 FOR 25.0;
+			LEVEL 1 FOR 25.0;
+		}
+		LEVEL 0 FOR 25.0;
+	}
+}
+
+TRANSITION_LIST("setx_sig_output[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 2000.0;
+	}
+}
+
+TRANSITION_LIST("setx_sig_output[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 2000.0;
+	}
+}
+
+TRANSITION_LIST("setx_sig_output[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 2000.0;
+	}
+}
+
 DISPLAY_LINE
 {
 	CHANNEL = "reset";
@@ -7381,7 +7467,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "clock";
+	CHANNEL = "inclock";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -11114,6 +11200,55 @@ DISPLAY_LINE
 	RADIX = Binary;
 	TREE_INDEX = 374;
 	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "bex_sig_output";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 375;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "setx_sig_output";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 376;
+	TREE_LEVEL = 0;
+	CHILDREN = 377, 378, 379;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "setx_sig_output[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 377;
+	TREE_LEVEL = 1;
+	PARENT = 376;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "setx_sig_output[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 378;
+	TREE_LEVEL = 1;
+	PARENT = 376;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "setx_sig_output[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 379;
+	TREE_LEVEL = 1;
+	PARENT = 376;
 }
 
 TIME_BAR
