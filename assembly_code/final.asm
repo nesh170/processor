@@ -35,15 +35,15 @@ addi $r14, $r0, 160
 addi $r15, $r0, 320
 addi $r16, $r0, 480
 # ending address can't be expressed in 17 bits for addi, use lw
-lw $r20, 8($r0)
-addi $r21, $r21, 0
-addi $r22, $r0, 92
-j background_loop # edit to write background
-background_loop:
-bgt $r21, $r20, exit_background
-sw $r22, 0($r21)
-addi $r21, $r21, 1
-j background_loop
+#lw $r20, 8($r0)
+#addi $r21, $r21, 0
+#addi $r22, $r0, 92
+#j background_loop # edit to write background
+#background_loop:
+#bgt $r21, $r20, exit_background
+#sw $r22, 0($r21)
+#addi $r21, $r21, 1
+#j background_loop
 exit_background:
 jal draw_initial_box
 addi $r22, $r0, 0
@@ -191,6 +191,7 @@ add $r13, $r0, $r0
 jr $r31
 check_time:
 addi $r2, $r0, 40000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r2, 15000
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
