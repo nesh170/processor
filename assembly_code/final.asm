@@ -35,15 +35,15 @@ addi $r14, $r0, 160
 addi $r15, $r0, 320
 addi $r16, $r0, 480
 # ending address can't be expressed in 17 bits for addi, use lw
-#lw $r20, 8($r0)
-#addi $r21, $r21, 0
-#addi $r22, $r0, 92
-#j background_loop # edit to write background
-#background_loop:
-#bgt $r21, $r20, exit_background
-#sw $r22, 0($r21)
-#addi $r21, $r21, 1
-#j background_loop
+lw $r20, 16($r0) #last index
+lw $r21, 8($r0) # starting index
+addi $r22, $r0, 65
+j background_loop # edit to write background
+background_loop:
+bgt $r21, $r20, exit_background
+sw $r22, 0($r21)
+addi $r21, $r21, 1
+j background_loop
 exit_background:
 jal draw_initial_box
 addi $r22, $r0, 0
@@ -191,7 +191,7 @@ add $r13, $r0, $r0
 jr $r31
 check_time:
 addi $r2, $r0, 40000 #add 50000 to register 2 - 50000 is clock freq
-addi $r2, $r2, 15000
+addi $r2, $r2, 30000
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -200,7 +200,7 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-addi $r2, $r0, 6000
+addi $r2, $r0, 10000
 bne $r5, $r2, update_player_pos
 jr $r31
 update_player_pos:
@@ -224,18 +224,27 @@ a_press:
 addi $r11, $r27, -25760
 addi $r12, $r27, -51200
 addi $r13, $r27, -25440
+addi $r11, $r11, -25600
+addi $r12, $r12, -25600
+addi $r13, $r13, -25600
 j check_bird_bug
 s_press:
 addi $r11, $r27, -25760
 addi $r11, $r11, -51200
 addi $r12, $r27, -51200 #CHANGE THIS CALL
 addi $r13, $r27, -25440
+addi $r11, $r11, -25600
+addi $r12, $r12, -25600
+addi $r13, $r13, -25600
 j check_bird_bug
 d_press:
 addi $r11, $r27, -51360
 addi $r12, $r27, -25600
 addi $r13, $r27, -25440 # CHANGE THIS CALL
 addi $r13, $r13, -51200
+addi $r11, $r11, -25600
+addi $r12, $r12, -25600
+addi $r13, $r13, -25600
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
@@ -523,17 +532,180 @@ finish_update:
 jr $ra
 quit:
 addi $r30, $r0, -1
-# refresh background
-lw $r20, 8($r0) # load last pixel index on screen
-add $r21, $r0, $r0 # index
-addi $r22, $r0, 255 # reset r22 to white color
-j update_background
-update_background:
-bgt $r21, $r20, exit_update_background
-sw $r22, 0($r21)
-addi $r21, $r21, 1
-j update_background
-exit_update_background:
+addi $r18, $r0, 14 # color red
+lw $r11, 17($r0)
+
+sw $r18, -5769($r11)
+sw $r18, -5768($r11)
+sw $r18, -5767($r11)
+sw $r18, -5766($r11)
+sw $r18, -5765($r11)
+sw $r18, -5764($r11)
+sw $r18, -5763($r11)
+sw $r18, -5758($r11)
+sw $r18, -5757($r11)
+sw $r18, -5756($r11)
+sw $r18, -5755($r11)
+sw $r18, -5754($r11)
+sw $r18, -5753($r11)
+sw $r18, -5752($r11)
+sw $r18, -5129($r11)
+sw $r18, -5123($r11)
+sw $r18, -5118($r11)
+sw $r18, -5112($r11)
+sw $r18, -4489($r11)
+sw $r18, -4487($r11)
+sw $r18, -4486($r11)
+sw $r18, -4485($r11)
+sw $r18, -4483($r11)
+sw $r18, -4478($r11)
+sw $r18, -4476($r11)
+sw $r18, -4475($r11)
+sw $r18, -4474($r11)
+sw $r18, -4472($r11)
+sw $r18, -3849($r11)
+sw $r18, -3847($r11)
+sw $r18, -3846($r11)
+sw $r18, -3845($r11)
+sw $r18, -3843($r11)
+sw $r18, -3842($r11)
+sw $r18, -3841($r11)
+sw $r18, -3840($r11)
+sw $r18, -3839($r11)
+sw $r18, -3838($r11)
+sw $r18, -3836($r11)
+sw $r18, -3835($r11)
+sw $r18, -3834($r11)
+sw $r18, -3832($r11)
+sw $r18, -3209($r11)
+sw $r18, -3207($r11)
+sw $r18, -3206($r11)
+sw $r18, -3205($r11)
+sw $r18, -3203($r11)
+sw $r18, -3202($r11)
+sw $r18, -3201($r11)
+sw $r18, -3200($r11)
+sw $r18, -3199($r11)
+sw $r18, -3198($r11)
+sw $r18, -3196($r11)
+sw $r18, -3195($r11)
+sw $r18, -3194($r11)
+sw $r18, -3192($r11)
+sw $r18, -2569($r11)
+sw $r18, -2567($r11)
+sw $r18, -2566($r11)
+sw $r18, -2565($r11)
+sw $r18, -2563($r11)
+sw $r18, -2558($r11)
+sw $r18, -2556($r11)
+sw $r18, -2555($r11)
+sw $r18, -2554($r11)
+sw $r18, -2552($r11)
+sw $r18, -1929($r11)
+sw $r18, -1923($r11)
+sw $r18, -1918($r11)
+sw $r18, -1912($r11)
+sw $r18, -1289($r11)
+sw $r18, -1288($r11)
+sw $r18, -1287($r11)
+sw $r18, -1286($r11)
+sw $r18, -1285($r11)
+sw $r18, -1284($r11)
+sw $r18, -1283($r11)
+sw $r18, -1278($r11)
+sw $r18, -1277($r11)
+sw $r18, -1276($r11)
+sw $r18, -1275($r11)
+sw $r18, -1274($r11)
+sw $r18, -1273($r11)
+sw $r18, -1272($r11)
+sw $r18, 1271($r11)
+sw $r18, 1272($r11)
+sw $r18, 1273($r11)
+sw $r18, 1274($r11)
+sw $r18, 1275($r11)
+sw $r18, 1276($r11)
+sw $r18, 1277($r11)
+sw $r18, 1278($r11)
+sw $r18, 1279($r11)
+sw $r18, 1280($r11)
+sw $r18, 1281($r11)
+sw $r18, 1282($r11)
+sw $r18, 1283($r11)
+sw $r18, 1284($r11)
+sw $r18, 1285($r11)
+sw $r18, 1286($r11)
+sw $r18, 1287($r11)
+sw $r18, 1288($r11)
+sw $r18, 1911($r11)
+sw $r18, 1912($r11)
+sw $r18, 1913($r11)
+sw $r18, 1914($r11)
+sw $r18, 1915($r11)
+sw $r18, 1916($r11)
+sw $r18, 1917($r11)
+sw $r18, 1918($r11)
+sw $r18, 1919($r11)
+sw $r18, 1920($r11)
+sw $r18, 1921($r11)
+sw $r18, 1922($r11)
+sw $r18, 1923($r11)
+sw $r18, 1924($r11)
+sw $r18, 1925($r11)
+sw $r18, 1926($r11)
+sw $r18, 1927($r11)
+sw $r18, 1928($r11)
+sw $r18, 2551($r11)
+sw $r18, 2552($r11)
+sw $r18, 2553($r11)
+sw $r18, 2554($r11)
+sw $r18, 2555($r11)
+sw $r18, 2556($r11)
+sw $r18, 2557($r11)
+sw $r18, 2558($r11)
+sw $r18, 2559($r11)
+sw $r18, 2560($r11)
+sw $r18, 2561($r11)
+sw $r18, 2562($r11)
+sw $r18, 2563($r11)
+sw $r18, 2564($r11)
+sw $r18, 2565($r11)
+sw $r18, 2566($r11)
+sw $r18, 2567($r11)
+sw $r18, 2568($r11)
+sw $r18, 3191($r11)
+sw $r18, 3192($r11)
+sw $r18, 3193($r11)
+sw $r18, 3194($r11)
+sw $r18, 3205($r11)
+sw $r18, 3206($r11)
+sw $r18, 3207($r11)
+sw $r18, 3208($r11)
+sw $r18, 3831($r11)
+sw $r18, 3832($r11)
+sw $r18, 3833($r11)
+sw $r18, 3834($r11)
+sw $r18, 3845($r11)
+sw $r18, 3846($r11)
+sw $r18, 3847($r11)
+sw $r18, 3848($r11)
+sw $r18, 4471($r11)
+sw $r18, 4472($r11)
+sw $r18, 4473($r11)
+sw $r18, 4474($r11)
+sw $r18, 4485($r11)
+sw $r18, 4486($r11)
+sw $r18, 4487($r11)
+sw $r18, 4488($r11)
+sw $r18, 5111($r11)
+sw $r18, 5112($r11)
+sw $r18, 5113($r11)
+sw $r18, 5114($r11)
+sw $r18, 5125($r11)
+sw $r18, 5126($r11)
+sw $r18, 5127($r11)
+sw $r18, 5128($r11)
+lw $r3, 18($r0)
 halt
 .data
 left: .word 0x0000006B
@@ -544,7 +716,7 @@ d: .word 0x00000023
 color_line: .word 0x000000ff
 color_bug: .word 0x0000000C
 color_bird: .word 0x00ffffff
-color_background_limit: .word 0x0004AFFF
+color_background_limit: .word 0x000258AF
 right_line_limit: .word 0x0004AF60
 middle_line_limit: .word 0x0004AEC0
 left_line_limit: .word 0x0004AE20
@@ -552,3 +724,6 @@ initial_position: .word 0x0004AEC0
 color_bounding_box: .word 0x00000000
 limit_drawing: .word 0x00047CC0
 color_bird: .word 0x0000000E
+background_last: .word 0x00038531
+coordinate_quit: .word 0x0002EEF0
+fail: .word 0x0000FA17
