@@ -34,6 +34,8 @@ lw $r10, 4($r0)
 addi $r14, $r0, 160
 addi $r15, $r0, 320
 addi $r16, $r0, 480
+addi $r30, $r0, 10000
+#sw $r30, 800($r0)
 # ending address can't be expressed in 17 bits for addi, use lw
 lw $r20, 16($r0) #last index
 lw $r21, 8($r0) # starting index
@@ -109,9 +111,21 @@ nop
 nop
 bne $r6, $r4, move_right #x pressed
 continue_game_loop:
+lw $r8, 2($r0)
+lw $r9, 3($r0)
+lw $r10, 4($r0)
+nop
+nop
+nop
 bne $r6, $r8, a_press 
 bne $r6, $r9, s_press
 bne $r6, $r10, d_press
+lw $r8, 19($r0) # key code for up
+lw $r9, 20($r0) # key code for down
+nop
+nop
+bne $r6, $r8, up_press
+bne $r6, $r9, down_press
 check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
@@ -191,7 +205,9 @@ add $r13, $r0, $r0
 jr $r31
 check_time:
 addi $r2, $r0, 40000 #add 50000 to register 2 - 50000 is clock freq
-addi $r2, $r2, 30000
+addi $r2, $r2, 40000
+addi $r2, $r2, 60000
+addi $r2, $r2, 60000
 bne $r1, $r2, update_time
 # r1 = 50000, increment r2 that will be displayed on 7 seg display
 jr $r31
@@ -200,7 +216,10 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
+#lw $r30, 800($r0)
 addi $r2, $r0, 10000
+#add $r2, $r0, $r30
+nop
 bne $r5, $r2, update_player_pos
 jr $r31
 update_player_pos:
@@ -224,27 +243,37 @@ a_press:
 addi $r11, $r27, -25760
 addi $r12, $r27, -51200
 addi $r13, $r27, -25440
-addi $r11, $r11, -25600
-addi $r12, $r12, -25600
-addi $r13, $r13, -25600
+addi $r11, $r11, -16000
+addi $r12, $r12, -16000
+addi $r13, $r13, -16000
 j check_bird_bug
 s_press:
 addi $r11, $r27, -25760
 addi $r11, $r11, -51200
 addi $r12, $r27, -51200 #CHANGE THIS CALL
 addi $r13, $r27, -25440
-addi $r11, $r11, -25600
-addi $r12, $r12, -25600
-addi $r13, $r13, -25600
+addi $r11, $r11, -16000
+addi $r12, $r12, -16000
+addi $r13, $r13, -16000
 j check_bird_bug
 d_press:
 addi $r11, $r27, -51360
 addi $r12, $r27, -25600
 addi $r13, $r27, -25440 # CHANGE THIS CALL
 addi $r13, $r13, -51200
-addi $r11, $r11, -25600
-addi $r12, $r12, -25600
-addi $r13, $r13, -25600
+addi $r11, $r11, -16000
+addi $r12, $r12, -16000
+addi $r13, $r13, -16000
+j check_bird_bug
+up_press:
+lw $r30, 800($r0)
+addi $r30, $r30, -100
+sw $r30, 800($r0)
+j check_bird_bug
+down_press:
+lw $r30, 800($r0)
+addi $r30, $r30, 100
+sw $r30, 800($r0)
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
@@ -534,7 +563,12 @@ quit:
 addi $r30, $r0, -1
 addi $r18, $r0, 14 # color red
 lw $r11, 17($r0)
-
+jal draw_sad
+addi $r11, $r11, 160
+jal draw_sad
+lw $r3, 18($r0)
+halt
+draw_sad:
 sw $r18, -5769($r11)
 sw $r18, -5768($r11)
 sw $r18, -5767($r11)
@@ -705,8 +739,7 @@ sw $r18, 5125($r11)
 sw $r18, 5126($r11)
 sw $r18, 5127($r11)
 sw $r18, 5128($r11)
-lw $r3, 18($r0)
-halt
+jr $ra
 .data
 left: .word 0x0000006B
 right: .word 0x00000074
@@ -727,3 +760,5 @@ color_bird: .word 0x0000000E
 background_last: .word 0x00038531
 coordinate_quit: .word 0x0002EEF0
 fail: .word 0x0000FA17
+speed_up: .word 0x00000075
+slow_down: .word 0x00000072
