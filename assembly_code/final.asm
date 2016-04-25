@@ -34,8 +34,8 @@ lw $r10, 4($r0)
 addi $r14, $r0, 160
 addi $r15, $r0, 320
 addi $r16, $r0, 480
-addi $r30, $r0, 10000
-#sw $r30, 800($r0)
+addi $r29, $r0, 10000
+sw $r29, 800($r0)
 # ending address can't be expressed in 17 bits for addi, use lw
 lw $r20, 16($r0) #last index
 lw $r21, 8($r0) # starting index
@@ -204,8 +204,8 @@ add $r12, $r0, $r0
 add $r13, $r0, $r0
 jr $r31
 check_time:
-addi $r2, $r0, 40000 #add 50000 to register 2 - 50000 is clock freq
-addi $r2, $r2, 40000
+addi $r2, $r0, 60000 #add 50000 to register 2 - 50000 is clock freq
+addi $r2, $r2, 60000
 addi $r2, $r2, 60000
 addi $r2, $r2, 60000
 bne $r1, $r2, update_time
@@ -216,9 +216,9 @@ addi $r3, $r3, 1
 add $r1, $r0, $r0
 jr $r31
 increment_player_pos:
-#lw $r30, 800($r0)
-addi $r2, $r0, 10000
-#add $r2, $r0, $r30
+lw $r29, 800($r0)
+#addi $r2, $r0, 10000
+add $r2, $r0, $r29
 nop
 bne $r5, $r2, update_player_pos
 jr $r31
@@ -266,14 +266,14 @@ addi $r12, $r12, -16000
 addi $r13, $r13, -16000
 j check_bird_bug
 up_press:
-lw $r30, 800($r0)
-addi $r30, $r30, -100
-sw $r30, 800($r0)
+lw $r29, 800($r0)
+addi $r29, $r29, -1000
+sw $r29, 800($r0)
 j check_bird_bug
 down_press:
-lw $r30, 800($r0)
-addi $r30, $r30, 100
-sw $r30, 800($r0)
+lw $r29, 800($r0)
+addi $r29, $r29, 1000
+sw $r29, 800($r0)
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
