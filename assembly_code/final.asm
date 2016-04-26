@@ -48,8 +48,39 @@ addi $r21, $r21, 1
 j background_loop
 exit_background:
 jal draw_initial_box
+lw $r20, 22($r0) # last index
+lw $r21, 21($r0) # start index
+jal redraw_color #redraws patches
 addi $r22, $r0, 0
 j game_loop
+
+redraw_color:
+bgt $r21, $20, exit_redraw
+sw $r22, -6400($r21)
+sw $r22, -5760($r21)
+sw $r22, -5120($r21)
+sw $r22, -4480($r21)
+sw $r22, -3840($r21)
+sw $r22, -3200($r21)
+sw $r22, -2560($r21)
+sw $r22, -1920($r21)
+sw $r22, -1280($r21)
+sw $r22, -640($r21)
+sw $r22, 0($r21)
+sw $r22, 640($r21)
+sw $r22, 1280($r21)
+sw $r22, 1920($r21)
+sw $r22, 2560($r21)
+sw $r22, 3200($r21)
+sw $r22, 3840($r21)
+sw $r22, 4480($r21)
+sw $r22, 5120($r21)
+sw $r22, 5760($r21)
+sw $r22, 6400($r21)
+addi $r21, $r21, 1
+j redraw_color
+exit_redraw:
+jr $ra
 
 draw_initial_box:
 sw $r31,200($r0)
@@ -762,3 +793,9 @@ coordinate_quit: .word 0x0002EEF0
 fail: .word 0x0000FA17
 speed_up: .word 0x00000075
 slow_down: .word 0x00000072
+redraw_one: .word 0x0004650A
+redraw_two: .word 0x0004656E
+redraw_three: .word
+redraw_four: .word
+redraw_five: .word
+redraw_six: .word
