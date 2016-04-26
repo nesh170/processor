@@ -55,18 +55,16 @@ module ALU(data_operandA, data_operandB, ctrl_ALUopcode, ctrl_shiftamt, data_res
 	//Mult Opcode: 00110
 	wire[31:0] mult_output;
 	wire temp_mult_exception;
-	multiplier(.multiplicand(data_operandA), .multiplier(data_operandB[15:0]), .result(mult_output), .data_exception(temp_mult_exception));
+	multiplier muliply_operation(.multiplicand(data_operandA), .multiplier(data_operandB[15:0]), .result(mult_output), .data_exception(temp_mult_exception));
 	tri_state tri_state_MULT(mult_output,data_result,decoder_output[6]);
-	tri_state tri_state_MULT_exception(temp_mult_exception,mult_exception,decoder_output[6]);
-	tri_state tri_state_MULT_exception_not(1'b0,mult_exception,~decoder_output[6]);
+	assign mult_exception = (decoder_output[6]) ? temp_mult_exception : 1'b0;
 
 	//DIV module Opcode: 00111
 	wire[31:0] div_output;
 	wire temp_div_exception;
 	div_module divider(.data_operandA(data_operandA), .data_operandB(data_operandB[15:0]), .ctrl_DIV(1'b1), .data_result(div_output), .data_exception(temp_div_exception));
 	tri_state tri_state_DIV(div_output,data_result,decoder_output[7]);
-	tri_state tri_state_DIV_exception(temp_div_exception,div_exception,decoder_output[7]);
-	tri_state tri_state_DIV_exception_not(1'b0,div_exception,~decoder_output[7]);
+	assign div_exception = (decoder_output[7]) ? temp_div_exception : 1'b0;
 endmodule
 
 module tri_state(in, out, enable);

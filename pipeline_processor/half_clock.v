@@ -104,12 +104,12 @@ module half_clock (
 				.vcounderrange ());
 	defparam
 		altpll_component.bandwidth_type = "AUTO",
-		altpll_component.clk0_divide_by = 2,
+		altpll_component.clk0_divide_by = 5000,
 		altpll_component.clk0_duty_cycle = 50,
 		altpll_component.clk0_multiply_by = 1,
 		altpll_component.clk0_phase_shift = "0",
 		altpll_component.compensate_clock = "CLK0",
-		altpll_component.inclk0_input_frequency = 20000,
+		altpll_component.inclk0_input_frequency = 50000,
 		altpll_component.intended_device_family = "Cyclone IV E",
 		altpll_component.lpm_hint = "CBX_MODULE_PREFIX=half_clock",
 		altpll_component.lpm_type = "altpll",

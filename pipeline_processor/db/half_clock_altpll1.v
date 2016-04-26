@@ -1,4 +1,4 @@
-//altpll bandwidth_type="AUTO" CBX_DECLARE_ALL_CONNECTED_PORTS="OFF" clk0_divide_by=5000 clk0_duty_cycle=50 clk0_multiply_by=1 clk0_phase_shift="0" compensate_clock="CLK0" device_family="Cyclone IV E" inclk0_input_frequency=50000 intended_device_family="Cyclone IV E" lpm_hint="CBX_MODULE_PREFIX=half_clock" operation_mode="normal" pll_type="AUTO" port_clk0="PORT_USED" port_clk1="PORT_UNUSED" port_clk2="PORT_UNUSED" port_clk3="PORT_UNUSED" port_clk4="PORT_UNUSED" port_clk5="PORT_UNUSED" port_extclk0="PORT_UNUSED" port_extclk1="PORT_UNUSED" port_extclk2="PORT_UNUSED" port_extclk3="PORT_UNUSED" port_inclk1="PORT_UNUSED" port_phasecounterselect="PORT_UNUSED" port_phasedone="PORT_UNUSED" port_scandata="PORT_UNUSED" port_scandataout="PORT_UNUSED" self_reset_on_loss_lock="OFF" width_clock=5 areset clk inclk locked CARRY_CHAIN="MANUAL" CARRY_CHAIN_LENGTH=48
+//altpll bandwidth_type="AUTO" CBX_DECLARE_ALL_CONNECTED_PORTS="OFF" clk0_divide_by=50000 clk0_duty_cycle=50 clk0_multiply_by=1 clk0_phase_shift="0" compensate_clock="CLK0" device_family="Cyclone IV E" inclk0_input_frequency=50000 intended_device_family="Cyclone IV E" lpm_hint="CBX_MODULE_PREFIX=half_clock" operation_mode="normal" pll_type="AUTO" port_clk0="PORT_USED" port_clk1="PORT_UNUSED" port_clk2="PORT_UNUSED" port_clk3="PORT_UNUSED" port_clk4="PORT_UNUSED" port_clk5="PORT_UNUSED" port_extclk0="PORT_UNUSED" port_extclk1="PORT_UNUSED" port_extclk2="PORT_UNUSED" port_extclk3="PORT_UNUSED" port_inclk1="PORT_UNUSED" port_phasecounterselect="PORT_UNUSED" port_phasedone="PORT_UNUSED" port_scandata="PORT_UNUSED" port_scandataout="PORT_UNUSED" self_reset_on_loss_lock="OFF" width_clock=5 areset clk inclk locked CARRY_CHAIN="MANUAL" CARRY_CHAIN_LENGTH=48
 //VERSION_BEGIN 15.1 cbx_altclkbuf 2015:10:21:18:09:22:SJ cbx_altiobuf_bidir 2015:10:21:18:09:22:SJ cbx_altiobuf_in 2015:10:21:18:09:22:SJ cbx_altiobuf_out 2015:10:21:18:09:22:SJ cbx_altpll 2015:10:21:18:09:23:SJ cbx_cycloneii 2015:10:21:18:09:23:SJ cbx_lpm_add_sub 2015:10:21:18:09:23:SJ cbx_lpm_compare 2015:10:21:18:09:23:SJ cbx_lpm_counter 2015:10:21:18:09:23:SJ cbx_lpm_decode 2015:10:21:18:09:23:SJ cbx_lpm_mux 2015:10:21:18:09:23:SJ cbx_mgl 2015:10:21:18:12:49:SJ cbx_nadder 2015:10:21:18:09:23:SJ cbx_stratix 2015:10:21:18:09:23:SJ cbx_stratixii 2015:10:21:18:09:23:SJ cbx_stratixiii 2015:10:21:18:09:23:SJ cbx_stratixv 2015:10:21:18:09:23:SJ cbx_util_mgl 2015:10:21:18:09:23:SJ  VERSION_END
 //CBXI_INSTANCE_NAME="skeleton_processor_myprocessor_half_clock_clock_halfer_altpll_altpll_component"
 // synthesis VERILOG_INPUT_VERSION VERILOG_2001
@@ -28,7 +28,7 @@
 `timescale 1 ps / 1 ps
 //synopsys translate_on
 (* ALTERA_ATTRIBUTE = {"SUPPRESS_DA_RULE_INTERNAL=C104;SUPPRESS_DA_RULE_INTERNAL=R101"} *)
-module  half_clock_altpll
+module  half_clock_altpll1
 	( 
 	areset,
 	clk,
@@ -93,7 +93,7 @@ module  half_clock_altpll
 	);
 	defparam
 		pll1.bandwidth_type = "auto",
-		pll1.clk0_divide_by = 5000,
+		pll1.clk0_divide_by = 25000,
 		pll1.clk0_duty_cycle = 50,
 		pll1.clk0_multiply_by = 1,
 		pll1.clk0_phase_shift = "0",
@@ -106,5 +106,5 @@ module  half_clock_altpll
 	assign
 		clk = {wire_pll1_clk[4:0]},
 		locked = (wire_pll1_locked & pll_lock_sync);
-endmodule //half_clock_altpll
+endmodule //half_clock_altpll1
 //VALID FILE
