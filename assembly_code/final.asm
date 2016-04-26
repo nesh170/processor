@@ -51,6 +51,9 @@ addi $r21, $r21, 1
 j background_loop
 exit_background:
 jal draw_initial_box
+nop
+nop
+jal fix_brown_background #fix the brown spots in the background
 addi $r22, $r0, 0
 j game_loop
 
@@ -136,7 +139,7 @@ bne $r7, $r11, quit
 bne $r7, $r12, quit
 bne $r7, $r13, quit
 # render screen, update center
-addi $r2,$r0, 400 #render time
+addi $r2,$r0, 1500 #render time
 bne $r30, $r2, render_loop
 sw $r30,500($r0)
 j game_loop
@@ -159,6 +162,11 @@ addi $r29, $r27, 12800
 jal update_bounding_box
 addi $r27, $r27, -160
 lw $r18, 1202($r0)
+nop
+nop
+jal fix_brown_background # at every iteration just to be save
+nop
+nop
 jal draw_bug
 lw $r18, 15($r0)
 # register 11 will be used to draw all of the birds - so store it into memory, and then restore it back, to get the left bird's position back
@@ -544,7 +552,57 @@ update_bounding_box:
 bgt $r28, $r29, finish_update
 j inner_bounding_box_loop
 
+fix_brown_background:
+sw $r19, 1501($r0) #register saving, store color
+sw $r20, 1502($r0) #store start point
+sw $r21, 1503($r0) #store counter
+sw $r22, 1504($r0) #store end point
+sw $r31, 1505($r0) #store return address
+addi $r19,$r0,65 #storing that brown color
+addi $r22,$r0,100 #end point is 100, go hundred pixels to the left
+addi $r21,$r0,0 #reset register to 0
+lw $r20,22($r0) #charging up the first part of the brown
+jal loop_background_fix
+addi $r21,$r0,0 #reset register to 0
+lw $r20,23($r0) #charging up the second part of the brown
+jal loop_background_fix
+addi $r21,$r0,0 #reset register to 0
+lw $r20,24($r0) #charging up the third part of the brown
+jal loop_background_fix
+lw $r19, 1501($r0) #register restoration
+lw $r20, 1502($r0)
+lw $r21, 1503($r0)
+lw $r22, 1504($r0)
+lw $r31, 1505($r0)
+jr $r31
 
+loop_background_fix:
+add $r21,$r20,$r21 #to get it to the right pixels
+sw $r19, -6400($r21)
+sw $r19, -5760($r21)
+sw $r19, -5120($r21)
+sw $r19, -4480($r21)
+sw $r19, -3840($r21)
+sw $r19, -3200($r21)
+sw $r19, -2560($r21)
+sw $r19, -1920($r21)
+sw $r19, -1280($r21)
+sw $r19, -640($r21)
+sw $r19, 0($r21)
+sw $r19, 640($r21)
+sw $r19, 1280($r21)
+sw $r19, 1920($r21)
+sw $r19, 2560($r21)
+sw $r19, 3200($r21)
+sw $r19, 3840($r21)
+sw $r19, 4480($r21)
+sw $r19, 5120($r21)
+sw $r19, 5760($r21)
+sw $r19, 6400($r21)
+sub $r21,$r21,$r20 # to get it to a number between 0 and 100
+addi $r21,$r21,1
+blt $r21,$r22,loop_background_fix
+jr $r31
 
 inner_bounding_box_loop:
 lw $r18, 5($r0)
@@ -775,3 +833,6 @@ fail: .word 0x0000FA17
 speed_up: .word 0x00000075
 slow_down: .word 0x00000072
 five_press: .word 0x00000073
+brown_part_one: .word 0x0004970A
+brown_part_two: .word 0x000497B4
+brown_part_three: .word 0x000498FE
