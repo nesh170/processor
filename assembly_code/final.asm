@@ -25,6 +25,9 @@ main:
 # register 28 holds the coordinate 20 pixels north of register 27
 # register 30 holds the coordinates 20 pixels south of register 27
 nop
+addi $r29,$r0,12
+lw $r29,1202($r0)
+add $r29,$r0,$r0
 lw $r7, 12($r0) #upload initial position
 lw $r27, 12($r0) #upload initial position
 addi $r25, $r0, 2
@@ -122,10 +125,12 @@ bne $r6, $r9, s_press
 bne $r6, $r10, d_press
 lw $r8, 19($r0) # key code for up
 lw $r9, 20($r0) # key code for down
+lw $r10, 21($r0)
 nop
 nop
 bne $r6, $r8, up_press
 bne $r6, $r9, down_press
+bne $r6, $r10, five_color_change
 check_bird_bug: #check for bug intersecting bird
 bne $r7, $r11, quit
 bne $r7, $r12, quit
@@ -153,7 +158,7 @@ addi $r28, $r27, -12800
 addi $r29, $r27, 12800
 jal update_bounding_box
 addi $r27, $r27, -160
-lw $r18, 6($r0)
+lw $r18, 1202($r0)
 jal draw_bug
 lw $r18, 15($r0)
 # register 11 will be used to draw all of the birds - so store it into memory, and then restore it back, to get the left bird's position back
@@ -274,6 +279,13 @@ down_press:
 lw $r29, 800($r0)
 addi $r29, $r29, 1000
 sw $r29, 800($r0)
+j check_bird_bug
+five_color_change:
+sw $r29, 1201($r0) #temp 29 location
+lw $r29, 1202($r0)
+addi $r29, $r29, 1
+sw $r29, 1202($r0)
+lw $r29, 1201($r0)
 j check_bird_bug
 draw_line:
 sw $r18, 0($r17)
@@ -762,3 +774,4 @@ coordinate_quit: .word 0x0002EEF0
 fail: .word 0x0000FA17
 speed_up: .word 0x00000075
 slow_down: .word 0x00000072
+five_press: .word 0x00000073
