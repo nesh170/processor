@@ -26,7 +26,7 @@ main:
 # register 30 holds the coordinates 20 pixels south of register 27
 nop
 addi $r29,$r0,12
-lw $r29,1202($r0)
+sw $r29,1202($r0)
 add $r29,$r0,$r0
 lw $r7, 12($r0) #upload initial position
 lw $r27, 12($r0) #upload initial position
