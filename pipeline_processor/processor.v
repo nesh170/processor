@@ -97,10 +97,9 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	//assign wren_STATUS = setx_sig;
 	wire mult_sig,div_sig;
 	assign wren_STATUS = setx_sig | mult_exp&mult_sig | div_exp&div_sig;
-	wire[31:0] temp_status_wire,temp_status_wire_2;
-	assign temp_status_wire = (mult_exp) ? 32'd1 : 32'b0;
-	assign temp_status_wire_2 = (div_exp) ? 32'd2 : temp_status_wire; 
-	assign STATUS_in = (setx_sig) ? immediate_data : temp_status_wire_2;
+	wire[31:0] temp_status_wire;
+	assign temp_status_wire = (mult_exp|div_exp) ? 32'd1 : 32'b0; 
+	assign STATUS_in = (setx_sig) ? immediate_data : temp_status_wire;
 
 
 	//JUMP Stuff
