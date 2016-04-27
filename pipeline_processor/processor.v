@@ -25,8 +25,8 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	
 	//CLOCKS
 	wire clock;
-	//assign clock = inclock; //50Mhz
-	half_clock clock_halfer(.areset(reset),.inclk0(inclock),.c0(clock)); //25Mhz
+	assign clock = inclock; //50Mhz
+	//half_clock clock_halfer(.areset(reset),.inclk0(inclock),.c0(clock)); //25Mhz
 
 	
 	//FETCH STAGE
