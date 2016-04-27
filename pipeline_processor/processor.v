@@ -90,12 +90,12 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	wire[4:0] opcode_ALU, shamt;
 	wire[31:0] immediate_data;
 	wire[31:0] jump_immediate_data;
-	wire i_sig,j_sig,jr_sig,tty_sig,setx_sig;
-	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig),.status(STATUS_out),.setx_signal(setx_sig));
+	wire i_sig,j_sig,jr_sig,tty_sig,setx_sig,mult_sig,div_sig;
+	control_execute execute_controller(.instruction(de_ir_output),.ALU_opcode(opcode_ALU),.ctrl_shamt(shamt),.immediate_value(immediate_data),.i_signal(i_sig),.j_signal(j_sig),.jr_signal(jr_sig),.jump_immediate_value(jump_immediate_data),.pc(de_pc_output),.tty_signal(tty_sig),.status(STATUS_out),.setx_signal(setx_sig),.mult_signal(mult_sig),.div_signal(div_sig));
 	
 	//This is here only due to immediate data being decoded in the execute controller
 	//assign wren_STATUS = setx_sig;
-	wire mult_sig,div_sig;
+	
 	assign wren_STATUS = setx_sig | mult_exp&mult_sig | div_exp&div_sig;
 	wire[31:0] temp_status_wire;
 	assign temp_status_wire = (mult_exp|div_exp) ? 32'd1 : 32'b0; 
@@ -118,7 +118,7 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	assign ALU_input_B = (i_sig) ? immediate_data : temp_ALU_input_B;
 	assign ALU_input_A = (tty_sig) ? ps2_out_32 : 32'bZ;
 	assign ALU_input_A = (~tty_sig) ? temp_ALU_input_A : 32'bZ;
-	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output),.mult_exception(mult_exp), .div_exception(div_exp),.mult_signal(mult_sig),.div_signal(div_sig));
+	ALU alu(.data_operandA(ALU_input_A), .data_operandB(ALU_input_B), .ctrl_ALUopcode(opcode_ALU), .ctrl_shiftamt(shamt), .data_result(ALU_output),.mult_exception(mult_exp), .div_exception(div_exp));
 	
 	//EXECUTE_MEMORY_LATCH
 	wire[31:0] em_pc_output,em_ir_output, em_A_output,em_B_output;
@@ -200,9 +200,9 @@ module processor(inclock, reset, ps2_key_pressed, ps2_out, lcd_write, lcd_data, 
 	*/
 	assign ir_out = de_ir_output;
 	assign pc_out = de_pc_output;
-	assign debug_out = write_data;
+	assign debug_out = ALU_output;
 	
-	assign debug_e = jump_branch_next_pc;
+	assign debug_e = STATUS_out;
 	assign pc_e = de_pc_output;
 	assign setx_sig_output[0] = setx_sig;
 	assign setx_sig_output[1] = div_exp;

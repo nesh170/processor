@@ -7418,14 +7418,14 @@ TRANSITION_LIST("inclock")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 25.0;
+		LEVEL 1 FOR 10.0;
 		NODE
 		{
-			REPEAT = 39;
-			LEVEL 0 FOR 25.0;
-			LEVEL 1 FOR 25.0;
+			REPEAT = 99;
+			LEVEL 0 FOR 10.0;
+			LEVEL 1 FOR 10.0;
 		}
-		LEVEL 0 FOR 25.0;
+		LEVEL 0 FOR 10.0;
 	}
 }
 

@@ -1,8 +1,9 @@
-module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc,tty_signal,status,setx_signal);
+module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signal,j_signal,jr_signal,jump_immediate_value,pc,tty_signal,status,setx_signal,mult_signal,div_signal);
 	input[31:0] instruction,pc,status;
 	output[4:0] ALU_opcode,ctrl_shamt;
 	output[31:0] immediate_value,jump_immediate_value;
 	output i_signal,j_signal,jr_signal,tty_signal,setx_signal;
+	output mult_signal,div_signal;
 	
 	//optaining the opcode and putting them in individual wires;
 	wire A,B,C,D,E;
@@ -36,6 +37,13 @@ module control_execute(instruction,ALU_opcode,ctrl_shamt,immediate_value,i_signa
 	assign ctrl_shamt = instruction[11:7];
 	assign immediate_value[16:0] = instruction[16:0];
 	
+	//assign div signal and mult signal
+	wire runALU;
+	assign runALU=(~A&~B&~C&~D&~E);
+	assign mult_signal = ~instruction[6]&~instruction[5]&instruction[4]&instruction[3]&~instruction[2]&runALU;
+	assign div_signal =  ~instruction[6]&~instruction[5]&instruction[4]&instruction[3]&instruction[2]&runALU;
+
+
 	//Sign Extending
 	genvar i;
 	generate
